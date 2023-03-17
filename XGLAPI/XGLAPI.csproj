@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net4.8</TargetFramework>
+    <BaseOutputPath>G:\! New\XGLauncher\Builds\</BaseOutputPath>
+    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Platforms>AnyCPU</Platforms>
+    <RootNamespace>XGL.API</RootNamespace>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,44 @@
+﻿<Window x:Class="XGL.Dialogs.WarningBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XGL.Dialogs"
+        mc:Ignorable="d"
+        Style="{StaticResource XGLauncherDialog}"
+        Height="225" Width="400"
+        ResizeMode="NoResize"
+        Title="XGL.WarningBox.Title"
+        Background="#343435">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Name="warnText"/>
+        <Border Background="#303031"
+                Grid.Row="1">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="5">
+                <Button Name="ok" Content="Ok"
+                        Height="50" Width="150"
+                        Click="ReturnResult"
+                        Visibility="Collapsed"/>
+                <Button Name="yes" Content="Yes"
+                        Height="50" Width="150"
+                        Click="ReturnResult"
+                        Visibility="Collapsed"/>
+                <Button Name="no" Content="No"
+                        Height="50" Width="150"
+                        Click="ReturnResult"
+                        Visibility="Collapsed"/>
+                <Button Name="cancel" Content="Cancel"
+                        Height="50" Width="150"
+                        Click="ReturnResult"
+                        Visibility="Collapsed"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

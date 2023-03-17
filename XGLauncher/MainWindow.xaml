@@ -1,0 +1,65 @@
+﻿<Window x:Class="XGL.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cp="clr-namespace:ColorPicker;assembly=ColorPicker"
+        xmlns:elements="clr-namespace:XGL.Pages.LW"
+        xmlns:local="clr-namespace:XGL"
+        mc:Ignorable="d"  Title="XGLauncher"
+        Height="775" Width="1200"
+        MinHeight="675" MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        Style="{StaticResource XGLauncherMainWindow}"
+        Icon="\Images\xgl-wip.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="71*"/>
+            <RowDefinition Height="688*"/>
+        </Grid.RowDefinitions>
+        <Border Name="TopBar" Background="#393939" Margin="-5,-25,-5,0"
+                SnapsToDevicePixels="True">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <ToggleButton Name="store" Content="Store" Style="{StaticResource MWBtn}" Click="MainBtn_Click" Padding="0,20,0,0"/>
+                    <ToggleButton Name="games" Content="Library" Style="{StaticResource MWBtn}" Click="MainBtn_Click" IsChecked="True" Padding="0,20,0,0"/>
+                    <ToggleButton Name="news" Content="News" Style="{StaticResource MWBtn}" Click="MainBtn_Click" Padding="0,20,0,0"/>
+                    <ToggleButton Name="community" Content="Community" Style="{StaticResource MWBtn}" Click="MainBtn_Click" Visibility="Collapsed" Padding="0,20,0,0"/>
+                    <ToggleButton Name="profileBtn" Style="{StaticResource MWBtn}" Click="MainBtn_Click" Padding="0,20,0,0">
+                        <Grid MinWidth="200">
+                            <TextBlock Name="profile" Text="Profile" VerticalAlignment="Stretch"
+                                       HorizontalAlignment="Left" Margin="5, 12.5, 10, 0"/>
+                            <Image Name="profileIcon" Width="60" HorizontalAlignment="Right"
+                                   Margin="0, 0, 5, 0"/>
+                        </Grid>
+                    </ToggleButton>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" Name="StorePg" Visibility="Collapsed">
+            <elements:Store x:Name="storeControl"/>
+        </Border>
+        <Border Grid.Row="1" Name="GamesPg">
+            <elements:Games x:Name="gamesControl"/>
+        </Border>
+        <Border Grid.Row="1" Name="NewsPg" Visibility="Collapsed">
+            <elements:News x:Name="newsControl"/>
+        </Border>
+        <Border Grid.Row="1" Name="CommunityPg" Visibility="Collapsed">
+            <elements:Community x:Name="communityControl"/>
+        </Border>
+        <Border Grid.Row="1" Name="ProfilePg" Visibility="Collapsed">
+            <elements:Profile x:Name="profileControl"/>
+        </Border>
+        <Button Click="OpenSettings" Name="stg_btn"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                FontSize="20" Margin="0, 41, 7, 0" Height="25">
+            <Image Source="/Images/settings_icon.png"/>
+        </Button>
+        <Button Click="OpenPlugins" Name="plg_btn" Visibility="Collapsed"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                FontSize="20" Margin="0, 41, 37, 0" Height="25">
+            <Image Source="/Images/plugins.png"/>
+        </Button>
+    </Grid>
+</Window>

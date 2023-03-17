@@ -1,0 +1,31 @@
+﻿<Window x:Class="XGL.Dev.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XGL.Dev" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" Style="{StaticResource XGLauncherDialog}"
+        Title="XGLauncher" Height="500" Width="400">
+    <Grid>
+        <Image Source="XGL_devtools.png" Name="logo" VerticalAlignment="Top" Margin="130, 40, 120, 0"/>
+        <Grid Height="50" Margin="25, -10, 25, 0">
+            <TextBox Name="loginTB" FontSize="16"/>
+            <TextBlock Name="loginT" Text="Login" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
+            <TextBlock Name="loginWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="50,-25,0,50" Opacity="0"/>
+        </Grid>
+        <Grid Height="50" Margin="25, 170, 25, 0">
+            <TextBox Name="passwordTB" FontSize="16" Visibility="Collapsed" Margin="0, 0, 40, 0"/>
+            <PasswordBox Name="passwordTBH" FontSize="16" PasswordChar="•" Margin="0, 0, 40, 0"/>
+            <ToggleButton Checked="PassToggle_C" Unchecked="PassToggle_U" Style="{StaticResource GrayToggle}"
+                              HorizontalAlignment="Right" Width="40" VerticalAlignment="Stretch"/>
+            <TextBlock Name="passwordT" Text="Password" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
+            <TextBlock Name="passwordWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="78,-25,0,50" Opacity="0"/>
+        </Grid>
+        <Button Name="LoginBtn" Content="Login" Height="50" Style="{StaticResource BigButton}" FontWeight="Bold" FontSize="18" Margin="25, 0, 25, 40" 
+                VerticalAlignment="Bottom" Click="LoginBtn_Click"/>
+        <Button Style="{StaticResource WindowControlBtn}" Content="Register" 
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                    FontWeight="Bold" Click="NotifyRegister" Margin="0, 0, 0, 10"
+                    Name="notifyRegister"/>
+    </Grid>
+</Window>

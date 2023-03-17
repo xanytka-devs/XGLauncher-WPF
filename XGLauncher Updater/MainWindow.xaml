@@ -1,0 +1,74 @@
+﻿<Window x:Class="XGL.Update.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XGL.Update"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Style="{StaticResource XGLauncherWindow}"
+        Height="450" Width="800">
+    <Grid Margin="-15, -25, -15, 0">
+        <Grid Name="pageDownload">
+            <Border Background="Black"/>
+            <TextBlock Text="XGLauncher" FontFamily="Ubuntu Bold" FontSize="30"
+                       VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40, 25, 0, 0"/>
+            <TextBlock Text="Обновление" FontFamily="Ubuntu Light" FontSize="24"
+                       VerticalAlignment="Top" HorizontalAlignment="Left" Margin="230, 30, 0, 0"/>
+            <Image gif:ImageBehavior.AnimatedSource="loading.gif" Source="loading.gif" VerticalAlignment="Center" 
+                   HorizontalAlignment="Center" Margin="0, 80, 0, 80"/>
+        </Grid>
+        <Grid Name="pageWelcome">
+            <Image Source="/gradient.png" Margin="0, 0, 0, 100" Stretch="Fill"/>
+            <Border>
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,0.9" StartPoint="0.5,0">
+                        <GradientStop Color="#000000" Offset="0.8"/>
+                        <GradientStop Color="#00000000"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <TextBlock Text="XGLAUNCHER" FontFamily="Ubuntu Bold" FontSize="46"
+                       VerticalAlignment="Top" HorizontalAlignment="Left"
+                       Margin="30, 20, 0, 0"/>
+            <TextBlock Text="Обновление" FontFamily="Ubuntu Light" FontSize="23"
+                       VerticalAlignment="Top" HorizontalAlignment="Left"
+                       Margin="30, 70, 0, 0"/>
+            <Button Content="Обновить" Style="{StaticResource BorderButton}"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                    Width="150" Height="30" FontFamily="Ubuntu"
+                    Margin="0,0,20,20" Click="Update"/>
+            <ToggleButton Name="startAfterInstall" Width="30" Height="30"
+                          VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20, 0, 0, 20"
+                          IsChecked="True"/>
+            <TextBlock Text="Запустить лаунчер сразу после установки" FontFamily="Ubuntu Light" FontSize="20"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="60, 0, 0, 25"/>
+            <ToggleButton Name="createShortcut" Width="30" Height="30"
+                          VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20, 0, 0, 60"
+                          IsChecked="False"/>
+            <TextBlock Text="Создать ярлык на рабочем столе" FontFamily="Ubuntu Light" FontSize="20"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="60, 0, 0, 65"/>
+        </Grid>
+        <Grid Name="pageNoUpdates" Visibility="Collapsed">
+            <Image Source="/gradient.png" Margin="0, 0, 0, 100" Stretch="Fill"/>
+            <Border>
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,0.9" StartPoint="0.5,0">
+                        <GradientStop Color="#000000" Offset="0.8"/>
+                        <GradientStop Color="#00000000"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <TextBlock Text="XGLAUNCHER" FontFamily="Ubuntu Bold" FontSize="46"
+                       VerticalAlignment="Top" HorizontalAlignment="Left"
+                       Margin="30, 20, 0, 0"/>
+            <TextBlock Text="Обновлений не найдено" FontFamily="Ubuntu Light" FontSize="23"
+                       VerticalAlignment="Top" HorizontalAlignment="Left"
+                       Margin="30, 70, 0, 0"/>
+            <Button Content="Закрыть" Style="{StaticResource BorderButton}"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                    Width="150" Height="30" FontFamily="Ubuntu" Name="nextWelcome"
+                    Margin="0,0,20,20" Click="Exit"/>
+        </Grid>
+    </Grid>
+</Window>

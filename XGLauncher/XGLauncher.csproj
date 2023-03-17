@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{30C001FF-A9B2-4BBD-BFF4-47C6453269D7}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>XGL</RootNamespace>
+    <AssemblyName>XGLauncher</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>0.1.0.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>false</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Builds\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>XDG0062</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Builds\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>XDG0062</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\xgl-wip.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>7B60510FB45B9B6C49AD44C0153CF3060D92FD15</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>XGLauncher_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=8.0.32.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\! Libs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="xNet, Version=3.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\! Libs\xNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Common\Errors.cs" />
+    <Compile Include="Common\Game.cs" />
+    <Compile Include="Common\LazyDownload.cs" />
+    <Compile Include="Common\SLS.cs" />
+    <Compile Include="Common\ThemeManager.cs" />
+    <Compile Include="Common\Utils.cs" />
+    <Compile Include="Dialogs\DownloadGameDialog.xaml.cs">
+      <DependentUpon>DownloadGameDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ErrorBox.xaml.cs">
+      <DependentUpon>ErrorBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\OptionsWindow.xaml.cs">
+      <DependentUpon>OptionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PluginWindow.xaml.cs">
+      <DependentUpon>PluginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TempDialog.xaml.cs">
+      <DependentUpon>TempDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TempURLDialog.xaml.cs">
+      <DependentUpon>TempURLDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\WarningBox.xaml.cs">
+      <DependentUpon>WarningBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Authencation\Auth.cs" />
+    <Compile Include="Common\Authencation\VkAPI.cs" />
+    <Compile Include="Common\Database.cs" />
+    <Compile Include="Common\FileDownloader.cs" />
+    <Compile Include="Common\VersionManager.cs" />
+    <Compile Include="Pages\Community.xaml.cs">
+      <DependentUpon>Community.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Games.xaml.cs">
+      <DependentUpon>Games.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\News.xaml.cs">
+      <DependentUpon>News.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Profile.xaml.cs">
+      <DependentUpon>Profile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Store.xaml.cs">
+      <DependentUpon>Store.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Styles.xaml.cs">
+      <DependentUpon>Styles.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Dialogs\DownloadGameDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ErrorBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\OptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\PluginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\TempDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\TempURLDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\WarningBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Pages\Community.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Games.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\News.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Profile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Store.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\AuthIcons\github.png" />
+    <Resource Include="Images\AuthIcons\google.png" />
+    <Resource Include="Images\AuthIcons\tg.png" />
+    <Resource Include="Images\AuthIcons\vk.png" />
+    <Resource Include="Images\AuthIcons\whatsapp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\xgl-wip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\xgl-wip.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\jcraft_bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\override_text.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\big_paint_brush_w.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\moderator.png" />
+    <Resource Include="Images\shliapnik.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\checkmark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\lightning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\hdir.png" />
+    <Resource Include="Images\vdir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\eye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\settings_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\filter.png" />
+    <Resource Include="Images\plus.png" />
+    <Resource Include="Images\protection.png" />
+    <Resource Include="Images\refresh.png" />
+    <Resource Include="Images\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LangIcons\en-us.png" />
+    <Resource Include="Images\LangIcons\es.png" />
+    <Resource Include="Images\LangIcons\ru-ru.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\brush.png" />
+    <Resource Include="Images\download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\plugins.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XGLAPI\XGLAPI.csproj">
+      <Project>{2512f59c-22e4-4f09-8279-97219b133ac5}</Project>
+      <Name>XGLAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\AuthIcons\microsoft.png" />
+    <Resource Include="Images\AuthIcons\youtube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Gradients\RB Gradient Background 045.jpg" />
+    <Resource Include="Images\Gradients\RB Gradient Background 397.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\no_wi_fi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\heart.png" />
+    <Resource Include="Images\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LangIcons\ru_im.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf">
+      <Version>3.22.1</Version>
+    </PackageReference>
+    <PackageReference Include="K4os.Compression.LZ4.Streams">
+      <Version>1.3.5</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
+      <Version>7.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts">
+      <Version>10.0.22621.755</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="PixiEditor.ColorPicker">
+      <Version>3.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="Portable.BouncyCastle">
+      <Version>1.9.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO.Pipelines">
+      <Version>7.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="WpfAnimatedGif">
+      <Version>2.0.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\picture.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

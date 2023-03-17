@@ -1,0 +1,27 @@
+﻿<Window x:Class="XGL.Dev.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XGL.Dev" WindowStartupLocation="CenterScreen"
+        xmlns:pages="clr-namespace:XGL.Dev.Pages"
+        mc:Ignorable="d" Style="{StaticResource XGLauncherWindow}"
+        Height="775" Width="1200"
+        MinHeight="675" MinWidth="1000">
+    <Grid Margin="-5,-25,-5,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="41*"/>
+            <RowDefinition Height="351*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <ToggleButton Name="Products" Style="{StaticResource MWBtn}" Content="Products" Click="MainBtn_Click" IsChecked="True"/>
+            <ToggleButton Name="Statistics" Style="{StaticResource MWBtn}" Content="Statistics" Click="MainBtn_Click"/>
+            <ToggleButton Name="Command" Style="{StaticResource MWBtn}" Content="Command" Click="MainBtn_Click"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <pages:Products x:Name="ProductsP"/>
+            <pages:Statistics x:Name="StatisticsP" Visibility="Collapsed"/>
+            <pages:Command x:Name="CommandP" Visibility="Collapsed"/>
+        </Grid>
+    </Grid>
+</Window>

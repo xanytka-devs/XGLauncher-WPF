@@ -1,0 +1,41 @@
+﻿<Window x:Class="XGL.Dialogs.ErrorBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XGL.Dialogs"
+        mc:Ignorable="d" Style="{StaticResource XGLauncherDialog}"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Title="XGLauncher" Height="500" Width="550">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="113*"/>
+            <RowDefinition Height="54*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Image Source="\Images\Gradients\RB Gradient Background 045.jpg" Margin="-13,-58,-13,0"/>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Height="250" Margin="0, 0, 0, 30">
+                <Image Name="errorImg" Visibility="Collapsed"/>
+                <Image Name="noWiFiError" Source="..\Images\no_wi_fi.png" Visibility="Visible"/>
+                <Image Name="protectionError" Source="..\Images\protection.png" Visibility="Collapsed"/>
+                <Image Name="pluginError" Source="..\Images\plugins.png" Visibility="Collapsed"/>
+                <Image Name="storageError" Source="..\Images\brush.png" Visibility="Collapsed"/>
+                <Image Name="forceLoadError" Source="..\Images\lightning.png" Visibility="Collapsed"/>
+            </Grid>
+        </Grid>
+        <Grid Margin="5,308,5,5" Grid.RowSpan="2">
+            <TextBlock Name="errorTitle" FontSize="16" Text="Sample title"
+                       FontWeight="SemiBold" Margin="0,-11,0,0"/>
+            <TextBlock Name="errorDescription" FontSize="14" Text="Sample text" 
+                       Margin="2.5, 15, 2.5, 0" TextWrapping="WrapWithOverflow"/>
+        </Grid>
+        <StackPanel Grid.RowSpan="2" VerticalAlignment="Bottom"
+                    Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Name="btn1" Content="1" Width="250" Visibility="Collapsed"
+                    Height="35" Margin="5" Style="{StaticResource LightButton}"/>
+            <Button Name="btn2" Content="2" Width="250" Visibility="Collapsed"
+                    Height="35" Margin="5" Style="{StaticResource LightButton}"/>
+        </StackPanel>
+    </Grid>
+</Window>

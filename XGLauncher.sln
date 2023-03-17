@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGLauncher", "XGLauncher\XGLauncher.csproj", "{30C001FF-A9B2-4BBD-BFF4-47C6453269D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XGLAPI", "XGLAPI\XGLAPI.csproj", "{13ACFFA9-53B7-4013-A576-3DFB4B6529FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uninstall XGLauncher", "Uninstall XGLauncher\Uninstall XGLauncher.csproj", "{B794E562-2466-4E00-9954-8F1292B87FD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGLauncher DevTools", "XGLauncher DevTools\XGLauncher DevTools.csproj", "{E9338997-8511-4DDF-9D28-1CB32295D912}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGLauncher Updater", "XGLauncher Updater\XGLauncher Updater.csproj", "{0DAFF23A-67ED-44CF-B251-28A88E200B09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGLauncher Setup", "XGLauncher Setup\XGLauncher Setup.csproj", "{A805084A-7E03-43E0-8BEA-CFE25D3242D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30C001FF-A9B2-4BBD-BFF4-47C6453269D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C001FF-A9B2-4BBD-BFF4-47C6453269D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C001FF-A9B2-4BBD-BFF4-47C6453269D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C001FF-A9B2-4BBD-BFF4-47C6453269D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13ACFFA9-53B7-4013-A576-3DFB4B6529FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13ACFFA9-53B7-4013-A576-3DFB4B6529FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13ACFFA9-53B7-4013-A576-3DFB4B6529FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13ACFFA9-53B7-4013-A576-3DFB4B6529FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B794E562-2466-4E00-9954-8F1292B87FD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B794E562-2466-4E00-9954-8F1292B87FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B794E562-2466-4E00-9954-8F1292B87FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B794E562-2466-4E00-9954-8F1292B87FD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9338997-8511-4DDF-9D28-1CB32295D912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9338997-8511-4DDF-9D28-1CB32295D912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9338997-8511-4DDF-9D28-1CB32295D912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9338997-8511-4DDF-9D28-1CB32295D912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DAFF23A-67ED-44CF-B251-28A88E200B09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DAFF23A-67ED-44CF-B251-28A88E200B09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DAFF23A-67ED-44CF-B251-28A88E200B09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DAFF23A-67ED-44CF-B251-28A88E200B09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A805084A-7E03-43E0-8BEA-CFE25D3242D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A805084A-7E03-43E0-8BEA-CFE25D3242D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A805084A-7E03-43E0-8BEA-CFE25D3242D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A805084A-7E03-43E0-8BEA-CFE25D3242D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {842FCA33-22F8-4890-99BA-65D59C124EBA}
+	EndGlobalSection
+EndGlobal

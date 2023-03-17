@@ -1,0 +1,292 @@
+﻿<Window x:Class="XGL.Dialogs.OptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XGL.Dialogs"
+        mc:Ignorable="d"
+        Style="{StaticResource XGLauncherDialog}"
+        Title="Settings" Height="450" Width="800"
+        MinHeight="450" MinWidth="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Hidden">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Foreground="White" Text="Settings" Name="mainST"
+                       FontFamily="Bahnschrift Light" FontSize="28"
+                       HorizontalAlignment="Center" Margin="0, 20, 0, 30"/>
+                <Button Name="generalBtn" Content="General"
+                    Style="{StaticResource SmallBtn}"
+                    Height="50" FontSize="18"
+                    Click="SettingsBtn_Click"/>
+                <Button Name="accountBtn" Content="Account"
+                    Style="{StaticResource SmallBtn}"
+                    Height="50" FontSize="18"
+                    Click="SettingsBtn_Click"/>
+                <Button Name="languageBtn" Content="Language"
+                    Style="{StaticResource SmallBtn}"
+                    Height="50" FontSize="18"
+                    Click="SettingsBtn_Click"/>
+                <Button Name="appearanceBtn" Content="Appearance"
+                    Style="{StaticResource SmallBtn}"
+                    Height="50" FontSize="18"
+                    Click="SettingsBtn_Click"/>
+                <Button Name="aboutBtn" Content="About"
+                    Style="{StaticResource SmallBtn}"
+                    Height="50" FontSize="18"
+                    Click="SettingsBtn_Click"/>
+                <Button Name="devBtn" Content="For Devs"
+                    Style="{StaticResource SmallBtn}"
+                    Height="50" FontSize="18"
+                    Click="SettingsBtn_Click"/>
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" Name="generalPage"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Visibility="Collapsed">
+            <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
+                <TextBlock Text="General" FontSize="20"
+                           FontWeight="SemiBold" HorizontalAlignment="Center"
+                           VerticalAlignment="Top" Name="ti_G"/>
+                <Grid Height="40">
+                    <TextBlock Text="Run at start of system" 
+                               FontSize="18" VerticalAlignment="Center" 
+                               Name="ras_t"/>
+                    <ToggleButton Name="autorunTgB"
+                                  Height="30" Width="30"
+                                  HorizontalAlignment="Right"
+                                  Click="AutorunTgB_Click"/>
+                </Grid>
+                <Grid Height="40">
+                    <TextBlock Text="Automaticlly search for products in shop" 
+                               FontSize="18" VerticalAlignment="Center" 
+                               Name="g_autostoresearch"/>
+                    <ToggleButton Name="g_autostoresearch_TB"
+                                  Height="30" Width="30"
+                                  HorizontalAlignment="Right"
+                                  Click="AutoStoreSearch_Click"/>
+                </Grid>
+                <Grid Height="40">
+                    <TextBlock Text="Show Add application button in Library" FontSize="18" Name="fd_saab_T" VerticalAlignment="Center"/>
+                    <ToggleButton Name="fd_saab_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="30" Click="FD_Element_Click"
+                                  ToolTip="Shows/Hides 'Add application' button in Library tab in Main window."/>
+                </Grid>
+                <Grid Margin="0, 10, 0, 0">
+                    <TextBlock FontWeight="Bold" Name="gp_cs" FontSize="18" Text="Cache"/>
+                    <TextBlock Name="gp_cs_T" FontSize="18" Text="Cache size" Margin="70, 0, 0, 0"/>
+                </Grid>
+                <Button Height="40" Style="{StaticResource BigButtonGray}" Content="Clear cache"
+                        ToolTip="This button clears all temporary files." Name="gp_cc"
+                        Click="ClearCache" Margin="0, 5, 0, 0"/>
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" Name="accountPage" 
+                      Visibility="Collapsed" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <TextBlock Text="Account" FontSize="20"
+                           FontWeight="SemiBold" HorizontalAlignment="Center"
+                           VerticalAlignment="Top" Margin="5" Name="ti_Ac"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Name="accountData"
+                            Margin="5, 40, 5, 5">
+                    <Border Background="#252525" CornerRadius="10"
+                        Height="50" VerticalAlignment="Top" Width="150" Margin="0, 0, 5, 0">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center"
+                                Margin="5">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontWeight="Bold" Text="Login" Name="ap_u"/>
+                                <TextBlock Text="Profile" Margin="5, 0, 5, 0" Name="pN"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="#252525" CornerRadius="10"
+                        Height="50" VerticalAlignment="Top" Width="225" Margin="0, 0, 5, 0">
+                        <Grid VerticalAlignment="Center"
+                                Margin="5">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontWeight="Bold" Text="Password" Name="ap_p"/>
+                                <Grid Margin="5, 0, 5, 0">
+                                    <TextBlock Name="pP" Text="Password" Visibility="Collapsed"/>
+                                    <TextBlock Name="pHP" Text="********"/>
+                                </Grid>
+                            </StackPanel>
+                            <Button Name="passwordBtn" Height="15"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Click="PasswordBtn_Click">
+                                <Image Source="/Images/eye.png"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <Border Background="#252525" CornerRadius="10"
+                        Height="50" VerticalAlignment="Top" Width="195" Margin="0, 0, 5, 0">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center"
+                                Margin="5">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontWeight="Bold" Text="Email" Name="ap_e"/>
+                                <TextBlock Text="Email" Margin="5, 0, 5, 0" Name="eN"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <Button Click="SignOutBtn_Click" Content="Sign out" Name="ap_so"
+                        Height="35" Margin="5, 95, 5, 0" Background="#252525"
+                        FontSize="16" FontWeight="Bold"
+                        VerticalAlignment="Top"/>
+                <Button Click="DeleteAccount_Click" Name="ap_da"
+                        Height="35" Margin="5, 135, 5, 0" Background="#252525"
+                        FontSize="16" FontWeight="Bold"
+                        VerticalAlignment="Top">
+                    <TextBlock Foreground="#F44336" Name="ap_da_text">Delete Account</TextBlock>
+                </Button>
+            </Grid>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" Name="languagePage"
+                      Visibility="Collapsed"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <TextBlock Text="Language" FontSize="20"
+                           FontWeight="SemiBold" HorizontalAlignment="Center"
+                           VerticalAlignment="Top" Margin="5" Name="ti_L"/>
+                <StackPanel Orientation="Vertical" 
+                              Margin="5, 40, 5, 0">
+                    <Button Name="cl_ru_ru" Click="ChangeLanguage" Height="40">
+                        <Grid SnapsToDevicePixels="True" Width="590" HorizontalAlignment="Center">
+                            <Image Source="..\Images\LangIcons\ru-ru.png" Height="30" Margin="5" HorizontalAlignment="Left"/>
+                            <TextBlock Name="cl_ru_ru_tb" Text="Русский (RU)" Margin="58,0,10,0" VerticalAlignment="Center" FontSize="16"/>
+                        </Grid>
+                    </Button>
+                    <Button Name="cl_en_us" Click="ChangeLanguage" Height="40">
+                        <Grid SnapsToDevicePixels="True" Width="590" HorizontalAlignment="Center">
+                            <Image Source="..\Images\LangIcons\en-us.png" Height="30" Margin="5" HorizontalAlignment="Left"/>
+                            <TextBlock Name="cl_en_us_tb" Text="English (US)" Margin="58,0,10,0" VerticalAlignment="Center" FontSize="16"/>
+                        </Grid>
+                    </Button>
+                    <Button Name="cl_es" Click="ChangeLanguage" Height="40">
+                        <Grid SnapsToDevicePixels="True" Width="590" HorizontalAlignment="Center">
+                            <Image Source="..\Images\LangIcons\es.png" Height="30" Margin="5" HorizontalAlignment="Left"/>
+                            <TextBlock Name="cl_es_tb" Text="Español (ES)" Margin="58,0,10,0" VerticalAlignment="Center" FontSize="16"/>
+                        </Grid>
+                    </Button>
+                    <Button Name="cl_ru_im" Click="ChangeLanguage" Height="40">
+                        <Grid SnapsToDevicePixels="True" Width="590" HorizontalAlignment="Center">
+                            <Image Source="..\Images\LangIcons\ru_im.png" Height="30" Margin="5" HorizontalAlignment="Left"/>
+                            <TextBlock Name="cl_ru_im_tb" Text="Русскій (Дореволюционный Русский)" Margin="58,0,10,0" VerticalAlignment="Center" FontSize="16"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" Name="appearancePage"
+                      Visibility="Collapsed"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <TextBlock Text="Appearance" FontSize="20"
+                           FontWeight="SemiBold" HorizontalAlignment="Center"
+                           VerticalAlignment="Top" Margin="5" Name="ti_Ap"/>
+                <TextBlock FontWeight="Bold" Text="Nothing here yet..."
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           FontSize="24" Name="ne_t1"/>
+            </Grid>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" Name="aboutPage"
+                      Visibility="Collapsed"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
+                <TextBlock Text="About" FontSize="20"
+                           FontWeight="SemiBold" HorizontalAlignment="Center"
+                           Name="ti_Ab"/>
+                <Grid>
+                    <TextBlock Text="Version" FontSize="18"
+                               FontWeight="Bold" Name="ver_t"/>
+                    <TextBlock Name="verT" Text="Version" 
+                               FontSize="18" Margin="70, 0, 0, 0"/>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" Name="devPage"
+                      Visibility="Visible"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
+                <TextBlock Text="For Devs" FontSize="20"
+                           FontWeight="SemiBold" HorizontalAlignment="Center"
+                           Name="ti_FD"/>
+                <Grid>
+                    <Button Height="40" Style="{StaticResource BigButtonGray}" Content="Reload"
+                        ToolTip="This button reloads launcher." Name="fd_reload_btn"
+                        Click="RebootLauncher" Margin="5, 5, 70, 5"/>
+                    <TextBlock Text="Auto reload" VerticalAlignment="Top" HorizontalAlignment="Right"
+                               Name="fd_ard_T"/>
+                    <ToggleButton Name="fd_ard_CB" Height="20" Width="20"
+                                  VerticalAlignment="Center" HorizontalAlignment="Right"
+                                  Margin="0, 10, 25, 0" Click="FD_Element_Click"/>
+                </Grid>
+                <StackPanel>
+                    <TextBlock Text="General" FontSize="22" Margin="10" FontWeight="Bold"/>
+                    <!--#region "Use XGLAPI"-->
+                    <Grid Margin="5">
+                        <ToggleButton Name="fd_uapi_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="30" Click="FD_Element_Click"
+                                  ToolTip="Enables/Disables XGLAPI library use. [WARNING] All runtime events will be not avaible if this option isn't active."/>
+                        <TextBlock Text="Use XGLAPI" FontSize="18" Name="fd_uapi_T" Margin="40, 0, 0, 0"/>
+                    </Grid>
+                    <!--#endregion "Use XGLAPI"-->
+                    <!--#region "Use Plugins"-->
+                    <Grid Margin="5">
+                        <ToggleButton Name="fd_uplg_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="30" Click="FD_Element_Click"
+                                  ToolTip="Enables/Disables plugins use. [WARNING] All already active plugins will be disabled if this option isn't active."/>
+                        <TextBlock Text="Use Plugins" FontSize="18" Name="fd_uplg_T" Margin="40, 0, 0, 0"/>
+                    </Grid>
+                    <!--#endregion "Use Plugins"-->
+                    <TextBlock Text="Main window" FontSize="22" Margin="10" FontWeight="Bold"/>
+                    <!--#region "Show Community section"-->
+                    <Grid Margin="5">
+                        <ToggleButton Name="fd_scs_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="30" Click="FD_Element_Click"
+                                  ToolTip="Shows/Hides 'Community' tab in Main window."/>
+                        <TextBlock Text="Show Community section in Main window" FontSize="18" Name="fd_scs_T" Margin="40, 0, 0, 0"/>
+                    </Grid>
+                    <!--#endregion "Show Community section"-->
+                    <!--#region "Show Plugins section"-->
+                    <Grid Margin="5">
+                        <ToggleButton Name="fd_sps_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="30" Click="FD_Element_Click"
+                                  ToolTip="Shows/Hides 'plugins' button for access plugins in Main window."/>
+                        <TextBlock Text="Show Plugins button in Main window" FontSize="18" Name="fd_sps_T" Margin="40, 0, 0, 0"/>
+                    </Grid>
+                    <!--#endregion "Show Plugins section"-->
+                    <!--#region "Show Plugins section"-->
+                    <Grid Margin="5">
+                        <ToggleButton Name="fd_spci_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="30" Click="FD_Element_Click"
+                                  ToolTip="Shows/Hides 'Change Image' button in Profile."/>
+                        <TextBlock Text="Show Change Image button in Profile" FontSize="18" Name="fd_spci_T" Margin="40, 0, 0, 0"/>
+                    </Grid>
+                    <!--#endregion "Show Plugins section"-->
+                    <TextBlock Text="Login window" FontSize="22" Margin="10" FontWeight="Bold"/>
+                    <!--#region "Show 'Login with' block"-->
+                    <Grid Margin="5">
+                        <ToggleButton Name="fd_lwos_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="30" Click="FD_Element_Click"
+                                  ToolTip="Shows/Hides 'Login with' *custom source* section in Login window."/>
+                        <TextBlock Text="Show 'Login with' block" FontSize="18" Name="fd_lwos_T" Margin="40, 0, 0, 0"/>
+                    </Grid>
+                    <!--#endregion "Show 'Login with' block"-->
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
