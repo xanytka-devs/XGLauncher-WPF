@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /XGLauncher/ApplicationSData.cs
+/XGLauncher Setup/ApplicationSData.cs
+/XGLauncher DevTools/ApplicationSData.cs
+/XGLauncher Updater/ApplicationSData.cs
