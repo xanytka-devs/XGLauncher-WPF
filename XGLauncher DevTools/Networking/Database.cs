@@ -57,7 +57,7 @@ namespace XGL.Networking {
 
         public static string[] ProductIDs;
         public static string[] CommandIDs;
-        internal static readonly MySqlConnection Connection = new MySqlConnection("server-connector-data");
+        internal static readonly MySqlConnection Connection = new MySqlConnection(App.DBConnectorData);
 
         /// <summary>
         /// Opens new Database connection.

@@ -114,11 +114,11 @@ namespace XGL {
             AccountData = RegistrySLS.LoadString("LoginData", "INS;INS").Split(';');
             RegistrySLS.Save("Path", CurrentFolder);
             RegistrySLS.Save("Version", CurrentVersion);
-            /*string[] appSData = INTERNAL.ApplicationSData.IndefData;
+            string[] appSData = INTERNAL.ApplicationSData.IndefData;
             DBConnectorData = appSData[0];
             GoogleCID = appSData[1];
             GoogleCS = appSData[2];
-            VKConnectorData = appSData[3];*/
+            VKConnectorData = appSData[3];
         }
 
         private void CheckStatus() => OnlineMode = Utils.NotEmptyAndNotNotSet(CurrentAccount.Login) && Utils.NotEmptyAndNotNotSet(CurrentAccount.Password);

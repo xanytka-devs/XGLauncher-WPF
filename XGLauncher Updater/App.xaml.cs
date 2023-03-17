@@ -15,13 +15,14 @@ namespace XGL {
     public partial class App : Application {
 
         public static long UpdateID { get; private set; }
+        public static string DBConnectorData { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e) {
-
             foreach (string arg in e.Args) {
                 if (arg == "/devtools") UpdateID = 2;
             }
-
+            string[] appSData = INTERNAL.ApplicationSData.IndefData;
+            DBConnectorData = appSData[0];
             base.OnStartup(e);
         }
 

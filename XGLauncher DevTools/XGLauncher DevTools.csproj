@@ -66,6 +66,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ApplicationSData.cs" />
     <Compile Include="Common\SLS.cs" />
     <Compile Include="Common\Utils.cs" />
     <Compile Include="LoginWindow.xaml.cs">

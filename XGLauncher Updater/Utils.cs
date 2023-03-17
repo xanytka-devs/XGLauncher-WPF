@@ -32,7 +32,7 @@ namespace XGL {
         }
     }
     public class Database {
-        internal static readonly MySqlConnection Connection = new MySqlConnection("server-connector-data");
+        internal static readonly MySqlConnection Connection = new MySqlConnection(App.DBConnectorData);
         internal static bool OpenConnection() {
             try {
                 if (Connection.State == ConnectionState.Closed)

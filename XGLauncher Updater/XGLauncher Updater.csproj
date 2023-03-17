@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ApplicationSData.cs" />
     <Compile Include="Shortcut.cs" />
     <Compile Include="Styles.xaml.cs">
       <DependentUpon>Styles.xaml</DependentUpon>

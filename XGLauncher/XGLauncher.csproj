@@ -122,6 +122,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ApplicationSData.cs" />
     <Compile Include="Common\Errors.cs" />
     <Compile Include="Common\Game.cs" />
     <Compile Include="Common\LazyDownload.cs" />

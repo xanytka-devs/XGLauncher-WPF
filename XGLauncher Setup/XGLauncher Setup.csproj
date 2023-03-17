@@ -40,6 +40,9 @@
   <PropertyGroup>
     <ApplicationIcon>XGL_install.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>XGLS.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.5.7.0\lib\netstandard1.0\Costura.dll</HintPath>
@@ -217,6 +220,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ApplicationSData.cs" />
     <Compile Include="Shortcut.cs" />
     <Compile Include="Styles.xaml.cs">
       <DependentUpon>Styles.xaml</DependentUpon>

@@ -25,6 +25,7 @@ namespace XGL.Dev {
         public static string AppsFolder { get; private set; }
         public static Account CurrentAccount;
         public static bool RunMySQLCommands { get; set; } = true;
+        public static string DBConnectorData { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e) {
             //Instantiate variables.
@@ -52,6 +53,8 @@ namespace XGL.Dev {
             CurrentAccount = new Account("Not Set", "Not Set");
             AccountData = RegistrySLS.LoadString("PublisherLoginData", "INS;INS").Split(';');
             RegistrySLS.Save("DevToolsVersion", CurrentVersion);
+            string[] appSData = INTERNAL.ApplicationSData.IndefData;
+            DBConnectorData = appSData[0];
         }
 
         void FolderCheck() {
