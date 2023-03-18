@@ -1,18 +1,13 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Resources;
 using XGL.API;
-using XGL.Common;
-using XGL.Dialogs;
 using XGL.Dialogs.Login;
 using XGL.Networking.Database;
-using XGL.Properties;
 using XGL.SLS;
 
 namespace XGL {
@@ -25,7 +20,7 @@ namespace XGL {
 
         public static bool DevMode = true;
         public static bool OnlineMode = false;
-        public static string CurrentVersion { get; private set; } = "0.1.2";
+        public static string CurrentVersion { get; private set; } = "0.1.3";
         public static string[] AccountData;
         public static string CurrentFolder { get; private set; }
         public static string AppDataFolder { get; private set; }
@@ -44,13 +39,11 @@ namespace XGL {
             //Check online status and instantiate account.
             CheckStatus();
             //Read account data.
-            if (AccountData.Length > 1 && AccountData[0] != "INS" && AccountData[0] != "False") {
+            if (AccountData.Length > 1 && AccountData[0] != "INS" && AccountData[0] != "False")
                 CurrentAccount = new Account(AccountData[0], AccountData[1]);
-            }
             //Check for system language.
-            if (RegistrySLS.LoadString("Language", "INS") == "INS") {
+            if (RegistrySLS.LoadString("Language", "INS") == "INS")
                 RegistrySLS.Save("Language", CultureInfo.CurrentCulture);
-            }
             //Check for XGLAPI status.
             if (RegistrySLS.LoadBool("UseXGLAPI", true))
                 Core.Main(e.Args.ToArray());
@@ -62,14 +55,24 @@ namespace XGL {
                     l.Show();
                     return;
                 }
-                if(RegistrySLS.LoadBool("AutoUpdate", true))
-                    //Check for updates.
+                //Check for updates.
+                if (RegistrySLS.LoadBool("AutoUpdate", true))
                     CheckForUpdates();
                 if (Database.AccountExisting(CurrentAccount))
                     NextWindow();
                 else {
                     LoginWindow l = new LoginWindow();
                     l.Show();
+                    if (upRes) {
+                        ProcessStartInfo pr = new ProcessStartInfo() {
+                            FileName = $"{CurrentFolder}\\XGLauncher Updater.exe",
+                            UseShellExecute = true,
+                            Verb = "runas"
+                        };
+                        if(File.Exists(pr.FileName))
+                            Process.Start(pr);
+                        l.Close();
+                    }
                 }
                 return;
             }
@@ -78,6 +81,7 @@ namespace XGL {
             base.OnStartup(e);
         }
 
+        bool upRes = false;
         void CheckForUpdates() {
             string output = string.Empty;
             MySqlCommand command = new MySqlCommand($"SELECT `latest` FROM `applications` WHERE `id` = 1", Database.Connection);
@@ -91,9 +95,8 @@ namespace XGL {
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
             finally { Database.CloseConnection(); }
-            if (output.Split('{')[0] != CurrentVersion) {
-                Process.Start(Path.Combine(CurrentFolder, "XGLauncher Updater.exe"));
-            }
+            if (output.Split('{')[0] != CurrentVersion)
+                upRes = true;
         }
 
         void NextWindow() {
