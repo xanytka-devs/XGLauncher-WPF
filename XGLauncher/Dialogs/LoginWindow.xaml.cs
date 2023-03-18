@@ -239,7 +239,7 @@ namespace XGL.Dialogs.Login {
 
             if (!Database.AccountExisting(acc)) {
                 if (Database.CreateAccount(acc, nicknameTB.Text, emailTB.Text)) {
-                    RegistrySLS.Save("LoginData", nicknameTB.Text + ";" + _pass);
+                    RegistrySLS.Save("LoginData", loginRTB.Text + ";" + _pass);
                     RegistrySLS.Save("LastID", Database.GetID(acc));
                     RegistrySLS.Save("Username", nicknameTB.Text);
                     RegistrySLS.Save("Description", "INS");

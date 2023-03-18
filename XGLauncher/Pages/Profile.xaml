@@ -38,9 +38,9 @@
                             </Grid>
                         </Button>
                     </Grid>
-                    <Grid Margin="250,50,10,60">
+                    <Grid Margin="250,50,0,60">
                         <TextBlock Name="profileT" FontSize="72" Foreground="White" Text="Profile"
-                                   FontWeight="Bold" Margin="0,0,280,0" VerticalAlignment="Center" Height="132"/>
+                                   FontWeight="Bold" VerticalAlignment="Center" Height="132"/>
                         <TextBox Name="profileTB" FontSize="72" Foreground="White" Text="Profile"
                                  Style="{StaticResource EditBox}" Visibility="Collapsed"
                                  Margin="0, 0, 40, 50" VerticalAlignment="Top"/>

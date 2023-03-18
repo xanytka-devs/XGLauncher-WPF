@@ -43,7 +43,10 @@ namespace XGL.Dialogs {
             pages.Add(aboutPage);
             pages.Add(devPage);
             MainWindow.Instance.AllWindows.Add(this);
-            Closing += (object sender, System.ComponentModel.CancelEventArgs e) => MainWindow.Instance.AllWindows.Remove(this);
+            Closing += (object sender, System.ComponentModel.CancelEventArgs e) => { 
+                MainWindow.Instance.AllWindows.Remove(this); 
+                MainWindow.Instance.Reload();
+            };
             Loaded += OptionsWindow_Loaded;
         }
 
@@ -96,6 +99,8 @@ namespace XGL.Dialogs {
             fd_uplg_CB.IsChecked = RegistrySLS.LoadBool("Plugins", false);
             fd_ard_CB.IsChecked = RegistrySLS.LoadBool("DevAutoReload", false);
             fd_spci_CB.IsChecked = RegistrySLS.LoadBool("CustomProfileImage", false);
+            fd_sfu_CB.IsChecked = RegistrySLS.LoadBool("AutoUpdate", true);
+            fd_ar_CB.IsChecked = RegistrySLS.LoadBool("SW_AutoReload", false);
             //Additional Dev page checks.
             if (!(bool)fd_uplg_CB.IsChecked) {
                 fd_sps_CB.IsEnabled = false;
@@ -222,6 +227,10 @@ namespace XGL.Dialogs {
                     localizes.Add("бит");
                     localizes.Add("Автоматически искать товары в магазине");
                     localizes.Add("Показывать кнопку 'Добавить приложение' в Библиотеке");
+                    localizes.Add("Интерфейс");
+                    localizes.Add("Утилиты");
+                    localizes.Add("Автоматически перезагружать при изменении настроек");
+                    localizes.Add("Автоматически искать обновления");
                     break;
                 case "en-US":
                     localizes.Add("General");
@@ -239,8 +248,12 @@ namespace XGL.Dialogs {
                     localizes.Add("Cache");
                     localizes.Add("Clear cache");
                     localizes.Add("bits");
-                    localizes.Add("Automaticlly search for products in shop");
+                    localizes.Add("Automatically search for products in shop");
                     localizes.Add("Show 'Add application' button in Library");
+                    localizes.Add("Interface");
+                    localizes.Add("Utilities");
+                    localizes.Add("Automatically reload on setting changed");
+                    localizes.Add("Automatically search for updates");
                     break;
                 case "es":
                     localizes.Add("General");
@@ -260,6 +273,10 @@ namespace XGL.Dialogs {
                     localizes.Add("bits");
                     localizes.Add("Buscar automáticamente productos en la tienda");
                     localizes.Add("Mostrar el botón 'Agregar aplicación' en la Biblioteca");
+                    localizes.Add("Interfaz");
+                    localizes.Add("Utilidades");
+                    localizes.Add("Reiniciar automáticamente cuando cambie la configuración");
+                    localizes.Add("Buscar actualizaciones automáticamente");
                     break;
                 case "ru-IM":
                     localizes.Add("Основное");
@@ -279,11 +296,17 @@ namespace XGL.Dialogs {
                     localizes.Add("битъ​");
                     localizes.Add("Автоматически искать товары въ магазинѣ​");
                     localizes.Add("Показывать кнопку 'Добавить приложеніе' въ Библіотекѣ ​");
+                    localizes.Add("Интерфейсъ");
+                    localizes.Add("Утилиты");
+                    localizes.Add("Автоматически перезагружать при измѣненіи ​настроекъ");
+                    localizes.Add("Автоматически искать обновленія");
                     break;
             }
 
             //General
             generalBtn.Content = localizes[0];
+            g_ut.Text = localizes[18];
+            g_it.Text = localizes[17];
             ti_G.Text = localizes[0];
             ras_t.Text = localizes[6];
             gp_cs.Text = localizes[12];
@@ -291,6 +314,8 @@ namespace XGL.Dialogs {
             gp_cs_T.Text = localizes[14];
             g_autostoresearch.Text = localizes[15];
             fd_saab_T.Text = localizes[16];
+            fd_ar_T.Text = localizes[19];
+            fd_sfu_T.Text = localizes[20];
             //Account
             accountBtn.Content = localizes[1];
             ti_Ac.Text = localizes[1];
@@ -352,10 +377,18 @@ namespace XGL.Dialogs {
                     name = "CustomProfileImage";
                     el = fd_spci_CB;
                     break;
+                case "fd_sfu_CB":
+                    name = "AutoUpdate";
+                    el = fd_sfu_CB;
+                    break;
+                case "fd_ar_CB":
+                    name = "SW_AutoReload";
+                    el = fd_ar_CB;
+                    break;
             }
             if (!isChangeCritical) {
                 RegistrySLS.Save(name, (bool)el.IsChecked);
-                MainWindow.Instance.Reload();
+                if(RegistrySLS.LoadBool("SW_AutoReload", false)) MainWindow.Instance.Reload();
                 return;
             }
             //TODO: Implement custom dialog system.

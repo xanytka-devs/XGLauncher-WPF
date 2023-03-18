@@ -49,22 +49,16 @@
         <ScrollViewer Grid.Column="1" Name="generalPage"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
-                      Visibility="Collapsed">
+                      Visibility="Visible">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
                 <TextBlock Text="General" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
                            VerticalAlignment="Top" Name="ti_G"/>
+                <TextBlock Text="Interface" FontSize="20"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top" Name="g_it"/>
                 <Grid Height="40">
-                    <TextBlock Text="Run at start of system" 
-                               FontSize="18" VerticalAlignment="Center" 
-                               Name="ras_t"/>
-                    <ToggleButton Name="autorunTgB"
-                                  Height="30" Width="30"
-                                  HorizontalAlignment="Right"
-                                  Click="AutorunTgB_Click"/>
-                </Grid>
-                <Grid Height="40">
-                    <TextBlock Text="Automaticlly search for products in shop" 
+                    <TextBlock Text="Automatically search for products in shop" 
                                FontSize="18" VerticalAlignment="Center" 
                                Name="g_autostoresearch"/>
                     <ToggleButton Name="g_autostoresearch_TB"
@@ -75,8 +69,30 @@
                 <Grid Height="40">
                     <TextBlock Text="Show Add application button in Library" FontSize="18" Name="fd_saab_T" VerticalAlignment="Center"/>
                     <ToggleButton Name="fd_saab_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="30" Click="FD_Element_Click"/>
+                </Grid>
+                <Grid Height="40">
+                    <TextBlock Text="Automatically reload on setting changed" FontSize="18" Name="fd_ar_T" VerticalAlignment="Center"/>
+                    <ToggleButton Name="fd_ar_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
                                   Height="30" Width="30" Click="FD_Element_Click"
-                                  ToolTip="Shows/Hides 'Add application' button in Library tab in Main window."/>
+                                  ToolTip="[WARNING] It may lag a lot."/>
+                </Grid>
+                <TextBlock Text="Utilities" FontSize="20"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top" Name="g_ut"/>
+                <Grid Height="40">
+                    <TextBlock Text="Run at start of system" 
+                               FontSize="18" VerticalAlignment="Center" 
+                               Name="ras_t"/>
+                    <ToggleButton Name="autorunTgB"
+                                  Height="30" Width="30"
+                                  HorizontalAlignment="Right"
+                                  Click="AutorunTgB_Click"/>
+                </Grid>
+                <Grid Height="40">
+                    <TextBlock Text="Automatically search for updates" FontSize="18" Name="fd_sfu_T" VerticalAlignment="Center"/>
+                    <ToggleButton Name="fd_sfu_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="30" Click="FD_Element_Click"/>
                 </Grid>
                 <Grid Margin="0, 10, 0, 0">
                     <TextBlock FontWeight="Bold" Name="gp_cs" FontSize="18" Text="Cache"/>
@@ -216,7 +232,7 @@
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" Name="devPage"
-                      Visibility="Visible"
+                      Visibility="Collapsed"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">

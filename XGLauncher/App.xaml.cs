@@ -62,8 +62,9 @@ namespace XGL {
                     l.Show();
                     return;
                 }
-                //Check for updates.
-                CheckForUpdates();
+                if(RegistrySLS.LoadBool("AutoUpdate", true))
+                    //Check for updates.
+                    CheckForUpdates();
                 if (Database.AccountExisting(CurrentAccount))
                     NextWindow();
                 else {
