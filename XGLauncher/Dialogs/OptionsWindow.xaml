@@ -98,7 +98,7 @@
                     <TextBlock FontWeight="Bold" Name="gp_cs" FontSize="18" Text="Cache"/>
                     <TextBlock Name="gp_cs_T" FontSize="18" Text="Cache size" Margin="70, 0, 0, 0"/>
                 </Grid>
-                <Button Height="40" Style="{StaticResource BigButtonGray}" Content="Clear cache"
+                <Button Height="40" Style="{StaticResource OldStyleBigButtonGray}" Content="Clear cache"
                         ToolTip="This button clears all temporary files." Name="gp_cc"
                         Click="ClearCache" Margin="0, 5, 0, 0"/>
             </StackPanel>
@@ -206,14 +206,20 @@
                       Visibility="Collapsed"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto">
-            <Grid>
+            <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
                 <TextBlock Text="Appearance" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
                            VerticalAlignment="Top" Margin="5" Name="ti_Ap"/>
-                <TextBlock FontWeight="Bold" Text="Nothing here yet..."
-                           HorizontalAlignment="Center" VerticalAlignment="Center"
-                           FontSize="24" Name="ne_t1"/>
-            </Grid>
+                <Grid Height="40">
+                    <TextBlock Text="Old style" 
+                               FontSize="18" VerticalAlignment="Center" 
+                               Name="ap_oldstyle"/>
+                    <ToggleButton Name="ap_oldstyle_TB"
+                                  Height="30" Width="30"
+                                  HorizontalAlignment="Right"
+                                  Click="OldStyle_Click"/>
+                </Grid>
+            </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" Name="aboutPage"
                       Visibility="Collapsed"
@@ -240,7 +246,7 @@
                            FontWeight="SemiBold" HorizontalAlignment="Center"
                            Name="ti_FD"/>
                 <Grid>
-                    <Button Height="40" Style="{StaticResource BigButtonGray}" Content="Reload"
+                    <Button Height="40" Style="{StaticResource OldStyleBigButtonGray}" Content="Reload"
                         ToolTip="This button reloads launcher." Name="fd_reload_btn"
                         Click="RebootLauncher" Margin="5, 5, 70, 5"/>
                     <TextBlock Text="Auto reload" VerticalAlignment="Top" HorizontalAlignment="Right"

@@ -153,7 +153,10 @@ namespace XGL.Networking.Database {
                     if (AppsOnAccount.Length > 1)
                         AppsOnAccount = AppsOnAccount.Where((val, idx) => idx != AppsOnAccount.Length - 1).ToArray();
                     return true;
-                } else return false;
+                } else {
+                    AppsOnAccount = new string[]{ "-" };
+                    return true;
+                }
             }
             catch {
                 return false;
@@ -179,6 +182,7 @@ namespace XGL.Networking.Database {
         /// <returns>String like "1,2"</returns>
         public static string GetAppIDs() {
             string Out = string.Empty;
+            if (!App.RunMySQLCommands) return Out;
             if (!string.IsNullOrEmpty(AppsOnAccount[0])) {
                 if (AppsOnAccount[0] != "*") {
                     for (int i = 0; i < AppsOnAccount.Length; i++) {

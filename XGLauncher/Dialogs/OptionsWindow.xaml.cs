@@ -88,6 +88,9 @@ namespace XGL.Dialogs {
             if (lang == "ru-IM") cl_ru_im_tb.FontWeight = FontWeights.Bold;
             ApplyLocalization(lang);
 
+            //Appearance page.
+            ap_oldstyle_TB.IsChecked = RegistrySLS.LoadBool("OldStyle", false);
+
             //About page.
             verT.Text = App.CurrentVersion;
 
@@ -434,6 +437,9 @@ namespace XGL.Dialogs {
             MainWindow.Instance.Reload();
         }
 
+        void OldStyle_Click(object sender, RoutedEventArgs e) {
+            RegistrySLS.Save("OldStyle", (bool)ap_oldstyle_TB.IsChecked);
+        }
     }
 
 }

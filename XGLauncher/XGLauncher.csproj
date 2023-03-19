@@ -298,9 +298,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\jcraft_bg.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\override_text.png" />
   </ItemGroup>
   <ItemGroup>

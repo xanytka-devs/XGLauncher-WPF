@@ -29,8 +29,9 @@ namespace XGL {
         public static bool RunMySQLCommands { get; set; } = true;
         public static string DBConnectorData { get; private set; }
         public static string VKConnectorData { get; private set; }
-        public static string GoogleCS { get; internal set; }
-        public static string GoogleCID { get; internal set; }
+        public static string GoogleCS { get; private set; }
+        public static string GoogleCID { get; private set; }
+        public static bool IsFirstRun { get; set; } = false;
 
         protected override void OnStartup(StartupEventArgs e) {
             //Instantiate variables.

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows;
@@ -42,7 +43,7 @@ namespace XGL.Pages.LW {
         bool isEditingColors = false;
         bool canMoveBadges = false;
         string[] personalData;
-        readonly byte[] outRGB = { 0, 0, 0 };
+        readonly byte[] outRGB = { 255, 128, 44 };
         string vAlg = "top";
         string hAlg = "right";
         int cpi = 0;
@@ -54,16 +55,18 @@ namespace XGL.Pages.LW {
             if (RegistrySLS.LoadString("Personalization") != "False")
                 //Load from save file (if exists).
                 personalData = RegistrySLS.LoadString("Personalization").Replace(',', '.').Split('-');
-            else if (!App.OnlineMode)
+            else if (!App.OnlineMode && !App.IsFirstRun)
                 //Load from database (if not in offline or null modes).
                 personalData = Database.GetValue(App.CurrentAccount, "personalizationChoices")
                         .ToString().Replace(',', '.').Split('-');
             //Else just create sample values string.
-            else personalData = new string[] { "0", "0", "0", "top", "right" };
+            else personalData = new string[] { "255", "128", "44", "top", "right" };
             //Define texts of UI elements.
             if (string.IsNullOrEmpty(RegistrySLS.LoadString("Description")) ||
                     RegistrySLS.LoadString("Description") == "INS") {
-                RegistrySLS.Save("Description", Database.GetValue(App.CurrentAccount, "description").ToString());
+                if(!App.IsFirstRun)
+                    RegistrySLS.Save("Description", Database.GetValue(App.CurrentAccount, "description").ToString());
+                else RegistrySLS.Save("Description", "INS");
             }
             profileT.Text = RegistrySLS.LoadString("Username");
             profileTB.Text = RegistrySLS.LoadString("Username");
@@ -109,19 +112,23 @@ namespace XGL.Pages.LW {
             LoadImage();
         }
 
-        async void LoadImage() {
-            string URL = Database.GetValue(App.CurrentAccount, "icon").ToString();
-            string nameOfImg = Path.Combine(App.CurrentFolder, "cache", URL.Split('{')[0] + ".jpg");
-            if (!File.Exists(nameOfImg)) {
-                Thread.Sleep(1000);
-                await Utils.DownloadFileAsync(URL.Split('{')[1], nameOfImg);
-            } else Thread.Sleep(1000);
-            BitmapImage logo = new BitmapImage();
-            logo.BeginInit();
-            logo.UriSource = new Uri(nameOfImg);
-            logo.EndInit();
-            logo.Freeze();
-            profilePgIcon.Source = logo;
+        void LoadImage() {
+            try {
+                string URL = string.Empty;
+                if (App.IsFirstRun) URL = "default{https://drive.google.com/uc?export=download&id=1hKSUYQgTaJIp8V-coY8Y8Bmod0eIupzy";
+                else URL = Database.GetValue(App.CurrentAccount, "icon").ToString();
+                string nameOfImg = Path.Combine(App.CurrentFolder, "cache", URL.Split('{')[0] + ".jpg");
+                BitmapImage logo = new BitmapImage();
+                logo.BeginInit();
+                logo.UriSource = new Uri(nameOfImg);
+                logo.EndInit();
+                logo.Freeze();
+                profilePgIcon.Source = logo;
+            }
+            catch (Exception ex) {
+                Debug.WriteLine(ex);
+                LoadImage();
+            }
         }
 
         private void EditProfile_Click(object sender, RoutedEventArgs e) {

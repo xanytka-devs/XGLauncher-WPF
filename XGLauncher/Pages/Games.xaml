@@ -4,11 +4,49 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:XGL.Pages.LW"
-             xmlns:gif="http://wpfanimatedgif.codeplex.com"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <Style x:Key="GameBtn" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0, 5, 0, 0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Border Name="border" Background="Black"
+                                        Opacity="0.5" CornerRadius="4"/>
+                                <Border Name="hoverBorder" Background="#492E10"
+                                        Width="1.5" Height="20"
+                                        HorizontalAlignment="Left" Margin="2.5, 0, 0, 0"/>
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" 
+                                          HorizontalAlignment="Stretch" RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="Center" Margin="10, 1, 0, 1"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" TargetName="border" Value="0.75"/>
+                                <Setter Property="Background" TargetName="hoverBorder" Value="#DB8B30"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Opacity" TargetName="border" Value="0.75"/>
+                                <Setter Property="Height" TargetName="hoverBorder" Value="40"/>
+                                <Setter Property="Background" TargetName="hoverBorder" Value="#F49B36"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="OldStyleGameBtn" TargetType="{x:Type ToggleButton}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="Foreground" Value="White"/>
@@ -44,42 +82,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="AltBigButton" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#272728"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" 
-                            Background="{TemplateBinding Background}"
-                            SnapsToDevicePixels="True" CornerRadius="5">
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" 
-                                          HorizontalAlignment="Center"
-                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#313132"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Background" TargetName="border" Value="#202021"/>
-                            </Trigger>
-                            <Trigger Property="IsDefault" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#313132"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid>
@@ -87,51 +89,26 @@
                 <ColumnDefinition Width="90*" Name="gBarRow"/>
                 <ColumnDefinition Width="316*"/>
             </Grid.ColumnDefinitions>
-            <Border Background="Black" Name="LoadingBG" Grid.ColumnSpan="2" Visibility="Collapsed"/>
-            <Image gif:ImageBehavior.AnimatedSource="\Images\loading.gif" Grid.Column="1" 
-                   Source="\Images\loading.gif" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Height="200" Visibility="Collapsed" Name="LoadingGIF"/>
-            <Grid Name="gBar" Grid.Column="0" Margin="-5, 0, 0, -5">
-                <Border Name="gBarV" Background="#232323" Opacity="0.25"/>
-                <Grid>
-                    <Grid Name="gSearchBar" Height="65" VerticalAlignment="Top" 
-                          Margin="5">
-                        <TextBlock Text="Search" FontSize="18" Foreground="White" 
-                                   VerticalAlignment="Top" Name="searchBarT"/>
-                        <TextBox Name="gSearchBarTB" Height="40" VerticalAlignment="Bottom"
-                                 TextChanged="GSearchBarTB_TextChanged" UndoLimit="5"/>
-                    </Grid>
-                    <Button Name="addGameBtn" Style="{StaticResource BigButtonGray}" Height="30"
-                            VerticalAlignment="Top" Margin="5, 75, 5, 0" Click="AddCustomGame"
-                            Visibility="Visible">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="\Images\plus.png" Height="20" Margin="5"/>
-                            <TextBlock Text="Add application" Margin="5, 7, 5, 5"/>
-                        </StackPanel>
-                    </Button>
-                    <ScrollViewer Name="gGamesBar" Margin="10, 110, 5, 35" Background="Transparent" 
-                                 BorderThickness="0" HorizontalScrollBarVisibility="Disabled"
-                                  VerticalScrollBarVisibility="Auto">
-                        <StackPanel Orientation="Vertical" Name="gBarSP"/>
-                    </ScrollViewer>
-                    <Button Name="GBarBtn" Content=">" 
-                                Click="GBarBtn_Click"
-                                HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                                FontSize="24" Margin="5"/>
-                </Grid>
+            <Grid Name="LibraryBackground" Grid.ColumnSpan="2" Margin="-5, 0, -5, -5">
+                <Image Name="LibBG" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                       Source="\Images\Gradients\RB Gradient Background 045.jpg" Stretch="UniformToFill"/>
             </Grid>
-            <Border Background="#232323" Grid.Column="1" Height="60"
-                    VerticalAlignment="Bottom" Margin="0, 0, -5, -5">
+            <Image Name="LibLogo" HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Source="\Images\xgl-wip.png" Height="250" Margin="0, 35, 0, 5" Grid.Column="1"
+                   Visibility="Collapsed"/>
+            <Border Grid.ColumnSpan="2" Height="60"
+                    VerticalAlignment="Bottom" Margin="-5, 0, -5, -5">
                 <Grid>
+                    <Border Background="#232323" Opacity="0.9" Name="LaunchPanelBG"/>
                     <Button Name="launchBtn" Content="Launch" 
                             HorizontalAlignment="Right"
-                            Style="{StaticResource AltBigButton}"
+                            Style="{StaticResource BigButtonGray}"
                             Width="180" Height="50" Margin="0, 0, 5, 0"
-                            FontSize="18" FontWeight="Bold" Visibility="Visible"
+                            FontSize="18" FontWeight="Bold" Visibility="Collapsed"
                             Click="LaunchBtn_Click"/>
                     <Button Name="updateBtn"
                             HorizontalAlignment="Right"
-                            Style="{StaticResource AltBigButton}"
+                            Style="{StaticResource BigButtonGray}"
                             Width="50" Height="50" Margin="0, 0, 190, 0"
                             FontSize="18" FontWeight="Bold" Visibility="Collapsed"
                             Click="UpdateBtn_Click">
@@ -145,6 +122,35 @@
                                  Margin="5" Width="250" Height="20" Visibility="Collapsed"/>
                 </Grid>
             </Border>
+            <Grid Name="gBar" Grid.Column="0" Margin="-5, 0, 0, -5">
+                <Border Name="gBarV" Background="#232323" Opacity="0.25"/>
+                <Grid>
+                    <Grid Name="gSearchBar" Height="65" VerticalAlignment="Top" 
+                          Margin="5">
+                        <TextBlock Text="Search" FontSize="18" Foreground="White" 
+                                   VerticalAlignment="Top" Name="searchBarT"/>
+                        <TextBox Name="gSearchBarTB" Height="40" VerticalAlignment="Bottom"
+                                 TextChanged="GSearchBarTB_TextChanged" UndoLimit="5"/>
+                    </Grid>
+                    <Button Name="addGameBtn" Style="{StaticResource BigButtonGray}" Height="30"
+                            VerticalAlignment="Top" Margin="7, 75, 7, 0" Click="AddCustomGame"
+                            Visibility="Visible">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="\Images\plus.png" Height="20" Margin="5"/>
+                            <TextBlock Text="Add application" Margin="5, 7, 5, 5"/>
+                        </StackPanel>
+                    </Button>
+                    <ScrollViewer Name="gGamesBar" Margin="5, 110, 5, 35" Background="Transparent" 
+                                 BorderThickness="0" HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical" Name="gBarSP"/>
+                    </ScrollViewer>
+                    <Button Name="GBarBtn" Content=">" 
+                                Click="GBarBtn_Click"
+                                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                FontSize="24" Margin="5"/>
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

@@ -43,7 +43,7 @@ namespace XGL.Dev.Pages {
             if (string.IsNullOrEmpty(TB_vers.Text)) SRB(T_vers);
             if (inv) return;
             MySqlCommand command = new MySqlCommand(
-                $"INSERT INTO `products`(`name`, `publisherID`, `genres`, `icon`, `previewIcon`, `price`, `description`, `latestDownloadLinks`) VALUES ('{TB_name.Text}', {RegistrySLS.LoadString("LastID")}, '{TB_genr.Text}', '{TB_icon.Text}', '{TB_scsh.Text}', '{TB_pric.Text}', '{TB_desc.Text}', '{TB_vers.Text + "{" + TB_urll.Text}')"
+                $"INSERT INTO `xgl_products`(`name`, `publisherID`, `genres`, `storeBanner`, `storeMedia`, `price`, `description`, `latestDownloadLinks`) VALUES ('{TB_name.Text}', {RegistrySLS.LoadString("LastID")}, '{TB_genr.Text}', '{TB_icon.Text}', '{TB_scsh.Text}', '{TB_pric.Text}', '{TB_desc.Text}', '{TB_vers.Text + "{" + TB_urll.Text}')"
                 , Connection);
             //Start the connection.
             OpenConnection();
@@ -55,7 +55,7 @@ namespace XGL.Dev.Pages {
             string vals = Database.GetValue(App.CurrentAccount, "productIDs").ToString();
             string appid = string.Empty;
             //Initialize components
-            command = new MySqlCommand($"SELECT `id` FROM `products` WHERE `name` = @nam and `publisherID` = @pid", Connection);
+            command = new MySqlCommand($"SELECT `id` FROM `xgl_products` WHERE `name` = @nam and `publisherID` = @pid", Connection);
             //Add parameters
             command.Parameters.Add("@nam", MySqlDbType.VarChar).Value = TB_name.Text;
             command.Parameters.Add("@pid", MySqlDbType.VarChar).Value = RegistrySLS.LoadString("LastID");
@@ -76,7 +76,7 @@ namespace XGL.Dev.Pages {
             }
             ChangeData(DBDataType.DT_PRODUCTS, vals + appid + ";");
             command = new MySqlCommand(
-                $"UPDATE `products` SET `icon`='{appid + "_storebanner01{" + TB_icon}',`previewIcon`='{appid + "_storeimage01{" + TB_scsh}' WHERE `name` = @nam and `publisherID` = @pid"
+                $"UPDATE `xgl_products` SET `storeBanner`='{appid + "_storebanner01{" + TB_icon}',`storeMedia`='{appid + "_storeimage01{" + TB_scsh}' WHERE `name` = @nam and `publisherID` = @pid"
                 , Connection);
             //Add parameters
             command.Parameters.Add("@nam", MySqlDbType.VarChar).Value = TB_name.Text;

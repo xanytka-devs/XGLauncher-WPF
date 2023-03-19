@@ -44,7 +44,7 @@ namespace XGL.Networking {
             //Initialize components.
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
-            MySqlCommand command = new MySqlCommand($"SELECT * FROM `products` WHERE `name`=" + '"' + name + '"', Connection);
+            MySqlCommand command = new MySqlCommand($"SELECT * FROM `xgl_products` WHERE `name`=" + '"' + name + '"', Connection);
             try {
                 //Fill adapter.
                 adapter.SelectCommand = command;
@@ -89,7 +89,7 @@ namespace XGL.Networking {
             string version = string.Empty;
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
-            MySqlCommand command = new MySqlCommand($"SELECT * FROM `products` WHERE `name`=" + '"' + name + '"', Connection);
+            MySqlCommand command = new MySqlCommand($"SELECT * FROM `xgl_products` WHERE `name`=" + '"' + name + '"', Connection);
             try {
                 //Fill adapter.
                 adapter.SelectCommand = command;

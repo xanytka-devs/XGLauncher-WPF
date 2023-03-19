@@ -18,7 +18,8 @@ namespace XGL {
         public MainWindow() {
             InitializeComponent();
             Instance = this;
-            if (!softwareKey.GetSubKeyNames().Contains("XGLauncher")) {
+            pageSelectInstall.Visibility = Visibility.Collapsed;
+            /*if (!softwareKey.GetSubKeyNames().Contains("XGLauncher")) {
                 pageSelectInstall.Visibility = Visibility.Collapsed;
             } else {
                 nextWelcome.Content = "Продолжить";
@@ -30,7 +31,7 @@ namespace XGL {
                     inXGLDT.IsEnabled = false;
                 if(softwareKey.OpenSubKey("XGLauncher", RegistryKeyPermissionCheck.ReadSubTree).GetValue("Path", "INS")
                     .ToString() != "INS") inXGL.IsEnabled = false;
-            }
+            }*/
         }
         void Next(object sender, RoutedEventArgs e) {
             switch((sender as Button).Name) {

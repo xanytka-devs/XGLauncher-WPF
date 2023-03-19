@@ -63,7 +63,9 @@ namespace XGL {
 
         async void LoadImage() {
             if(!App.RunMySQLCommands) return;
-            string URL = Database.GetValue(App.CurrentAccount, "icon").ToString();
+            string URL = string.Empty;
+            if (App.IsFirstRun) URL = "default{https://drive.google.com/uc?export=download&id=1hKSUYQgTaJIp8V-coY8Y8Bmod0eIupzy";
+            else URL = Database.GetValue(App.CurrentAccount, "icon").ToString();
             string nameOfImg = Path.Combine(App.CurrentFolder, "cache", URL.Split('{')[0] + ".jpg");
             if (!File.Exists(nameOfImg))
                 await Utils.DownloadFileAsync(URL.Split('{')[1], nameOfImg);
@@ -110,6 +112,7 @@ namespace XGL {
                 profileControl.Reload();
             }
             GC.Collect();
+            App.IsFirstRun = false;
         }
 
         void CollapseAllPages(Border nc) {
