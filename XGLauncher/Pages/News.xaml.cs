@@ -92,10 +92,10 @@ namespace XGL.Pages.LW {
 
         void LoadDataFromDB() {
             string ids = GetAppIDs();
-            MySqlCommand command = new MySqlCommand($"SELECT * FROM `news` WHERE `productID` IN ({ids})", Connection);
-            if(ids == "*") command = new MySqlCommand($"SELECT * FROM `news`", Connection);
-            else if (ids != "*" && ids != "-" && ids.Length > 0) command = new MySqlCommand($"SELECT * FROM `news` WHERE `productID` IN (0,{ids})", Connection);
-            else if(ids == "-") command = new MySqlCommand($"SELECT * FROM `news` WHERE `productID` = 0", Connection);
+            MySqlCommand command = new MySqlCommand($"SELECT * FROM `xgl_news` WHERE `productID` IN ({ids})", Connection);
+            if(ids == "*") command = new MySqlCommand($"SELECT * FROM `xgl_news`", Connection);
+            else if (ids != "*" && ids != "-" && ids.Length > 0) command = new MySqlCommand($"SELECT * FROM `xgl_news` WHERE `productID` IN (0,{ids})", Connection);
+            else if(ids == "-") command = new MySqlCommand($"SELECT * FROM `xgl_news` WHERE `productID` = 0", Connection);
             try  {
                 //Open connection and read everything, what needed.
                 OpenConnection();

@@ -129,13 +129,14 @@ namespace XGL {
         }
 
         public static bool IsControlVisible(UIElement c) {
-            if (c.IsVisible == false)
+            if (!c.IsVisible)
                 return false;
-            else
-                if (VisualTreeHelper.GetParent(c) as UIElement != null)
-                return IsControlVisible(VisualTreeHelper.GetParent(c) as UIElement);
-            else
-                return c.IsVisible;
+            else if (c is FrameworkElement fe && (fe.ActualWidth == 0 || fe.ActualHeight == 0))
+                return false;
+            else {
+                UIElement parent = VisualTreeHelper.GetParent(c) as UIElement;
+                return parent == null ? c.IsVisible : IsControlVisible(parent);
+            }
         }
 
     }

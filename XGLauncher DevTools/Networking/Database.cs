@@ -108,7 +108,7 @@ namespace XGL.Networking {
             string log = string.Empty;
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
-            MySqlCommand command = new MySqlCommand("SELECT * FROM `publishers` WHERE `name` = @log and `password` = @pass", Connection);
+            MySqlCommand command = new MySqlCommand("SELECT * FROM `xgl_publishers` WHERE `name` = @log and `password` = @pass", Connection);
             //Add parameters
             command.Parameters.Add("@log", MySqlDbType.VarChar).Value = account.Login;
             command.Parameters.Add("@pass", MySqlDbType.VarChar).Value = account.Password;
@@ -144,7 +144,7 @@ namespace XGL.Networking {
             if (AccountExisting(account)) {
                 //Initialize components
                 long output = 0;
-                MySqlCommand command = new MySqlCommand("SELECT * FROM `publishers` WHERE `name` = @log and `password` = @pass", Connection);
+                MySqlCommand command = new MySqlCommand("SELECT * FROM `xgl_publishers` WHERE `name` = @log and `password` = @pass", Connection);
                 //Add parameters
                 command.Parameters.Add("@log", MySqlDbType.VarChar).Value = account.Login;
                 command.Parameters.Add("@pass", MySqlDbType.VarChar).Value = account.Password;
@@ -222,7 +222,7 @@ namespace XGL.Networking {
             if (AccountExisting(acc)) {
                 //Initialize components
                 object output = 0;
-                MySqlCommand command = new MySqlCommand($"SELECT `{column.ToLower()}` FROM `publishers` WHERE `name` = @log and `password` = @pass", Connection);
+                MySqlCommand command = new MySqlCommand($"SELECT `{column.ToLower()}` FROM `xgl_publishers` WHERE `name` = @log and `password` = @pass", Connection);
                 //Add parameters
                 command.Parameters.Add("@log", MySqlDbType.VarChar).Value = acc.Login;
                 command.Parameters.Add("@pass", MySqlDbType.VarChar).Value = acc.Password;
@@ -263,9 +263,9 @@ namespace XGL.Networking {
         /// <param name="value">Data to replace old data.</param>
         public static void ChangeData(DBDataType dataType, object value) {
             if (!App.RunMySQLCommands) return;
-            MySqlCommand command = new MySqlCommand("UPDATE `publishers` SET `{0}`='{1}' WHERE `id`={2}", Connection);
+            MySqlCommand command = new MySqlCommand("UPDATE `xgl_publishers` SET `{0}`='{1}' WHERE `id`={2}", Connection);
             if (string.IsNullOrEmpty(value.ToString()))
-                command = new MySqlCommand("UPDATE `publishers` SET `{0}`='INS' WHERE `id`={2}", Connection);
+                command = new MySqlCommand("UPDATE `xgl_publishers` SET `{0}`='INS' WHERE `id`={2}", Connection);
             switch (dataType) {
                 case DBDataType.DT_NAME:
                     command = ChangeCmd(command, "name", value);
@@ -280,7 +280,7 @@ namespace XGL.Networking {
                     command = ChangeCmd(command, "password", value);
                     break;
                 case DBDataType.DT_ACTIVITY:
-                    command = new MySqlCommand("UPDATE `publishers` SET `{0}`={1} WHERE `id`={2}", Connection);
+                    command = new MySqlCommand("UPDATE `xgl_publishers` SET `{0}`={1} WHERE `id`={2}", Connection);
                     command = ChangeCmd(command, "activity", value);
                     break;
                 case DBDataType.DT_DESCRIPTION:

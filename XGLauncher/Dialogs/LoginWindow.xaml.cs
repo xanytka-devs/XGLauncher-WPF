@@ -42,8 +42,11 @@ namespace XGL.Dialogs.Login {
                         ErrorDescription = warnings[1],
                         ErrorImage = ErrorBox.ErrorBoxEType.Network,
                     };
-                    //box.ErrorButton1 = new ErrorBox.ErrorBoxButton("Retry", false, true, (object sender, RoutedEventArgs e) => { Process.Start(Path.Combine(Environment.CurrentDirectory, "XGLauncher.exe")); box.Close(); });
-                    //box.ErrorButton2 = new ErrorBox.ErrorBoxButton("Offline mode", true, false, (object _sender, RoutedEventArgs _e) => { box.Close(); });
+                    //box.ErrorButton1 = new ErrorBox.ErrorBoxButton("Retry", false, true, (object sender,
+                    //RoutedEventArgs e) => { Process.Start(Path.Combine(Environment.CurrentDirectory,
+                    //"XGLauncher.exe")); box.Close(); });
+                    //box.ErrorButton2 = new ErrorBox.ErrorBoxButton("Offline mode", true, false, (object _sender,
+                    //RoutedEventArgs _e) => { box.Close(); });
                     box.Show();
                     Close();
                     return;
@@ -105,7 +108,8 @@ namespace XGL.Dialogs.Login {
                     App.AccountData = new string[] { acc.Login, acc.Password };
                     NextWindow(acc);
                     return;
-                } else MessageBox.Show("This account isn't avaible currently. Please write to support@xan.ru if you have questions.");
+                } else
+                    MessageBox.Show("This account isn't avaible currently. Please write to support@xan.ru if you have questions.");
             }
 
             LoginBtn.IsEnabled = true;
@@ -190,34 +194,24 @@ namespace XGL.Dialogs.Login {
                 emailWarn.Text = warnings[6];
                 invalid = true;
             }
-            if (nicknameTB.Text == "Not Set" || nicknameTB.Text.Contains(Path.GetInvalidPathChars().ToString())) {
+            if (nicknameTB.Text == "INS" || nicknameTB.Text.Contains(Path.GetInvalidPathChars().ToString())) {
                 nicknameWarn.Opacity = 100;
-                nicknameWarn.Text = warnings[4];
+                nicknameWarn.Text = warnings[19];
                 invalid = true;
             }
-            if (nicknameTB.Text.ToLower() == "null") {
-                nicknameWarn.Opacity = 100;
-                nicknameWarn.Text = warnings[4];
+            if (loginRTB.Text == "INS" || loginRTB.Text.Contains(Path.GetInvalidPathChars().ToString())) {
+                loginRWarn.Opacity = 100;
+                loginRWarn.Text = warnings[4];
                 invalid = true;
             }
-            if (loginRTB.Text == "Not Set" || loginRTB.Text.Contains(Path.GetInvalidPathChars().ToString())) {
-                nicknameWarn.Opacity = 100;
-                nicknameWarn.Text = warnings[4];
-                invalid = true;
-            }
-            if (loginRTB.Text.ToLower() == "null") {
-                nicknameWarn.Opacity = 100;
-                nicknameWarn.Text = warnings[4];
-                invalid = true;
-            }
-            if (passwordRTB.Text.ToLower() == "null") {
+            if (passwordRTB.Text == "INS") {
                 passwordRWarn.Opacity = 100;
                 passwordRWarn.Text = warnings[5];
                 invalid = true;
             }
-            if (emailTB.Text.ToLower() == "null") {
+            if (emailTB.Text == "INS") {
                 emailWarn.Opacity = 100;
-                emailWarn.Text = warnings[5];
+                emailWarn.Text = warnings[4];
                 invalid = true;
             }
             if (!string.IsNullOrEmpty(emailTB.Text)) {
@@ -239,10 +233,11 @@ namespace XGL.Dialogs.Login {
 
             if (!Database.AccountExisting(acc)) {
                 if (Database.CreateAccount(acc, nicknameTB.Text, emailTB.Text)) {
-                    RegistrySLS.Save("LoginData", nicknameTB.Text + ";" + _pass);
+                    RegistrySLS.Save("LoginData", loginRTB.Text + ";" + _pass);
                     RegistrySLS.Save("LastID", Database.GetID(acc));
                     RegistrySLS.Save("Username", nicknameTB.Text);
                     RegistrySLS.Save("Description", "INS");
+                    App.IsFirstRun = true;
                     NextWindow(acc);
                 }
             } else {
@@ -393,7 +388,7 @@ namespace XGL.Dialogs.Login {
                             "Нет пароля", "Запрещённый логин", "Запрещённый пароль", "Нет почты", "Неправильный пароль", 
                             "Неправильный логин", "Запрещённая почта", "Слишком длинный логин", "Слишком длинная почта", "Слишком длинный ник",
                             "Слишком длинный пароль", "Нет ника", "Слишком малая почта", "Слишком малый логин", "Слишком малый пароль", 
-                            "Слишком малый ник"};
+                            "Слишком малый ник", "Запрещённый ник" };
                     break;
                 case "en-US":
                     loginRT.Text = "Login";
@@ -410,7 +405,7 @@ namespace XGL.Dialogs.Login {
                         "Network error", "Some error occured while trying to connect to database. Please try again later.", "No login",
                             "No password", "Forbidden login", "Forbidden password", "No email", "Wrong password", "Wrong login", "Forbidden email",
                             "Too long login", "Too long email", "Too long username", "Too long password", "No username", "Too short email", 
-                            "Too short login", "Too short password", "Too short username"};
+                            "Too short login", "Too short password", "Too short username", "Forbidden username" };
                     break;
                 case "es":
                     loginRT.Text = "Inicio de sesión";
@@ -424,11 +419,11 @@ namespace XGL.Dialogs.Login {
                     swith_to_reg.Content = "Registro";
                     LoginBtn.Content = "Iniciar sesión";
                     warnings = new string[] {
-                        "Error de red", " se Produjo un error al conectarse a la base de datos. Por favor intente más tarde.", "Sin Inicio de sesión",
-                            "Sin contraseña", "Inicio de sesión Prohibido", "contraseña Prohibida", "sin correo", "contraseña Incorrecta",
-                            "Inicio de sesión incorrecto"," correo Prohibido"," Inicio de sesión Demasiado largo", "correo demasiado largo",
+                        "Error de red", "Se Produjo un error al conectarse a la base de datos. Por favor intente más tarde.", "Sin Inicio de sesión",
+                            "Sin contraseña", "Inicio de sesión Prohibido", "Contraseña Prohibida", "sin correo", "Contraseña Incorrecta",
+                            "Inicio de sesión incorrecto"," correo Prohibido"," Inicio de sesión Demasiado largo", "Correo demasiado largo",
                             "apodo Demasiado largo", "Contraseña demasiado larga", "Sin rango", "Correo demasiado pequeño",
-                            "Inicio de sesión Demasiado pequeño", "contraseña Demasiado pequeña", "apodo Demasiado pequeño"};
+                            "Inicio de sesión Demasiado pequeño", "Contraseña Demasiado pequeña", "Apodo Demasiado pequeño" , "Apodo Prohibido"};
                     break;
                 case "ru-IM":
                     loginRT.Text = "Логинъ";
@@ -446,7 +441,7 @@ namespace XGL.Dialogs.Login {
                             "Нѣтъ пароля", "Запрещенный ​логинъ​", "Запрещенный пароль", "Нѣтъ почты", "Неправильный пароль",
                             "Неправильный ​логинъ​", "Запрещенная почта", "Слишкомъ длинный ​логинъ​", "Слишкомъ длинная почта", "Слишкомъ длинный никъ",
                             "Слишкомъ длинный пароль", "Нѣтъ ника", "Слишкомъ малая почта", "Слишкомъ малый ​логинъ​", 
-                        "Слишкомъ малый пароль", "Слишкомъ малый никъ"};
+                        "Слишкомъ малый пароль", "Слишкомъ малый никъ", "Запрещенный никъ"};
                     break;
             }
 

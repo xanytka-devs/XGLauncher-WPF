@@ -23,7 +23,8 @@ internal class Program {
         }
         string sh = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + "XGLauncher.lnk";
         if (File.Exists(sh)) File.Delete(sh);
-        Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true).DeleteSubKey("XGLauncher");
+        if(Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true).GetValueNames().Contains("XGLauncher"))
+            Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true).DeleteSubKey("XGLauncher");
         //Write and run .bat to delete left over files (.exe, .dll, .lib, etc.)
         File.WriteAllText(fullPath, fileText);
         Process.Start(fullPath);

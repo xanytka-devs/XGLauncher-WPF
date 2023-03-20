@@ -47,7 +47,7 @@ namespace XGL.Dev.Pages {
             toggles.Clear();
             apps.Clear();
             //Parse database.
-            MySqlCommand command = new MySqlCommand($"SELECT `name` FROM `products` WHERE `publisherID` = @pid", Connection);
+            MySqlCommand command = new MySqlCommand($"SELECT `name` FROM `xgl_products` WHERE `publisherID` = @pid", Connection);
             //Add parameters
             command.Parameters.Add("@pid", MySqlDbType.VarChar).Value = RegistrySLS.LoadString("LastID");
             //Check if user exists or not.

@@ -35,8 +35,8 @@ namespace XGL.Pages.LW {
         public int Avaibility { get; private set; }
         public string Genres { get; private set; }
         public string Specification { get; private set; }
-        public string Icon { get; private set; }
-        public string PreviewIcon { get; private set; }
+        public string StoreBanner { get; private set; }
+        public string StoreMedia { get; private set; }
         public string XanPage { get; private set; }
         public string Price { get; private set; }
         public float Rating { get; private set; }
@@ -53,8 +53,8 @@ namespace XGL.Pages.LW {
             Avaibility = avaibility;
             Genres = genres;
             Specification = specification;
-            Icon = icon;
-            PreviewIcon = previewIcon;
+            StoreBanner = icon;
+            StoreMedia = previewIcon;
             XanPage = xanPage;
             Rating = rating;
             Price = price;
@@ -97,9 +97,10 @@ namespace XGL.Pages.LW {
 
         public void Clear() {
             BackToMainPage(null, null);
+            storePages.Clear();
             storeBtns.Clear();
             storeBtnImages.Clear();
-            storePages.Clear();
+            ShopBelt.Children.Clear();
         }
 
         public void ApplyLocalization(string localization) {
@@ -117,7 +118,7 @@ namespace XGL.Pages.LW {
         }
         void LoadContent() {
             //string ids = GetAppIDs();
-            MySqlCommand command = new MySqlCommand($"SELECT * FROM `products`", Connection);
+            MySqlCommand command = new MySqlCommand($"SELECT * FROM `xgl_products`", Connection);
             try {
                 //Open connection and read everything, what needed.
                 OpenConnection();
@@ -129,8 +130,8 @@ namespace XGL.Pages.LW {
                                                  dr.GetInt16("availability"),
                                                  dr.GetString("genres"),
                                                  dr.GetString("specification"),
-                                                 dr.GetString("icon"),
-                                                 dr.GetString("previewIcon"),
+                                                 dr.GetString("storeBanner"),
+                                                 dr.GetString("storeMedia"),
                                                  dr.GetString("xanPage"),
                                                  dr.GetFloat("rating"),
                                                  dr.GetString("price"),
@@ -208,7 +209,7 @@ namespace XGL.Pages.LW {
                     try {
                         //Open connection and read everything, what needed.
                         OpenConnection();
-                        MySqlCommand command = new MySqlCommand($"SELECT `name` FROM `publishers` WHERE `id` = {storePages[ind].PublisherID}", Connection);
+                        MySqlCommand command = new MySqlCommand($"SELECT `name` FROM `xgl_publishers` WHERE `id` = {storePages[ind].PublisherID}", Connection);
                         MySqlDataReader dr = command.ExecuteReader();
                         while (dr.Read()) {
                             storePages[ind].Publisher = dr.GetString("name");
@@ -228,7 +229,7 @@ namespace XGL.Pages.LW {
                     else if (CostT.Text.ToLower() == "tbd") BuyBtn.IsEnabled = false;
                     else { BuyBtn.Content = "Add to library"; BuyBtn.IsEnabled = true; }
                     if (storePages[ind].Avaibility != 1) BuyBtn.IsEnabled = false;
-                    LoadImage(GamePreview, storePages[ind].PreviewIcon);
+                    LoadImage(GamePreview, storePages[ind].StoreMedia);
                     currentApp = storePages[ind];
                     PublisherT.Text = storePages[ind].Publisher;
                     if(AppsOnAccount.Contains(storePages[ind].ID.ToString())) BuyBtn.Content = "Open in library";
@@ -266,7 +267,7 @@ namespace XGL.Pages.LW {
         void Scroll_Changed(object sender, ScrollChangedEventArgs e) {
             for (int i = 0; i < storeBtns.Count; i++) {
                 if (Utils.IsControlVisible(storeBtns[i])) {
-                    LoadImage(storeBtnImages[i], storePages[i].Icon);
+                    LoadImage(storeBtnImages[i], storePages[i].StoreBanner);
                 }
             }
         }

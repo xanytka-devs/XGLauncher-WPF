@@ -12,7 +12,7 @@
         <Grid Name="LoginPage">
             <Image Name="logo" Source="/Images/xgl-wip.png" VerticalAlignment="Top" Margin="130, 40, 120, 0"/>
             <Grid Height="50" Margin="25, -10, 25, 0">
-                <TextBox Name="loginTB" FontSize="16" UndoLimit="5"/>
+                <TextBox Name="loginTB" FontSize="16" UndoLimit="5" Style="{StaticResource OldStyleTextBox}"/>
                 <TextBlock Name="loginT" Text="Login" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
                 <TextBlock Name="loginWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="50,-25,0,50" Opacity="0"/>
             </Grid>
@@ -60,22 +60,22 @@
         <Grid Name="RegisterPage" Background="#323233" Visibility="Collapsed">
             <Image Source="/Images/xgl-wip.png" VerticalAlignment="Top" Margin="130, 20, 120, 0" Height="92"/>
             <Grid Height="50" Margin="25, 0, 25, 360" VerticalAlignment="Bottom">
-                <TextBox Name="loginRTB" FontSize="16" UndoLimit="5"/>
+                <TextBox Name="loginRTB" FontSize="16" UndoLimit="5" Style="{StaticResource OldStyleTextBox}"/>
                 <TextBlock Name="loginRT" Text="Login" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
                 <TextBlock Name="loginRWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="125,-25,0,50" Opacity="0"/>
             </Grid>
             <Grid Height="50" Margin="25, 0, 25, 280" VerticalAlignment="Bottom">
-                <TextBox Name="nicknameTB" FontSize="16" UndoLimit="5"/>
+                <TextBox Name="nicknameTB" FontSize="16" UndoLimit="5" Style="{StaticResource OldStyleTextBox}"/>
                 <TextBlock Name="nicknameT" Text="Nickname" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
                 <TextBlock Name="nicknameWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="125,-25,0,50" Opacity="0"/>
             </Grid>
             <Grid Height="50" Margin="25, 0, 25, 200" VerticalAlignment="Bottom">
-                <TextBox Name="emailTB" FontSize="16" UndoLimit="5"/>
+                <TextBox Name="emailTB" FontSize="16" UndoLimit="5" Style="{StaticResource OldStyleTextBox}"/>
                 <TextBlock Name="emailT" Text="Email" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
                 <TextBlock Name="emailWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="125,-25,0,50" Opacity="0"/>
             </Grid>
             <Grid Height="50" Margin="25, 0, 25, 120" VerticalAlignment="Bottom">
-                <TextBox Name="passwordRTB" FontSize="16" Grid.ColumnSpan="2" UndoLimit="5"/>
+                <TextBox Name="passwordRTB" FontSize="16" Grid.ColumnSpan="2" UndoLimit="5" Style="{StaticResource OldStyleTextBox}"/>
                 <TextBlock Name="passwordRT" Text="Password" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50" Grid.ColumnSpan="2"/>
                 <TextBlock Name="passwordRWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="125,-25,0,50" Opacity="0"/>
             </Grid>

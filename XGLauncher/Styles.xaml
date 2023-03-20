@@ -316,6 +316,45 @@
     </Style>
 
     <Style x:Key="BigButtonGray" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="border" BorderBrush="Transparent"
+                            BorderThickness="0" 
+                            Background="Transparent"
+                            SnapsToDevicePixels="True" CornerRadius="5">
+                        <Grid>
+                            <Border Background="Black" Opacity="0.5" Name="Border"
+                                    CornerRadius="4"/>
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" 
+                                          HorizontalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" TargetName="Border" Value="0.75"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" TargetName="Border" Value="0.25"/>
+                        </Trigger>
+                        <Trigger Property="IsDefault" Value="True">
+                            <Setter Property="Opacity" TargetName="Border" Value="0.75"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="OldStyleBigButtonGray" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="#353536"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Foreground" Value="White"/>
@@ -401,7 +440,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type TextBox}">
+    <Style TargetType="{x:Type TextBox}" x:Key="OldStyleTextBox">
         <Setter Property="SnapsToDevicePixels"
           Value="True" />
         <Setter Property="OverridesDefaultStyle"
@@ -438,6 +477,52 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity"
                                     Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="SnapsToDevicePixels"
+          Value="True" />
+        <Setter Property="OverridesDefaultStyle"
+          Value="True" />
+        <Setter Property="KeyboardNavigation.TabNavigation"
+          Value="None" />
+        <Setter Property="FocusVisualStyle"
+          Value="{x:Null}" />
+        <Setter Property="MinWidth"
+          Value="120" />
+        <Setter Property="MinHeight"
+          Value="20" />
+        <Setter Property="AllowDrop"
+          Value="true" />
+        <Setter Property="FontFamily" Value="Bahnschrift Light"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border Name="border"
+                            Padding="2"
+                            UseLayoutRounding="True" CornerRadius="6"
+                            BorderBrush="Transparent">
+                        <Grid>
+                            <Border Opacity="0.5" Name="Border" Background="Black"
+                                    CornerRadius="4"/>
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity"
+                                    Value="0.75"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity"
+                                    Value="0.25"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
