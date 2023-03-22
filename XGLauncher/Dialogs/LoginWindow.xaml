@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XGL.Dialogs.Login"
+        xmlns:tools="clr-namespace:XGL"
         mc:Ignorable="d"
-        Title="XGLauncher" Height="580" Width="400"
+        Title="XGLauncher" Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={tools:RatioConverter}, ConverterParameter='0.55'}" 
+        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={tools:RatioConverter}, ConverterParameter='0.21'}"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Style="{StaticResource XGLauncherDialog}">
     <Grid>

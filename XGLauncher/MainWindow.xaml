@@ -7,8 +7,9 @@
         xmlns:elements="clr-namespace:XGL.Pages.LW"
         xmlns:local="clr-namespace:XGL"
         mc:Ignorable="d"  Title="XGLauncher"
-        Height="775" Width="1200"
-        MinHeight="675" MinWidth="1000"
+        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={local:RatioConverter}, ConverterParameter='0.6'}" 
+        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={local:RatioConverter}, ConverterParameter='0.52'}"
+        MinHeight="500" MinWidth="700"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource XGLauncherMainWindow}"
         Icon="\Images\xgl-wip.ico">
@@ -27,8 +28,8 @@
                     <ToggleButton Name="community" Content="Community" Style="{StaticResource MWBtn}" Click="MainBtn_Click" Visibility="Collapsed" Padding="0,20,0,0"/>
                     <ToggleButton Name="profileBtn" Style="{StaticResource MWBtn}" Click="MainBtn_Click" Padding="0,20,0,0">
                         <Grid MinWidth="200">
-                            <TextBlock Name="profile" Text="Profile" VerticalAlignment="Stretch"
-                                       HorizontalAlignment="Left" Margin="5, 12.5, 70, 0"/>
+                            <TextBlock Name="profile" Text="Profile" VerticalAlignment="Center"
+                                       HorizontalAlignment="Left" Margin="5, 0, 70, 0"/>
                             <Image Name="profileIcon" Width="60" HorizontalAlignment="Right"
                                    Margin="0, 0, 5, 0"/>
                         </Grid>
@@ -52,8 +53,8 @@
             <elements:Profile x:Name="profileControl"/>
         </Border>
         <Button Click="OpenSettings" Name="stg_btn"
-                HorizontalAlignment="Right" VerticalAlignment="Top"
-                FontSize="20" Margin="0, 41, 7, 0" Height="25">
+                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                FontSize="20" Margin="0, 0, 5, 5" Height="25">
             <Image Source="/Images/settings_icon.png"/>
         </Button>
         <Button Click="OpenPlugins" Name="plg_btn" Visibility="Collapsed"
