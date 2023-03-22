@@ -20,7 +20,7 @@ namespace XGL {
 
         public static bool DevMode = true;
         public static bool OnlineMode = false;
-        public static string CurrentVersion { get; private set; } = "0.1.3";
+        public static string CurrentVersion { get; private set; } = "0.1.3.1";
         public static string[] AccountData;
         public static string CurrentFolder { get; private set; }
         public static string AppDataFolder { get; private set; }
