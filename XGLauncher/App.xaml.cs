@@ -59,21 +59,25 @@ namespace XGL {
                 //Check for updates.
                 if (RegistrySLS.LoadBool("AutoUpdate", true))
                     CheckForUpdates();
+                if (upRes) {
+                    ProcessStartInfo pr = new ProcessStartInfo() {
+                        FileName = $"{CurrentFolder}\\XGLauncher Updater.exe",
+                        UseShellExecute = true,
+                        Verb = "runas"
+                    };
+                    if (File.Exists(pr.FileName))
+                        Process.Start(pr);
+                    OnExit(null);
+                    LoginWindow l = new LoginWindow();
+                    l.Show();
+                    l.Close();
+                    return;
+                }
                 if (Database.AccountExisting(CurrentAccount))
                     NextWindow();
                 else {
                     LoginWindow l = new LoginWindow();
                     l.Show();
-                    if (upRes) {
-                        ProcessStartInfo pr = new ProcessStartInfo() {
-                            FileName = $"{CurrentFolder}\\XGLauncher Updater.exe",
-                            UseShellExecute = true,
-                            Verb = "runas"
-                        };
-                        if(File.Exists(pr.FileName))
-                            Process.Start(pr);
-                        l.Close();
-                    }
                 }
                 return;
             }

@@ -6,8 +6,7 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:XGL" Style="{StaticResource XGLauncherWindow}"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="" Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={local:RatioConverter}, ConverterParameter='0.46'}" 
-        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={local:RatioConverter}, ConverterParameter='0.43'}" ResizeMode="NoResize">
+        Title="" Height="500" Width="800" ResizeMode="NoResize">
     <Grid Margin="-15, -25, -15, 0">
         <Grid Name="pageComplete">
             <Image Source="/gradient.png" Margin="0, 0, 0, 100" Stretch="Fill"/>
