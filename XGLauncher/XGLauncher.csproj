@@ -28,8 +28,8 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>0.1.0.0</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>0.1.3.2</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>false</BootstrapperEnabled>
@@ -59,10 +59,10 @@
     <ApplicationIcon>Images\xgl-wip.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>7B60510FB45B9B6C49AD44C0153CF3060D92FD15</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>D5385CF2DB89D3943F8433325B6AD23DAC9C403D</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>XGLauncher_TemporaryKey.pfx</ManifestKeyFile>
@@ -79,13 +79,16 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>XGLauncher_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=8.0.32.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data, Version=8.0.31.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\! Libs\MySql.Data.dll</HintPath>
+      <HintPath>Libs\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -112,7 +115,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="xNet, Version=3.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\! Libs\xNet.dll</HintPath>
+      <HintPath>Libs\xNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -266,6 +269,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="XGLauncher_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -344,12 +348,6 @@
     <Resource Include="Images\plugins.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XGLAPI\XGLAPI.csproj">
-      <Project>{2512f59c-22e4-4f09-8279-97219b133ac5}</Project>
-      <Name>XGLAPI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\AuthIcons\microsoft.png" />
     <Resource Include="Images\AuthIcons\youtube.png" />
   </ItemGroup>
@@ -404,6 +402,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\picture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Libs\MySql.Data.dll" />
+    <Content Include="Libs\xNet.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

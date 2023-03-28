@@ -137,10 +137,13 @@ namespace XGL {
         void StartInstallation() {
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
             string link = Database.GetValue().Split('{')[1];
+            if (!Database.OpenConnection() && !Database.CloseConnection()) {
+                link = "https://xanytka.ru/downloads/XGLauncher.zip";
+            }
             try {
                 using (WebClient client = new WebClient()) {
                     client.DownloadFileCompleted += Client_DownloadFileCompleted;
-                    if(installID == 1)
+                    if (installID == 1)
                         client.DownloadFileAsync(new Uri(link), Path.Combine(path, "XGLauncher.zip"));
                     else client.DownloadFileAsync(new Uri(link), Path.Combine(path, "XGLauncher DevTools.zip"));
                 }
