@@ -45,7 +45,7 @@
   <ItemGroup>
     <Reference Include="MySql.Data, Version=8.0.32.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\XGLauncher\bin\Debug\MySql.Data.dll</HintPath>
+      <HintPath>..\XGLauncher\Libs\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />

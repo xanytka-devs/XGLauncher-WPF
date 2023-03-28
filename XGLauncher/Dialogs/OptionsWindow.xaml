@@ -259,12 +259,12 @@
                 <StackPanel>
                     <TextBlock Text="General" FontSize="22" Margin="10" FontWeight="Bold"/>
                     <!--#region "Use XGLAPI"-->
-                    <Grid Margin="5">
+                    <!--<Grid Margin="5">
                         <ToggleButton Name="fd_uapi_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
                                   Height="30" Width="30" Click="FD_Element_Click"
                                   ToolTip="Enables/Disables XGLAPI library use. [WARNING] All runtime events will be not avaible if this option isn't active."/>
                         <TextBlock Text="Use XGLAPI" FontSize="18" Name="fd_uapi_T" Margin="40, 0, 0, 0"/>
-                    </Grid>
+                    </Grid>-->
                     <!--#endregion "Use XGLAPI"-->
                     <!--#region "Use Plugins"-->
                     <Grid Margin="5">

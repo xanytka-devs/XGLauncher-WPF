@@ -98,7 +98,7 @@ namespace XGL.Dialogs {
             fd_lwos_CB.IsChecked = RegistrySLS.LoadBool("LoginAuth", false);
             fd_scs_CB.IsChecked = RegistrySLS.LoadBool("Community", false);
             fd_sps_CB.IsChecked = RegistrySLS.LoadBool("PluginsButton", false);
-            fd_uapi_CB.IsChecked = RegistrySLS.LoadBool("UseXGLAPI", true);
+            //fd_uapi_CB.IsChecked = RegistrySLS.LoadBool("UseXGLAPI", true);
             fd_uplg_CB.IsChecked = RegistrySLS.LoadBool("Plugins", false);
             fd_ard_CB.IsChecked = RegistrySLS.LoadBool("DevAutoReload", false);
             fd_spci_CB.IsChecked = RegistrySLS.LoadBool("CustomProfileImage", false);
@@ -362,11 +362,11 @@ namespace XGL.Dialogs {
                     name = "GBarAddGame";
                     el = fd_saab_CB;
                     break;
-                case "fd_uapi_CB":
+                /*case "fd_uapi_CB":
                     name = "UseXGLAPI";
                     el = fd_uapi_CB;
                     isChangeCritical = true;
-                    break;
+                    break;*/
                 case "fd_uplg_CB":
                     name = "Plugins";
                     el = fd_uplg_CB;
