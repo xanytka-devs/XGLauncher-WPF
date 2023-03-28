@@ -20,7 +20,7 @@ namespace XGL {
 
         public static bool DevMode = true;
         public static bool OnlineMode = false;
-        public static string CurrentVersion { get; private set; } = "0.1.3.2";
+        public static string CurrentVersion { get; private set; } = "0.1.3.1";
         public static string[] AccountData;
         public static string CurrentFolder { get; private set; }
         public static string AppDataFolder { get; private set; }
@@ -80,9 +80,10 @@ namespace XGL {
                     l.Show();
                 }
                 return;
+            } else {
+                LoginWindow l = new LoginWindow();
+                l.Show();
             }
-            CurrentAccount = new Account("Offline", string.Empty);
-            NextWindow();
             base.OnStartup(e);
         }
 
@@ -119,7 +120,7 @@ namespace XGL {
             CurrentFolder = Environment.CurrentDirectory;
             AppDataFolder = Path.Combine(CurrentFolder, "ApplicationData");
             AppsFolder = Path.Combine(CurrentFolder, "apps");
-            CurrentAccount = new Account("Not Set", "Not Set");
+            CurrentAccount = new Account("INS", "INS");
             AccountData = RegistrySLS.LoadString("LoginData", "INS;INS").Split(';');
             RegistrySLS.Save("Path", CurrentFolder);
             RegistrySLS.Save("Version", CurrentVersion);

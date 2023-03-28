@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Windows;
@@ -62,7 +63,7 @@ namespace XGL {
         }
 
         async void LoadImage() {
-            if(!App.RunMySQLCommands) return;
+            if(!App.RunMySQLCommands || App.CurrentAccount == null) return;
             string URL = string.Empty;
             if (App.IsFirstRun) URL = "default{https://drive.google.com/uc?export=download&id=1hKSUYQgTaJIp8V-coY8Y8Bmod0eIupzy";
             else URL = Database.GetValue(App.CurrentAccount, "icon").ToString();
@@ -152,10 +153,9 @@ namespace XGL {
             RegistrySLS.Save("Description", "INS");
             RegistrySLS.Save("LastID", "INS");
             RegistrySLS.Save("LoginData", "INS");
-            App.CurrentAccount = new Account("Not Set", "Not Set");
+            App.CurrentAccount = new Account("INS", "INS");
             App.AccountData = null;
-            LoginWindow lw = new LoginWindow();
-            lw.Show();
+            Process.Start(Path.Combine(App.CurrentFolder, "XGLauncher.exe"));
             Close();
         }
 

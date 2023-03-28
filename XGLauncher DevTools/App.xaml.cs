@@ -50,7 +50,7 @@ namespace XGL.Dev {
             RegistrySLS.Save("Path", Environment.CurrentDirectory);
             AppDataFolder = Path.Combine(CurrentFolder, "ApplicationData");
             AppsFolder = Path.Combine(CurrentFolder, "apps");
-            CurrentAccount = new Account("Not Set", "Not Set");
+            CurrentAccount = new Account("INS", "INS");
             AccountData = RegistrySLS.LoadString("PublisherLoginData", "INS;INS").Split(';');
             RegistrySLS.Save("DevToolsVersion", CurrentVersion);
             string[] appSData = INTERNAL.ApplicationSData.IndefData;
