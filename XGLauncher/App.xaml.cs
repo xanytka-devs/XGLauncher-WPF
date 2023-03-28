@@ -80,9 +80,10 @@ namespace XGL {
                     l.Show();
                 }
                 return;
+            } else {
+                LoginWindow l = new LoginWindow();
+                l.Show();
             }
-            CurrentAccount = new Account("Offline", string.Empty);
-            NextWindow();
             base.OnStartup(e);
         }
 
@@ -119,7 +120,7 @@ namespace XGL {
             CurrentFolder = Environment.CurrentDirectory;
             AppDataFolder = Path.Combine(CurrentFolder, "ApplicationData");
             AppsFolder = Path.Combine(CurrentFolder, "apps");
-            CurrentAccount = new Account("Not Set", "Not Set");
+            CurrentAccount = new Account("INS", "INS");
             AccountData = RegistrySLS.LoadString("LoginData", "INS;INS").Split(';');
             RegistrySLS.Save("Path", CurrentFolder);
             RegistrySLS.Save("Version", CurrentVersion);

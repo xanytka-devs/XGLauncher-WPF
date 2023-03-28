@@ -237,6 +237,8 @@ namespace XGL.Dialogs.Login {
                     RegistrySLS.Save("LastID", Database.GetID(acc));
                     RegistrySLS.Save("Username", nicknameTB.Text);
                     RegistrySLS.Save("Description", "INS");
+                    App.CurrentAccount = acc;
+                    App.AccountData = new string[] { acc.Login, acc.Password };
                     App.IsFirstRun = true;
                     NextWindow(acc);
                 }

@@ -27,7 +27,7 @@ namespace XGL {
 
         public static bool NotEmptyAndNotNotSet(string val) {
             return !string.IsNullOrEmpty(val) &&
-                                val != "Not Set";
+                                val != "INS";
         }
 
         public static string ReaplaceValueWith(string source, int index, object value) {
