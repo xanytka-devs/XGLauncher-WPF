@@ -230,19 +230,4 @@ namespace XGL.Networking.Authencation {
 
     }
 
-    public class VKAuthencator {
-
-        public static void Login() {
-
-            //Creates the OAuth 2.0 authorization request.
-            string authorizationRequest = string.Format("{0}authorize?client_id={1}&display=page&redirect_uri={0}blank.html&scope=friends&response_type=token&v=5.52",
-                "https://oauth.vk.com/",
-                VkAPI.__APPID);
-            //Opens request in the browser.
-            System.Diagnostics.Process.Start(authorizationRequest);
-
-        }
-
-    }
-
 }

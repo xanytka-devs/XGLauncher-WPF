@@ -16,10 +16,12 @@ namespace XGL {
 
         public static long UpdateID { get; private set; }
         public static string DBConnectorData { get; private set; }
+        public static int UpdateIteration { get; private set; } = 0;
 
         protected override void OnStartup(StartupEventArgs e) {
             foreach (string arg in e.Args) {
-                if (arg == "/devtools") UpdateID = 2;
+                if (arg == "/old") UpdateIteration = 1;
+                else if (arg == "/new") UpdateIteration = 2;
             }
             string[] appSData = INTERNAL.ApplicationSData.IndefData;
             DBConnectorData = appSData[0];
