@@ -1,13 +1,12 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 
 namespace XGL.API {
-
-    public class Core {
+    public static class Core {
 
         public static void Main(string[] args) {
 
-            Debug.WriteLine("XGLAPI instantiated");
+            Debug.WriteLine("XGLAPI initialized.");
 
         }
 

@@ -321,7 +321,7 @@ namespace XGL.Dialogs.Login {
                     GoogleAuthencator.Login();
                     break;
                 case "lb_vk":
-                    VKAuthencator.Login();
+                    MessageBox.Show("Oh no, looks like this authencation method isn't implemented", "XGLauncher");
                     break;
                 case "lb_tg":
                     MessageBox.Show("Oh no, looks like this authencation method isn't implemented", "XGLauncher");

@@ -18,7 +18,7 @@
             <Image gif:ImageBehavior.AnimatedSource="loading.gif" Source="loading.gif" VerticalAlignment="Center" 
                    HorizontalAlignment="Center" Margin="0, 80, 0, 80"/>
         </Grid>
-        <Grid Name="pageWelcome">
+        <Grid Name="pageWelcome" Visibility="Collapsed">
             <Image Source="/gradient.png" Margin="0, 0, 0, 100" Stretch="Fill"/>
             <Border>
                 <Border.Background>

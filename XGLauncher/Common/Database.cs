@@ -189,7 +189,8 @@ namespace XGL.Networking.Database {
                         if (i != AppsOnAccount.Length - 1) Out += AppsOnAccount[i] + ", ";
                         else Out += AppsOnAccount[i];
                     }
-                } else Out = AppsOnAccount[0];
+                }
+                else Out = AppsOnAccount[0];
             }
             return Out;
         }
