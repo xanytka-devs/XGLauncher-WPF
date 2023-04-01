@@ -49,7 +49,7 @@
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" Name="generalPage"
                       HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Disabled"
                       Visibility="Visible">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
                 <TextBlock Text="General" FontSize="20"
@@ -62,20 +62,20 @@
                     <TextBlock Text="Automatically search for products in shop" 
                                FontSize="18" VerticalAlignment="Center" 
                                Name="g_autostoresearch"/>
-                    <ToggleButton Name="g_autostoresearch_TB"
-                                  Height="30" Width="30"
+                    <CheckBox Name="g_autostoresearch_TB"
+                                  Height="30" Width="60"
                                   HorizontalAlignment="Right"
                                   Click="AutoStoreSearch_Click"/>
                 </Grid>
                 <Grid Height="40">
                     <TextBlock Text="Show Add application button in Library" FontSize="18" Name="fd_saab_T" VerticalAlignment="Center"/>
-                    <ToggleButton Name="fd_saab_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                  Height="30" Width="30" Click="FD_Element_Click"/>
+                    <CheckBox Name="fd_saab_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="60" Click="FD_Element_Click"/>
                 </Grid>
                 <Grid Height="40">
                     <TextBlock Text="Automatically reload on setting changed" FontSize="18" Name="fd_ar_T" VerticalAlignment="Center"/>
-                    <ToggleButton Name="fd_ar_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                  Height="30" Width="30" Click="FD_Element_Click"
+                    <CheckBox Name="fd_ar_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="60" Click="FD_Element_Click"
                                   ToolTip="[WARNING] It may lag a lot."/>
                 </Grid>
                 <TextBlock Text="Utilities" FontSize="20"
@@ -85,15 +85,15 @@
                     <TextBlock Text="Run at start of system" 
                                FontSize="18" VerticalAlignment="Center" 
                                Name="ras_t"/>
-                    <ToggleButton Name="autorunTgB"
-                                  Height="30" Width="30"
+                    <CheckBox Name="autorunTgB"
+                                  Height="30" Width="60"
                                   HorizontalAlignment="Right"
                                   Click="AutorunTgB_Click"/>
                 </Grid>
                 <Grid Height="40">
                     <TextBlock Text="Automatically search for updates" FontSize="18" Name="fd_sfu_T" VerticalAlignment="Center"/>
-                    <ToggleButton Name="fd_sfu_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                  Height="30" Width="30" Click="FD_Element_Click"/>
+                    <CheckBox Name="fd_sfu_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="60" Click="FD_Element_Click"/>
                 </Grid>
                 <Grid Margin="0, 10, 0, 0">
                     <TextBlock FontWeight="Bold" Name="gp_cs" FontSize="18" Text="Cache"/>
@@ -107,7 +107,7 @@
         <ScrollViewer Grid.Column="1" Name="accountPage" 
                       Visibility="Collapsed" 
                       HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Disabled">
             <Grid>
                 <TextBlock Text="Account" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
@@ -169,7 +169,7 @@
         <ScrollViewer Grid.Column="1" Name="languagePage"
                       Visibility="Collapsed"
                       HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Disabled">
             <Grid>
                 <TextBlock Text="Language" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
@@ -206,17 +206,61 @@
         <ScrollViewer Grid.Column="1" Name="appearancePage"
                       Visibility="Collapsed"
                       HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Disabled">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
                 <TextBlock Text="Appearance" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
                            VerticalAlignment="Top" Margin="5" Name="ti_Ap"/>
+                <Grid Width="300">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Name="ap_theme_sys" Height="90" Margin="5" Click="ThemeBtn_Click">
+                            <Grid Height="85">
+                                <Border Name="ap_theme_sys_bg" Background="Black" Opacity="0" CornerRadius="4"/>
+                                <Border Height="60" Width="60" Background="DarkSlateGray" 
+                                    BorderBrush="Gray" BorderThickness="4" CornerRadius="50"
+                                    VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                <TextBlock Text="System" FontSize="16" VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Center" Name="ap_theme_sys_T"/>
+                            </Grid>
+                        </Button>
+                        <Button Name="ap_theme_dark" Height="90" Margin="5" Click="ThemeBtn_Click">
+                            <Grid Height="85">
+                                <Border Name="ap_theme_dark_bg" Background="Black" Opacity="0" CornerRadius="4"/>
+                                <Border Height="60" Width="60" Background="Black" 
+                                    BorderBrush="Gray" BorderThickness="4" CornerRadius="50"
+                                    VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Dark" FontSize="16" VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Center" Name="ap_theme_dark_T"/>
+                            </Grid>
+                        </Button>
+                        <Button Name="ap_theme_light" Height="90" Margin="5" Click="ThemeBtn_Click">
+                            <Grid Height="85">
+                                <Border Name="ap_theme_light_bg" Background="Black" Opacity="0" CornerRadius="4"/>
+                                <Border Height="60" Width="60" Background="LightGray" 
+                                    BorderBrush="Gray" BorderThickness="4" CornerRadius="50"
+                                    VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Light" FontSize="16" VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Center" Name="ap_theme_light_T"/>
+                            </Grid>
+                        </Button>
+                        <Button Name="ap_theme_ohio" Height="90" Margin="5" Click="ThemeBtn_Click">
+                            <Grid Height="85">
+                                <Border Name="ap_theme_ohio_bg" Background="Black" Opacity="0" CornerRadius="4"/>
+                                <Border Height="60" Width="60" Background="DeepPink" 
+                                    BorderBrush="Gray" BorderThickness="4" CornerRadius="50"
+                                    VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Ohio" FontSize="16" VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Center" Name="ap_theme_ohio_T"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Grid>
                 <Grid Height="40">
                     <TextBlock Text="Old style" 
                                FontSize="18" VerticalAlignment="Center" 
                                Name="ap_oldstyle"/>
-                    <ToggleButton Name="ap_oldstyle_TB"
-                                  Height="30" Width="30"
+                    <CheckBox Name="ap_oldstyle_TB"
+                                  Height="30" Width="60"
                                   HorizontalAlignment="Right"
                                   Click="OldStyle_Click"/>
                 </Grid>
@@ -225,7 +269,7 @@
         <ScrollViewer Grid.Column="1" Name="aboutPage"
                       Visibility="Collapsed"
                       HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Disabled">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
                 <TextBlock Text="About" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
@@ -241,7 +285,7 @@
         <ScrollViewer Grid.Column="1" Name="devPage"
                       Visibility="Collapsed"
                       HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Disabled">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
                 <TextBlock Text="For Devs" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
@@ -252,60 +296,52 @@
                         Click="RebootLauncher" Margin="5, 5, 70, 5"/>
                     <TextBlock Text="Auto reload" VerticalAlignment="Top" HorizontalAlignment="Right"
                                Name="fd_ard_T"/>
-                    <ToggleButton Name="fd_ard_CB" Height="20" Width="20"
+                    <CheckBox Name="fd_ard_CB" Height="30" Width="60"
                                   VerticalAlignment="Center" HorizontalAlignment="Right"
-                                  Margin="0, 10, 25, 0" Click="FD_Element_Click"/>
+                                  Margin="0, 12, 0, 0" Click="FD_Element_Click"/>
                 </Grid>
                 <StackPanel>
                     <TextBlock Text="General" FontSize="22" Margin="10" FontWeight="Bold"/>
                     <!--#region "Use XGLAPI"-->
-                    <!--<Grid Margin="5">
-                        <ToggleButton Name="fd_uapi_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="30" Click="FD_Element_Click"
+                    <Grid Margin="5">
+                        <CheckBox Name="fd_uapi_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="FD_Element_Click"
                                   ToolTip="Enables/Disables XGLAPI library use. [WARNING] All runtime events will be not avaible if this option isn't active."/>
-                        <TextBlock Text="Use XGLAPI" FontSize="18" Name="fd_uapi_T" Margin="40, 0, 0, 0"/>
-                    </Grid>-->
+                        <TextBlock Text="Use XGLAPI" FontSize="18" Name="fd_uapi_T" Margin="60, 0, 0, 0"/>
+                    </Grid>
                     <!--#endregion "Use XGLAPI"-->
                     <!--#region "Use Plugins"-->
                     <Grid Margin="5">
-                        <ToggleButton Name="fd_uplg_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="30" Click="FD_Element_Click"
+                        <CheckBox Name="fd_uplg_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="FD_Element_Click"
                                   ToolTip="Enables/Disables plugins use. [WARNING] All already active plugins will be disabled if this option isn't active."/>
-                        <TextBlock Text="Use Plugins" FontSize="18" Name="fd_uplg_T" Margin="40, 0, 0, 0"/>
+                        <TextBlock Text="Use Plugins" FontSize="18" Name="fd_uplg_T" Margin="60, 0, 0, 0"/>
                     </Grid>
                     <!--#endregion "Use Plugins"-->
                     <TextBlock Text="Main window" FontSize="22" Margin="10" FontWeight="Bold"/>
                     <!--#region "Show Community section"-->
                     <Grid Margin="5">
-                        <ToggleButton Name="fd_scs_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="30" Click="FD_Element_Click"
+                        <CheckBox Name="fd_scs_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="FD_Element_Click"
                                   ToolTip="Shows/Hides 'Community' tab in Main window."/>
-                        <TextBlock Text="Show Community section in Main window" FontSize="18" Name="fd_scs_T" Margin="40, 0, 0, 0"/>
+                        <TextBlock Text="Show Community section in Main window" FontSize="18" Name="fd_scs_T" Margin="60, 0, 0, 0"/>
                     </Grid>
                     <!--#endregion "Show Community section"-->
                     <!--#region "Show Plugins section"-->
                     <Grid Margin="5">
-                        <ToggleButton Name="fd_sps_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="30" Click="FD_Element_Click"
+                        <CheckBox Name="fd_sps_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="FD_Element_Click"
                                   ToolTip="Shows/Hides 'plugins' button for access plugins in Main window."/>
-                        <TextBlock Text="Show Plugins button in Main window" FontSize="18" Name="fd_sps_T" Margin="40, 0, 0, 0"/>
-                    </Grid>
-                    <!--#endregion "Show Plugins section"-->
-                    <!--#region "Show Plugins section"-->
-                    <Grid Margin="5">
-                        <ToggleButton Name="fd_spci_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="30" Click="FD_Element_Click"
-                                  ToolTip="Shows/Hides 'Change Image' button in Profile."/>
-                        <TextBlock Text="Show Change Image button in Profile" FontSize="18" Name="fd_spci_T" Margin="40, 0, 0, 0"/>
+                        <TextBlock Text="Show Plugins button in Main window" FontSize="18" Name="fd_sps_T" Margin="60, 0, 0, 0"/>
                     </Grid>
                     <!--#endregion "Show Plugins section"-->
                     <TextBlock Text="Login window" FontSize="22" Margin="10" FontWeight="Bold"/>
                     <!--#region "Show 'Login with' block"-->
                     <Grid Margin="5">
-                        <ToggleButton Name="fd_lwos_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="30" Click="FD_Element_Click"
+                        <CheckBox Name="fd_lwos_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="FD_Element_Click"
                                   ToolTip="Shows/Hides 'Login with' *custom source* section in Login window."/>
-                        <TextBlock Text="Show 'Login with' block" FontSize="18" Name="fd_lwos_T" Margin="40, 0, 0, 0"/>
+                        <TextBlock Text="Show 'Login with' block" FontSize="18" Name="fd_lwos_T" Margin="60, 0, 0, 0"/>
                     </Grid>
                     <!--#endregion "Show 'Login with' block"-->
                 </StackPanel>

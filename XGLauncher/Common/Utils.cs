@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -138,6 +139,17 @@ namespace XGL {
                 return parent == null ? c.IsVisible : IsControlVisible(parent);
             }
         }
+
+        [DllImport("uxtheme.dll", CharSet = CharSet.Auto)]
+        public static extern int GetCurrentThemeName(StringBuilder pszThemeFileName, int dwMaxNameChars, StringBuilder pszColorBuff, int dwMaxColorChars, StringBuilder pszSizeBuff, int cchMaxSizeChars);
+
+        public static string GetSystemTheme() {
+            StringBuilder themeNameBuffer = new StringBuilder(260);
+            var error = GetCurrentThemeName(themeNameBuffer, themeNameBuffer.Capacity, null, 0, null, 0);
+            if (error != 0) Marshal.ThrowExceptionForHR(error);
+            return themeNameBuffer.ToString();
+        }
+
 
     }
 

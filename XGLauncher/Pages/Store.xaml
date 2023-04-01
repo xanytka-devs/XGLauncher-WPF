@@ -51,7 +51,7 @@
                     </Grid>
                     <Grid>
                         <Image Name="GamePreview" Source="G:\! New\XGLauncher\XGLauncher\Images\Gradients\RB Gradient Background 045.jpg"
-                           Stretch="UniformToFill" Height="400" Width="880" HorizontalAlignment="Left"/>
+                           Stretch="UniformToFill" Height="400" Margin="0, 0, 280, 0" HorizontalAlignment="Left"/>
                         <TextBlock Text="Description" HorizontalAlignment="Right" Margin="0, 0, 130, 0"
                                    VerticalAlignment="Top" FontWeight="Bold" FontSize="24" Name="DescriptionTop"/>
                         <TextBlock Text="JCraft is voxel game about exploration and building your own world." HorizontalAlignment="Right"
@@ -67,7 +67,7 @@
                     <Grid HorizontalAlignment="Left" Margin="0, 10, 0, 0">
                         <TextBlock Name="CostT" Text="Free" FontSize="26"
                                    VerticalAlignment="Center" Margin="420, 0, 0, 0"/>
-                        <Button Style="{StaticResource BigButtonGray}" Content="Add to library"
+                        <Button Style="{StaticResource OldStyleBigButtonGray}" Content="Add to library"
                                 HorizontalAlignment="Left" Width="400" Height="50" FontSize="24"
                                 Name="BuyBtn" Click="Buy"/>
                     </Grid>

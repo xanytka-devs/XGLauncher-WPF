@@ -19,7 +19,7 @@ namespace XGL {
     public partial class App : Application {
 
         public static bool OnlineMode = false;
-        public static string CurrentVersion { get; private set; } = "0.1.3.3";
+        public static string CurrentVersion { get; private set; } = "0.1.4";
         public static string[] AccountData;
         public static string CurrentFolder { get; private set; }
         public static string AppDataFolder { get; private set; }
