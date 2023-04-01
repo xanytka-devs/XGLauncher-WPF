@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using XGL.Dialogs;
 using XGL.Dialogs.Login;
@@ -27,21 +29,20 @@ namespace XGL {
         public static VersionManager Manager { get; private set; }
         public static bool OODDialofResult { get; set; }
         public List<Window> AllWindows = new List<Window>();
+        public int curP = 2;
 
         public void CloseAllWindows() {
-            for (int i = 0; i < AllWindows.Count; i++) {
-                AllWindows[i]?.Close();
-            }
+            for (int i = 0; i < AllWindows.Count; i++) AllWindows[i]?.Close();
             Close();
         }
 
         public static void Show(object sender) {
-            MainWindow m = new MainWindow();
-            m.Show();
+            new MainWindow().Show();
             (sender as Window).Close();
         }
 
         public void Reload() {
+            CheckTheme();
             DisableControls();
             //Update public variables.
             profile.Text = RegistrySLS.LoadString("Username");
@@ -52,14 +53,43 @@ namespace XGL {
             if (RegistrySLS.LoadBool("Community", false)) community.Visibility = Visibility.Visible;
             if (RegistrySLS.LoadBool("Plugins", false) &&
                 RegistrySLS.LoadBool("PluginsButton", false)) plg_btn.Visibility = Visibility.Visible;
+            storeControl.Clear();
             gamesControl.Clear();
             newsControl.Clear();
-            storeControl.Clear();
-            gamesControl.Reload();
+            if (curP == 1) storeControl.Reload();
+            if(curP == 2) gamesControl.Reload();
+            if(curP == 3) newsControl.Reload();
             ApplyLocalization(RegistrySLS.LoadString("Language", "en-US"));
             LoadImage();
             //Reload parts.
             EnableControls();
+        }
+
+        public void ReloadTheme() {
+
+            Close();
+            MainWindow m = new MainWindow();
+            m.Show();
+            m.gamesControl.Reload();
+
+        }
+
+        void CheckTheme() {
+            string theme = RegistrySLS.LoadString("Theme", "System");
+            var uri = new Uri("Themes\\" + "Dark" + ".xaml", UriKind.Relative);
+            if (theme != "System")
+                uri = new Uri("Themes\\" + theme + ".xaml", UriKind.Relative);
+            ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
+            Application.Current.Resources.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+            switch (theme) {
+                case "Light":
+                    TopBar.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#818181"));
+                    break;
+                case "Ohio":
+                    TopBar.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#10dd55"));
+                    break;
+            }
         }
 
         async void LoadImage() {
@@ -89,28 +119,36 @@ namespace XGL {
         }
 
         public void MainBtn_Click(object sender, RoutedEventArgs e) {
-            storeControl.Clear();
-            newsControl.Clear();
-            gamesControl.Clear();
-            if (sender == store) {
+            if (curP != 1)
+                storeControl.Clear();
+            if (curP != 3)
+                newsControl.Clear();
+            if (curP != 2)
+                gamesControl.Clear();
+            if (sender == store & curP != 1) {
                 SetAllButtons(store);
                 CollapseAllPages(StorePg);
                 storeControl.Reload();
-            } else if (sender == news) {
-                SetAllButtons(news);
-                CollapseAllPages(NewsPg);
-                newsControl.Reload();
-            } else if (sender == games) {
+                curP = 1;
+            } else if (sender == games & curP != 2) {
                 SetAllButtons(games);
                 CollapseAllPages(GamesPg);
                 gamesControl.Reload();
-            } else if (sender == community) {
+                curP = 2;
+            } else if (sender == news & curP != 3) {
+                SetAllButtons(news);
+                CollapseAllPages(NewsPg);
+                newsControl.Reload();
+                curP = 3;
+            } else if (sender == community & curP != 4) {
                 SetAllButtons(community);
                 CollapseAllPages(CommunityPg);
-            } else if (sender == profileBtn) {
+                curP = 4;
+            } else if (sender == profileBtn & curP != 5) {
                 SetAllButtons(profileBtn);
                 CollapseAllPages(ProfilePg);
                 profileControl.Reload();
+                curP = 5;
             }
             GC.Collect();
             App.IsFirstRun = false;

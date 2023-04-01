@@ -47,7 +47,6 @@ namespace XGL.Pages.LW {
         string vAlg = "top";
         string hAlg = "right";
         int cpi = 0;
-        //List<ColorSelectorAndText> pages = new List<ColorSelectorAndText>();
 
         private void Profile_Loaded(object sender, RoutedEventArgs e) {
             Loaded -= Profile_Loaded;
@@ -143,7 +142,7 @@ namespace XGL.Pages.LW {
                 cUB_EI.Visibility = Visibility.Collapsed;
                 cUB_SI.Visibility = Visibility.Visible;
                 photoChangeBtnVis.Visibility = Visibility.Visible;
-                if(RegistrySLS.LoadBool("CustomProfileImage", false)) photoChangeBtn.Visibility = Visibility.Visible;
+                photoChangeBtn.Visibility = Visibility.Visible;
                 if (profileDescTB.Text == "INS") profileDescTB.Text = string.Empty;
                 //If can edit badges -
                 if (canMoveBadges) { 

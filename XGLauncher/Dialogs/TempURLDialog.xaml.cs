@@ -28,8 +28,7 @@ namespace XGLauncher.Dialogs {
         }
 
         void PublishImage(object sender, RoutedEventArgs e) {
-            if(string.IsNullOrEmpty(imageURL.Text) || !imageURL.Text.Contains("http://") 
-                || !imageURL.Text.Contains("https://")) {
+            if(string.IsNullOrEmpty(imageURL.Text) || !imageURL.Text.Contains("http")) {
                 imageURLT.Foreground = new SolidColorBrush(Colors.Red);
                 return;
             }

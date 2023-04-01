@@ -29,9 +29,6 @@ namespace XGL.Dialogs {
         List<string> localizes = new List<string>();
         readonly List<ScrollViewer> pages = new List<ScrollViewer>();
         readonly List<TextBlock> langBtnTexts = new List<TextBlock>();
-        readonly string[] termPaths = { Path.Combine(App.CurrentFolder, "localizations"),
-            Path.Combine(App.CurrentFolder, "cache"), Path.Combine(App.CurrentFolder, "app.publish"), 
-            Path.Combine(App.CurrentFolder, "apps"), Path.Combine(App.CurrentFolder, "logs")};
         bool isChangeCritical = false;
 
         public OptionsWindow() {
@@ -90,6 +87,7 @@ namespace XGL.Dialogs {
 
             //Appearance page.
             ap_oldstyle_TB.IsChecked = RegistrySLS.LoadBool("OldStyle", false);
+            LoadThemeButtons();
 
             //About page.
             verT.Text = App.CurrentVersion;
@@ -98,10 +96,9 @@ namespace XGL.Dialogs {
             fd_lwos_CB.IsChecked = RegistrySLS.LoadBool("LoginAuth", false);
             fd_scs_CB.IsChecked = RegistrySLS.LoadBool("Community", false);
             fd_sps_CB.IsChecked = RegistrySLS.LoadBool("PluginsButton", false);
-            //fd_uapi_CB.IsChecked = RegistrySLS.LoadBool("UseXGLAPI", true);
+            fd_uapi_CB.IsChecked = RegistrySLS.LoadBool("UseXGLAPI", true);
             fd_uplg_CB.IsChecked = RegistrySLS.LoadBool("Plugins", false);
             fd_ard_CB.IsChecked = RegistrySLS.LoadBool("DevAutoReload", false);
-            fd_spci_CB.IsChecked = RegistrySLS.LoadBool("CustomProfileImage", false);
             fd_sfu_CB.IsChecked = RegistrySLS.LoadBool("AutoUpdate", true);
             fd_ar_CB.IsChecked = RegistrySLS.LoadBool("SW_AutoReload", false);
             //Additional Dev page checks.
@@ -234,6 +231,11 @@ namespace XGL.Dialogs {
                     localizes.Add("Утилиты");
                     localizes.Add("Автоматически перезагружать при изменении настроек");
                     localizes.Add("Автоматически искать обновления");
+                    localizes.Add("Старый стиль");
+                    localizes.Add("Системная");
+                    localizes.Add("Светлая");
+                    localizes.Add("Тёмная");
+                    localizes.Add("Охае");
                     break;
                 case "en-US":
                     localizes.Add("General");
@@ -257,6 +259,11 @@ namespace XGL.Dialogs {
                     localizes.Add("Utilities");
                     localizes.Add("Automatically reload on setting changed");
                     localizes.Add("Automatically search for updates");
+                    localizes.Add("Old style");
+                    localizes.Add("System");
+                    localizes.Add("Light");
+                    localizes.Add("Dark");
+                    localizes.Add("Ohio");
                     break;
                 case "es":
                     localizes.Add("General");
@@ -280,6 +287,11 @@ namespace XGL.Dialogs {
                     localizes.Add("Utilidades");
                     localizes.Add("Reiniciar automáticamente cuando cambie la configuración");
                     localizes.Add("Buscar actualizaciones automáticamente");
+                    localizes.Add("Estilo antiguo");
+                    localizes.Add("Sistémico");
+                    localizes.Add("Luminoso");
+                    localizes.Add("Oscuro");
+                    localizes.Add("Ohio");
                     break;
                 case "ru-IM":
                     localizes.Add("Основное");
@@ -303,6 +315,11 @@ namespace XGL.Dialogs {
                     localizes.Add("Утилиты");
                     localizes.Add("Автоматически перезагружать при измѣненіи ​настроекъ");
                     localizes.Add("Автоматически искать обновленія");
+                    localizes.Add("Ветхій видъ");
+                    localizes.Add("Системная");
+                    localizes.Add("Свѣтлая");
+                    localizes.Add("Темная");
+                    localizes.Add("​Охае​");
                     break;
             }
 
@@ -333,6 +350,11 @@ namespace XGL.Dialogs {
             //Appearence
             appearanceBtn.Content = localizes[3];
             ti_Ap.Text = localizes[3];
+            ap_oldstyle.Text = localizes[21];
+            ap_theme_sys_T.Text = localizes[22];
+            ap_theme_light_T.Text = localizes[23];
+            ap_theme_dark_T.Text = localizes[24];
+            ap_theme_ohio_T.Text = localizes[25];
             //About
             aboutBtn.Content = localizes[4];
             ti_Ab.Text = localizes[4];
@@ -362,11 +384,11 @@ namespace XGL.Dialogs {
                     name = "GBarAddGame";
                     el = fd_saab_CB;
                     break;
-                /*case "fd_uapi_CB":
+                case "fd_uapi_CB":
                     name = "UseXGLAPI";
                     el = fd_uapi_CB;
                     isChangeCritical = true;
-                    break;*/
+                    break;
                 case "fd_uplg_CB":
                     name = "Plugins";
                     el = fd_uplg_CB;
@@ -375,10 +397,6 @@ namespace XGL.Dialogs {
                 case "fd_ard_CB":
                     name = "DevAutoReload";
                     el = fd_ard_CB;
-                    break;
-                case "fd_spci_CB":
-                    name = "CustomProfileImage";
-                    el = fd_spci_CB;
                     break;
                 case "fd_sfu_CB":
                     name = "AutoUpdate";
@@ -406,9 +424,7 @@ namespace XGL.Dialogs {
             }
         }
 
-        void RebootLauncher(object sender, RoutedEventArgs e) {
-            MainWindow.Instance.Reload();
-        }
+        void RebootLauncher(object sender, RoutedEventArgs e) => MainWindow.Instance.Reload();
 
         void DeleteAccount_Click(object sender, RoutedEventArgs e) {
             //TODO: Implement custom dialog system.
@@ -434,12 +450,60 @@ namespace XGL.Dialogs {
 
         void AutoStoreSearch_Click(object sender, RoutedEventArgs e) { 
             RegistrySLS.Save("AutoStoreSearch", !RegistrySLS.LoadBool("AutoStoreSearch", false));
-            MainWindow.Instance.Reload();
         }
 
-        void OldStyle_Click(object sender, RoutedEventArgs e) {
+        void OldStyle_Click(object sender, RoutedEventArgs e) { 
             RegistrySLS.Save("OldStyle", (bool)ap_oldstyle_TB.IsChecked);
+            MainWindow.Instance.curP = 0;
+            MainWindow.Instance.MainBtn_Click(MainWindow.Instance.games, null);
+            MainWindow.Instance.Reload();
+            MainWindow.Instance.gamesControl.Clear();
+            MainWindow.Instance.gamesControl.Reload();
+            MainWindow.Instance.curP = 2;
         }
+
+        void ThemeBtn_Click(object sender, RoutedEventArgs e) {
+            switch ((sender as Button).Name) {
+                case "ap_theme_sys":
+                    MessageBox.Show("This theme isn't implemented. Dark one will be used.", "XGLauncher", MessageBoxButton.OK);
+                    RegistrySLS.Save("Theme", "System");
+                    break;
+                case "ap_theme_dark":
+                    RegistrySLS.Save("Theme", "Dark");
+                    break;
+                case "ap_theme_light":
+                    RegistrySLS.Save("Theme", "Light");
+                    break;
+                case "ap_theme_ohio":
+                    RegistrySLS.Save("Theme", "Ohio");
+                    break;
+            }
+            LoadThemeButtons();
+            MainWindow.Instance.ReloadTheme();
+            MainWindow.Instance.ReloadTheme();
+        }
+
+        void LoadThemeButtons() {
+            ap_theme_sys_bg.Opacity = 0;
+            ap_theme_dark_bg.Opacity = 0;
+            ap_theme_light_bg.Opacity = 0;
+            ap_theme_ohio_bg.Opacity = 0;
+            switch (RegistrySLS.LoadString("Theme", "System")) {
+                case "System":
+                    ap_theme_sys_bg.Opacity = 0.125;
+                    break;
+                case "Dark":
+                    ap_theme_dark_bg.Opacity = 0.125;
+                    break;
+                case "Light":
+                    ap_theme_light_bg.Opacity = 0.125;
+                    break;
+                case "Ohio":
+                    ap_theme_ohio_bg.Opacity = 0.125;
+                    break;
+            }
+        }
+
     }
 
 }

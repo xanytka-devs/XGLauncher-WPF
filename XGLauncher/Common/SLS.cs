@@ -65,7 +65,8 @@ namespace XGL.SLS {
 
         public static void Setup() {
             softwareKey.CreateSubKey("XGLauncher");
-            curKey = softwareKey.OpenSubKey("XGLauncher");  
+            curKey = softwareKey.OpenSubKey("XGLauncher");
+            Save("Theme", "Dark");
         }
 
     }

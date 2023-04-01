@@ -31,6 +31,7 @@ namespace XGL.Pages.LW {
         public string Background { get; set; }
         public string Logo { get; set; }
         public int LoadStatus { get; set; } = 0;
+        public string Version { get; set; } = "1.0";
         public XGLApp(string name, int status, string link, bool custom = false) {
             Name = name;
             Status = status;
@@ -92,6 +93,8 @@ namespace XGL.Pages.LW {
                     gBarV.Opacity = 0.25;
                     LibLogo.Visibility = Visibility.Collapsed;
                     LibBG.Visibility = Visibility.Visible;
+                    gSearchBarTB.Style = (Style)TryFindResource("default");
+                    addGameBtn.Style = (Style)FindResource("BigButtonGray");
                     gBtnStyleName = "GameBtn";
                 }
                 //Parse products and check if they are on user's account.

@@ -1,11 +1,11 @@
-﻿<ResourceDictionary x:Class="XGL.Styles" xmlns:local="clr-namespace:XGL"
+﻿<ResourceDictionary x:Class="XGL.Light" xmlns:local="clr-namespace:XGL"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <FontFamily x:Key="UIFont"/>
 
     <!-- Основные стили -->
     <Style TargetType="TextBlock">
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
     </Style>
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="SnapsToDevicePixels"
@@ -23,8 +23,8 @@
         <Setter Property="AllowDrop"
           Value="true" />
         <Setter Property="FontFamily" Value="Bahnschrift Light"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="CaretBrush" Value="Black"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -33,7 +33,7 @@
                             UseLayoutRounding="True" CornerRadius="6"
                             BorderBrush="Transparent">
                         <Grid>
-                            <Border Opacity="0.5" Name="Border" Background="Black"
+                            <Border Opacity="0.5" Name="Border" Background="White"
                                     CornerRadius="4"/>
                             <ScrollViewer Margin="0" x:Name="PART_ContentHost" VerticalAlignment="Center"/>
                         </Grid>
@@ -69,7 +69,7 @@
                             Height="{TemplateBinding Height}"
                             Width="{TemplateBinding Width}">
                         <Grid>
-                            <Border Name="border" Background="Black" Opacity="0" CornerRadius="5"/>
+                            <Border Name="border" Background="White" Opacity="0" CornerRadius="5"/>
                             <ContentPresenter x:Name="contentPresenter" Focusable="False" 
                                           HorizontalAlignment="Center"
                                           Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
@@ -103,7 +103,7 @@
                                 CornerRadius="2"
                                 Margin="1"
                                 Background="Transparent"
-                                BorderBrush="#444444"
+                                BorderBrush="#999999"
                                 BorderThickness="2"/>
                         <Image x:Name="arrow" Source="\Images\checkmark.png"
                                Opacity="0"/>
@@ -115,15 +115,15 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" TargetName="checkBg"
-                                    Value="#444444"/>
+                                    Value="#999999"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Background" TargetName="checkBg"
-                                    Value="#444444"/>
+                                    Value="#999999"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" TargetName="checkBg"
-                                    Value="#252525"/>
+                                    Value="#858585"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -146,8 +146,8 @@
         <Setter Property="AllowDrop"
           Value="true" />
         <Setter Property="FontFamily" Value="Bahnschrift Light"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="CaretBrush" Value="Black"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -156,7 +156,7 @@
                             UseLayoutRounding="True" CornerRadius="6"
                             BorderBrush="Transparent">
                         <Grid>
-                            <Border Opacity="0.5" Name="Border" Background="Black"
+                            <Border Opacity="0.5" Name="Border" Background="White"
                                     CornerRadius="4"/>
                             <ScrollViewer Margin="0" x:Name="PART_ContentHost" VerticalAlignment="Center"/>
                         </Grid>
@@ -199,7 +199,7 @@
                                           Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalAlignment="Stretch"/>
-                            <Border Name="blacker" Background="Black" Opacity="0"/>
+                            <Border Name="blacker" Background="White" Opacity="0"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -214,7 +214,7 @@
     <Style x:Key="MWBtn" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="MinWidth" Value="200"/>
         <Setter Property="FontSize" Value="28"/>
@@ -232,8 +232,8 @@
                             <Border>
                                 <Border.Background>
                                     <LinearGradientBrush EndPoint="0.5,0.9" StartPoint="0.5,0">
-                                        <GradientStop Color="#00393939" Offset="0.999" x:Name="bgFadeColor"/>
-                                        <GradientStop Color="#393939" x:Name="bgColor"/>
+                                        <GradientStop Color="#00878787" Offset="0.999" x:Name="bgFadeColor"/>
+                                        <GradientStop Color="#878787" x:Name="bgColor"/>
                                     </LinearGradientBrush>
                                 </Border.Background>
                             </Border>
@@ -246,13 +246,13 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#444444"/>
+                            <Setter Property="Background" TargetName="border" Value="#999999"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#484848"/>
+                            <Setter Property="Background" TargetName="border" Value="#ababab"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#484848"/>
+                            <Setter Property="Background" TargetName="border" Value="#999999"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -262,7 +262,7 @@
 
     <!-- Часто используемые стили кнопок -->
     <Style TargetType="{x:Type Button}" x:Key="LightButton">
-        <Setter Property="Background" Value="#393939"/>
+        <Setter Property="Background" Value="#878787"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -284,7 +284,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#373737"/>
+                            <Setter Property="Background" TargetName="border" Value="#808080"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -294,7 +294,7 @@
     <Style x:Key="SmallBtn" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -314,7 +314,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#252525"/>
+                            <Setter Property="Background" TargetName="border" Value="#777777"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -322,7 +322,7 @@
         </Setter>
     </Style>
     <Style x:Key="BigButtonGray" TargetType="{x:Type Button}">
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -335,7 +335,7 @@
                             Background="Transparent"
                             SnapsToDevicePixels="True" CornerRadius="5">
                         <Grid>
-                            <Border Background="Black" Opacity="0.5" Name="Border"
+                            <Border Background="White" Opacity="0.5" Name="Border"
                                     CornerRadius="4"/>
                             <ContentPresenter x:Name="contentPresenter" Focusable="False" 
                                           HorizontalAlignment="Center"
@@ -360,9 +360,9 @@
         </Setter>
     </Style>
     <Style x:Key="OldStyleBigButtonGray" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="#353536"/>
+        <Setter Property="Background" Value="#868686"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -382,13 +382,13 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#383839"/>
+                            <Setter Property="Background" TargetName="border" Value="#878787"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" TargetName="border" Value="#303031"/>
+                            <Setter Property="Background" TargetName="border" Value="#808080"/>
                         </Trigger>
                         <Trigger Property="IsDefault" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#383839"/>
+                            <Setter Property="Background" TargetName="border" Value="#878787"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -400,7 +400,7 @@
     <Style x:Key="WindowCloseBtn" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -430,7 +430,7 @@
     <Style x:Key="WindowControlBtn" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -450,7 +450,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#393939"/>
+                            <Setter Property="Background" TargetName="border" Value="#878787"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -475,15 +475,15 @@
         <Setter Property="AllowDrop"
           Value="true" />
         <Setter Property="FontFamily" Value="Bahnschrift Light"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="CaretBrush" Value="Black"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
                     <Border Name="Border"
                             Padding="2"
                             BorderThickness="1"
-                            Background="#262627" UseLayoutRounding="True" CornerRadius="6"
+                            Background="#777777" UseLayoutRounding="True" CornerRadius="6"
                             BorderBrush="Transparent">
                         <ScrollViewer Margin="0"
                         x:Name="PART_ContentHost" VerticalAlignment="Center"/>
@@ -491,7 +491,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background"
-                                    Value="#393939"/>
+                                    Value="#878787"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity"
@@ -518,8 +518,8 @@
         <Setter Property="AllowDrop"
           Value="true" />
         <Setter Property="FontFamily" Value="Bahnschrift Light"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="CaretBrush" Value="Black"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -539,7 +539,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="EffectBorder" Value="Black"/>
+                            <Setter Property="Background" TargetName="EffectBorder" Value="White"/>
                             <Setter Property="Opacity" TargetName="EffectBorder" Value="0.125"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -563,15 +563,15 @@
         <Setter Property="AllowDrop"
           Value="true" />
         <Setter Property="FontFamily" Value="Bahnschrift Light"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="CaretBrush" Value="Black"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RichTextBox}">
                     <Border Name="Border"
                             Padding="2"
                             BorderThickness="1"
-                            Background="#262627" UseLayoutRounding="True" CornerRadius="6"
+                            Background="#777777" UseLayoutRounding="True" CornerRadius="6"
                             BorderBrush="Transparent">
                         <ScrollViewer Margin="0"
                         x:Name="PART_ContentHost" VerticalAlignment="Center"/>
@@ -579,7 +579,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background"
-                                    Value="#393939"/>
+                                    Value="#878787"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity"
@@ -600,8 +600,8 @@
         <Setter Property="MinHeight" Value="20" />
         <Setter Property="AllowDrop" Value="true" />
         <Setter Property="FontFamily" Value="Bahnschrift Light"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="CaretBrush" Value="Black"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RichTextBox}">
@@ -633,15 +633,15 @@
         <Setter Property="AllowDrop"
           Value="true" />
         <Setter Property="FontFamily" Value="Bahnschrift Light"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="CaretBrush" Value="Black"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type PasswordBox}">
                     <Border Name="Border"
                             Padding="2"
                             BorderThickness="1"
-                            Background="#262627" UseLayoutRounding="True" CornerRadius="6"
+                            Background="#777777" UseLayoutRounding="True" CornerRadius="6"
                             BorderBrush="Transparent">
                         <ScrollViewer Margin="0"
                         x:Name="PART_ContentHost" VerticalAlignment="Center"/>
@@ -649,7 +649,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background"
-                                    Value="#393939"/>
+                                    Value="#878787"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity"
@@ -680,8 +680,8 @@
         <Setter Property="AcceptsTab"
           Value="true" />
         <Setter Property="FontFamily" Value="Bahnschrift Light"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="CaretBrush" Value="Black"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -689,7 +689,7 @@
                         <Border Name="Border"
                             Padding="2"
                             BorderThickness="1"
-                            Background="Black" UseLayoutRounding="True" CornerRadius="6"
+                            Background="White" UseLayoutRounding="True" CornerRadius="6"
                             BorderBrush="Transparent" Opacity="0.125"/>
                         <Border
                             Padding="2"
@@ -703,11 +703,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background"
-                                    Value="#393939"/>
+                                    Value="#878787"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background"
-                                    Value="#252525"/>
+                                    Value="#777777"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -717,8 +717,8 @@
 
     <!-- Стили дополнительных компонентов -->
     <Style x:Key="GrayToggle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="#262627"/>
-        <Setter Property="BorderBrush" Value="#262627"/>
+        <Setter Property="Background" Value="#777777"/>
+        <Setter Property="BorderBrush" Value="#777777"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -733,8 +733,8 @@
                                 Grid.Column="0"
                                 CornerRadius="6"
                                 Margin="1"
-                                Background="#262627"
-                                BorderBrush="#262627"
+                                Background="#777777"
+                                BorderBrush="#777777"
                                 BorderThickness="2"/>
                         <Image x:Name="arrow" Source="\Images\eye.png"
                                Opacity="1" Margin="5"/>
@@ -744,7 +744,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" TargetName="checkBg"
-                                    Value="#393939"/>
+                                    Value="#878787"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Opacity" TargetName="arrow" Value="0"/>
@@ -768,7 +768,7 @@
                 <ControlTemplate TargetType="CheckBox">
                     <StackPanel Orientation="Horizontal">
                         <Grid >
-                            <Border x:Name="border" Width="45" Height="20" Background="#252525" CornerRadius="10" Margin="5,0"/>
+                            <Border x:Name="border" Width="45" Height="20" Background="#777777" CornerRadius="10" Margin="5,0"/>
                             <Border x:Name="button" Height="25" Width="25" CornerRadius="12.5" HorizontalAlignment="Left"/>
                         </Grid>
                         <ContentPresenter x:Name="content" Margin="10,0,0,0" Content="{TemplateBinding Content}" VerticalAlignment="Center"/>
@@ -795,7 +795,7 @@
                                 <RemoveStoryboard BeginStoryboardName="leftt"/>
                                 <BeginStoryboard Storyboard="{StaticResource right}" x:Name="rightt"/>
                             </Trigger.ExitActions>
-                            <Setter TargetName="button" Property="Background" Value="#424242"/>
+                            <Setter TargetName="button" Property="Background" Value="#949494"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
                             <Trigger.ExitActions>
@@ -803,7 +803,7 @@
                                 <BeginStoryboard Storyboard="{StaticResource left}" x:Name="leftt"/>
                             </Trigger.ExitActions>
                             <Setter TargetName="border" Property="Background" Value="#F49B36"/>
-                            <Setter TargetName="button" Property="Background" Value="#424242"/>
+                            <Setter TargetName="button" Property="Background" Value="#949494"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -865,8 +865,8 @@
                             CornerRadius="5"
                             Width="{TemplateBinding Width}"
                             Height="{TemplateBinding Height}"
-                            Background="#393939" 
-                            BorderBrush="#393939">
+                            Background="#878787" 
+                            BorderBrush="#878787">
                         <ContentPresenter Margin="4"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top" />
@@ -963,7 +963,7 @@
             </Grid.RowDefinitions>
             <Border Grid.RowSpan="3"
             CornerRadius="2"
-            Background="#404040" />
+            Background="#909090" />
             <RepeatButton Grid.Row="0"
                   Style="{StaticResource ScrollBarLineButton}"
                   Height="18"
@@ -974,7 +974,7 @@
            IsDirectionReversed="true">
                 <Track.Thumb>
                     <Thumb Style="{StaticResource ScrollBarThumb}"
-               Margin="1,0,1,0" Background="#545454"/>
+               Margin="1,0,1,0" Background="#adadad"/>
                 </Track.Thumb>
             </Track>
         </Grid>
@@ -1004,7 +1004,7 @@
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <Thumb Style="{StaticResource ScrollBarThumb}"
-               Margin="0,1,0,1" Background="Black"/>
+               Margin="0,1,0,1" Background="White"/>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource ScrollBarPageButton}"
@@ -1048,8 +1048,8 @@
 
     <!-- Стили окон -->
     <Style x:Key="XGLauncherWindow" TargetType="{x:Type Window}">
-        <Setter Property="BorderBrush" Value="#303031"/>
-        <Setter Property="Background" Value="#303031"/>
+        <Setter Property="BorderBrush" Value="#818181"/>
+        <Setter Property="Background" Value="#818181"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
@@ -1106,7 +1106,7 @@
                                 </DockPanel.Resources>
                                 <TextBlock Margin="5, 2, 0, 0" VerticalAlignment="Center"
                                            DockPanel.Dock="Left" FontWeight="Bold"
-                                           Foreground="White"
+                                           Foreground="Black"
                                            Text="{TemplateBinding Title}"/>
                                 <Button Name="CloseBtn" Click="CloseBtn_Click" Style="{StaticResource CloseBtn}">
                                     <Button.Content>
@@ -1119,7 +1119,7 @@
                                 </Button>
                                 <Button Name="RestoreBtn" Click="RestoreBtn_Click">
                                     <Button.Content>
-                                        <Rectangle Stroke="White"
+                                        <Rectangle Stroke="Black"
                                                    StrokeThickness="1" Width="10" Height="8"
                                                    Margin="0, 3, 0, 0"
                                                    VerticalAlignment="Center" 
@@ -1128,7 +1128,7 @@
                                 </Button>
                                 <Button Name="MinimizeBtn" Click="MinimizeBtn_Click">
                                     <Button.Content>
-                                        <Rectangle Stroke="White"
+                                        <Rectangle Stroke="Black"
                                                    StrokeThickness="1" Width="10" Height="1"
                                                    Margin="0, 6, 0, 0"
                                                    VerticalAlignment="Center" 
@@ -1143,8 +1143,8 @@
         </Setter>
     </Style>
     <Style x:Key="XGLauncherMainWindow" TargetType="{x:Type Window}">
-        <Setter Property="BorderBrush" Value="#303031"/>
-        <Setter Property="Background" Value="#303031"/>
+        <Setter Property="BorderBrush" Value="#818181"/>
+        <Setter Property="Background" Value="#818181"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
@@ -1201,7 +1201,7 @@
                                 </DockPanel.Resources>
                                 <TextBlock Margin="5, 2, 0, 0" VerticalAlignment="Center"
                                            DockPanel.Dock="Left" FontWeight="Bold"
-                                           Foreground="White"
+                                           Foreground="Black"
                                            Text="{TemplateBinding Title}"/>
                                 <Button Name="CloseBtn" Click="CloseBtn_Click" Style="{StaticResource CloseBtn}">
                                     <Button.Content>
@@ -1214,7 +1214,7 @@
                                 </Button>
                                 <Button Name="RestoreBtn" Click="RestoreBtn_Click">
                                     <Button.Content>
-                                        <Rectangle Stroke="White"
+                                        <Rectangle Stroke="Black"
                                                    StrokeThickness="1" Width="10" Height="8"
                                                    Margin="0, 3, 0, 0"
                                                    VerticalAlignment="Center" 
@@ -1223,7 +1223,7 @@
                                 </Button>
                                 <Button Name="MinimizeBtn" Click="MinimizeBtn_Click">
                                     <Button.Content>
-                                        <Rectangle Stroke="White"
+                                        <Rectangle Stroke="Black"
                                                    StrokeThickness="1" Width="10" Height="1"
                                                    Margin="0, 6, 0, 0"
                                                    VerticalAlignment="Center" 
@@ -1238,9 +1238,9 @@
         </Setter>
     </Style>
     <Style x:Key="XGLauncherDialog" TargetType="{x:Type Window}">
-        <Setter Property="BorderBrush" Value="#323233"/>
+        <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="ResizeMode" Value="NoResize"/>
-        <Setter Property="Background" Value="#323233"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
@@ -1288,7 +1288,7 @@
                                 </DockPanel.Resources>
                                 <TextBlock Margin="5, 2, 0, 0" VerticalAlignment="Center"
                                            DockPanel.Dock="Left" FontWeight="Bold"
-                                           Foreground="White"
+                                           Foreground="Black"
                                            Text="{TemplateBinding Title}"/>
                                 <Button Name="CloseBtn" Click="CloseBtn_Click" Style="{StaticResource CloseBtn}">
                                     <Button.Content>

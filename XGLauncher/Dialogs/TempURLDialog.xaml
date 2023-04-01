@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         Title="URL Dialog" Height="140" Width="400">
     <Grid>
-        <TextBlock Name="imageURLT" Text="Image (URL)" VerticalAlignment="Top" Margin="5, 15, 5, 5"/>
+        <TextBlock Name="imageURLT" Text="Image (URL) | Supports any picture (PNG, JPG, etc.)" VerticalAlignment="Top" Margin="5, 15, 5, 5"/>
         <TextBox Name="imageURL" VerticalAlignment="Top" Margin="5, 40, 5, 5" Height="30"/>
         <Button Name="save" Click="PublishImage" VerticalAlignment="Bottom" Margin="5" Height="30"
                 Style="{StaticResource BigButtonGray}" HorizontalAlignment="Right" Width="120"

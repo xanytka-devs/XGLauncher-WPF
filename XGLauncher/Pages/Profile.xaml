@@ -43,7 +43,7 @@
                                    FontWeight="Bold" VerticalAlignment="Center" Height="132"/>
                         <TextBox Name="profileTB" FontSize="72" Foreground="White" Text="Profile"
                                  Style="{StaticResource EditBox}" Visibility="Collapsed"
-                                 Margin="0, 0, 40, 50" VerticalAlignment="Top"/>
+                                 Margin="0, 0, 50, 30" VerticalAlignment="Top"/>
                         <TextBlock Name="profileIDT" FontSize="32" Foreground="White" Text="#null"
                                    Margin="0,74,280,0" Opacity="0.25"/>
                     </Grid>

@@ -26,7 +26,7 @@
                 <TextBlock Name="passwordT" Text="Password" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
                 <TextBlock Name="passwordWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="78,-25,0,50" Opacity="0"/>
             </Grid>
-            <Button Name="LoginBtn" Content="Login" Height="50" Style="{StaticResource BigButton}" FontWeight="Bold" FontSize="18" Margin="25, 0, 25, 100" 
+            <Button Name="LoginBtn" Content="Login" Height="50" Style="{StaticResource OldStyleBigButtonGray}" FontWeight="Bold" FontSize="18" Margin="25, 0, 25, 100" 
                 VerticalAlignment="Bottom" Click="LoginBtn_Click"/>
             <!--<Button Content="Login with..." VerticalAlignment="Bottom" Background="#393939" 
                     Height="50" Margin="25, 0, 25, 40" FontWeight="Bold"/> -->
@@ -80,7 +80,7 @@
                 <TextBlock Name="passwordRT" Text="Password" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50" Grid.ColumnSpan="2"/>
                 <TextBlock Name="passwordRWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="125,-25,0,50" Opacity="0"/>
             </Grid>
-            <Button Name="RegisterBtn" Content="Register" Height="50" Style="{StaticResource BigButton}" FontWeight="Bold" FontSize="18" Margin="25, 0, 25, 40" 
+            <Button Name="RegisterBtn" Content="Register" Height="50" Style="{StaticResource OldStyleBigButtonGray}" FontWeight="Bold" FontSize="18" Margin="25, 0, 25, 40" 
                 VerticalAlignment="Bottom" Click="RegisterBtn_Click"/>
             <Button Style="{StaticResource WindowControlBtn}" Content="Login" 
                     HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="sw_login"
