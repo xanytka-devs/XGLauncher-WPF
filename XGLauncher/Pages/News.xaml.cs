@@ -16,44 +16,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using XGL.Networking.Database;
-using static Google.Protobuf.WellKnownTypes.Field.Types;
-using static XGL.Networking.Database.Database;
+using XGL.Networking;
+using XGL.SLS;
 
 namespace XGL.Pages.LW {
-
-    public enum NewsType {
-        Announcement,
-        Update,
-        MajorUpdate,
-        Build,
-        Alpha,
-        Beta,
-        Release,
-    }
-
-    public class NewsBase {
-
-        public long ID { get; private set; }
-        public long ProductID { get; private set; }
-        public string Name { get; set; }
-        public string Body { get; private set; }
-        public string Icon { get; private set; }
-        public string MainIcon { get; private set; }
-        public DateTime CreationDate { get; private set; }
-        public int Likes { get; private set; }
-
-        public NewsBase(long iD, long productID, string name, string body, DateTime creationDate, int likes, string icon, string mainIcon) {
-            ID = iD;
-            ProductID = productID;
-            Name = name;
-            Body = body;
-            CreationDate = creationDate;
-            Likes = likes;
-            Icon = icon;
-            MainIcon = mainIcon;
-        }
-    }
 
     /// <summary>
     /// Логика взаимодействия для News.xaml
@@ -63,8 +29,9 @@ namespace XGL.Pages.LW {
 
         readonly List<StackPanel> panels = new List<StackPanel>();
         readonly List<Button> newsBtns = new List<Button>();
-        readonly List<NewsBase> news = new List<NewsBase>();
+        List<NewsBase> news = new List<NewsBase>();
         readonly List<Image> newsBtnImages = new List<Image>();
+        internal int tabClicks = 2;
 
         public News() {
             InitializeComponent();
@@ -76,49 +43,31 @@ namespace XGL.Pages.LW {
         }
 
         public void Reload() {
+            if (RegistrySLS.LoadBool("DClickToReloadTab", false)) {
+                if (tabClicks != 2) return;
+                Clear();
+                tabClicks = 0;
+            }
             //Get data from database.
-            LoadDataFromDB();
+            news = Database.GetNewsItems(Database.GetAppIDs());
             //Generate news buttons.
             GenerateNewsButtons();
         }
 
         public void Clear() {
+            if (RegistrySLS.LoadBool("DClickToReloadTab", false))
+                if (tabClicks != 2) return;
             for (int i = 0; i < panels.Count; i++)
                 panels[i].Children.Clear();
             newsBtns.Clear();
             newsBtnImages.Clear();
             news.Clear();
+            BackToMainPage(null, null);
         }
 
-        void LoadDataFromDB() {
-            string ids = GetAppIDs();
-            MySqlCommand command = new MySqlCommand($"SELECT * FROM `xgl_news` WHERE `productID` IN ({ids})", Connection);
-            if(ids == "*") command = new MySqlCommand($"SELECT * FROM `xgl_news`", Connection);
-            else if (ids != "*" && ids != "-" && ids.Length > 0) command = new MySqlCommand($"SELECT * FROM `xgl_news` WHERE `productID` IN (0,{ids})", Connection);
-            else if(ids == "-") command = new MySqlCommand($"SELECT * FROM `xgl_news` WHERE `productID` = 0", Connection);
-            try  {
-                //Open connection and read everything, what needed.
-                OpenConnection();
-                MySqlDataReader dr = command.ExecuteReader();
-                while (dr.Read()) {
-                    news.Add(new NewsBase(dr.GetInt64("id"),
-                                          dr.GetInt64("productID"),
-                                          dr.GetString("name"),
-                                          dr.GetString("body"),
-                                          dr.GetDateTime("createdOn"),
-                                          dr.GetInt32("likes"),
-                                          dr.GetString("icon"),
-                                          dr.GetString("mainIcon")));
-                }
-                //Close reader and connection.
-                dr.Close();
-                CloseConnection();
-            }
-            catch (Exception ex) {
-                //TODO: Implement custom dialog system.
-                MessageBox.Show(ex.Message);
-                return;
-            }
+        public void BackToMainPage(object sender, RoutedEventArgs e) {
+            newsPost.Visibility = Visibility.Collapsed;
+            BGImage.Source = null;
         }
 
         void GenerateNewsButtons() {
@@ -183,19 +132,9 @@ namespace XGL.Pages.LW {
             Scroll_Changed(ScrollBar, null);
         }
 
-        public void ApplyLocalization(string localization) {
+        public void ApplyLocalization() {
 
-            switch (localization) {
-                case "ru-RU":
-
-                    break;
-                case "en-US":
-
-                    break;
-                case "es":
-
-                    break;
-            }
+            //LocalizationManager l = LocalizationManager.I;
 
         }
 
@@ -206,7 +145,7 @@ namespace XGL.Pages.LW {
 
         private void Scroll_Changed(object sender, ScrollChangedEventArgs e) {
             for (int i = 0; i < newsBtns.Count; i++) {
-                if (Utils.IsControlVisible(newsBtns[i])) {
+                if (Utils.I.IsControlVisible(newsBtns[i], newsBtns[i].Parent as FrameworkElement)) {
                     LoadImageBtn(i, newsBtnImages[i]);
                 }
             }
@@ -215,7 +154,7 @@ namespace XGL.Pages.LW {
         async void LoadImage(int i) {
             string nameOfImg = Path.Combine(App.CurrentFolder, "cache", news[i].Icon.Split('{')[0] + ".jpg");
             if (!File.Exists(nameOfImg))
-                await Utils.DownloadFileAsync(news[i].Icon.Split('{')[1], nameOfImg);
+                await Utils.I.DownloadFileAsync(news[i].Icon.Split('{')[1], nameOfImg);
             BitmapImage logo = new BitmapImage();
             logo.BeginInit();
             logo.UriSource = new Uri(nameOfImg);
@@ -227,9 +166,10 @@ namespace XGL.Pages.LW {
         async void LoadImageBtn(int i, Image img) {
             string nameOfImg = Path.Combine(App.CurrentFolder, "cache", news[i].MainIcon.Split('{')[0] + ".jpg");
             if (!File.Exists(nameOfImg))
-                await Utils.DownloadFileAsync(news[i].MainIcon.Split('{')[1], nameOfImg);
-            BitmapImage logo = new BitmapImage();
-            logo.CacheOption = BitmapCacheOption.OnLoad;
+                await Utils.I.DownloadFileAsync(news[i].MainIcon.Split('{')[1], nameOfImg);
+            BitmapImage logo = new BitmapImage {
+                CacheOption = BitmapCacheOption.OnLoad
+            };
             logo.BeginInit();
             logo.UriSource = new Uri(nameOfImg);
             logo.EndInit();

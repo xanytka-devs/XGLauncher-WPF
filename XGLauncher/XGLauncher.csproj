@@ -58,7 +58,7 @@
     <NoWarn>XDG0062</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\xgl-wip.ico</ApplicationIcon>
+    <ApplicationIcon>Images\xgl-main.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
@@ -103,6 +103,7 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -122,11 +123,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApplicationSData.cs" />
-    <Compile Include="Common\Authencation\Auth.cs" />
+    <Compile Include="Common\Auth.cs" />
     <Compile Include="Common\Database.cs" />
     <Compile Include="Common\FileDownloader.cs" />
     <Compile Include="Common\Game.cs" />
     <Compile Include="Common\LazyDownload.cs" />
+    <Compile Include="Common\LocalizationManager.cs" />
     <Compile Include="Common\SLS.cs" />
     <Compile Include="Common\ThemeManager.cs" />
     <Compile Include="Common\Utils.cs" />
@@ -158,29 +160,35 @@
     <Compile Include="Pages\Community.xaml.cs">
       <DependentUpon>Community.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Downloads.xaml.cs">
+      <DependentUpon>Downloads.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Friends.xaml.cs">
+      <DependentUpon>Friends.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Games.xaml.cs">
       <DependentUpon>Games.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\News.xaml.cs">
       <DependentUpon>News.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MyProfile.xaml.cs">
+      <DependentUpon>MyProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Profile.xaml.cs">
       <DependentUpon>Profile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Publisher.xaml.cs">
+      <DependentUpon>Publisher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Store.xaml.cs">
       <DependentUpon>Store.xaml</DependentUpon>
     </Compile>
     <Compile Include="Styles.xaml.cs">
       <DependentUpon>Styles.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Themes\Dark.xaml.cs">
-      <DependentUpon>Dark.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Themes\Light.xaml.cs">
-      <DependentUpon>Light.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Themes\Ohio.xaml.cs">
-      <DependentUpon>Ohio.xaml</DependentUpon>
     </Compile>
     <Page Include="Dialogs\DownloadGameDialog.xaml">
       <SubType>Designer</SubType>
@@ -230,6 +238,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Downloads.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Friends.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Games.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -238,7 +254,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\MyProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Profile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Publisher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -247,18 +275,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Dark.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Light.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Ohio.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -302,9 +318,6 @@
     <Resource Include="Images\xgl-wip.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\xgl-wip.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.8 %28x86 и x64%29</ProductName>
@@ -327,7 +340,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\moderator.png" />
-    <Resource Include="Images\shliapnik.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\checkmark.png" />
@@ -353,11 +365,6 @@
     <Resource Include="Images\remove.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\LangIcons\en-us.png" />
-    <Resource Include="Images\LangIcons\es.png" />
-    <Resource Include="Images\LangIcons\ru-ru.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\brush.png" />
     <Resource Include="Images\download.png" />
   </ItemGroup>
@@ -369,10 +376,6 @@
     <Resource Include="Images\AuthIcons\youtube.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Gradients\RB Gradient Background 045.jpg" />
-    <Resource Include="Images\Gradients\RB Gradient Background 397.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\no_wi_fi.png" />
   </ItemGroup>
   <ItemGroup>
@@ -381,9 +384,6 @@
   <ItemGroup>
     <Resource Include="Images\heart.png" />
     <Resource Include="Images\search.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\LangIcons\ru_im.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\loading.gif" />
@@ -421,6 +421,20 @@
     <Resource Include="Images\picture.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\xgl-main.ico" />
+    <None Include="xgl.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Images\email.png" />
+    <Resource Include="Images\plain.jpg" />
+    <Resource Include="Images\RB Gradient Background 397.jpg" />
+    <Resource Include="Images\LangIcons\en-us.png" />
+    <Resource Include="Images\LangIcons\ru-ru.jpg" />
+    <Resource Include="Images\LangIcons\ru-im.jpg" />
+    <Resource Include="Images\LangIcons\es.jpg" />
+    <Resource Include="Images\def_icon.png" />
+    <Resource Include="Images\premium.png" />
+    <Resource Include="Images\promocode.png" />
     <Content Include="Libs\MySql.Data.dll" />
   </ItemGroup>
   <ItemGroup>

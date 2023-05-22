@@ -6,10 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using XGL.Networking.Authencation;
-using XGL.Networking.Database;
+using XGL.Networking;
 using XGL.SLS;
 
 namespace XGL.Dialogs.Login {
@@ -27,29 +30,44 @@ namespace XGL.Dialogs.Login {
         public LoginWindow() {
             InitializeComponent();
             Instance = this;
-            ApplyLocalization(RegistrySLS.LoadString("Language"));
+            ApplyLocalization();
             Loaded += LoginWindow_Loaded;
         }
 
-        private void LoginWindow_Loaded(object _sender, RoutedEventArgs _e) {
+        private async void LoginWindow_Loaded(object _sender, RoutedEventArgs _e) {
             Loaded -= LoginWindow_Loaded;
             CheckForLWButtons();
-            if (!App.OnlineMode) {
+            if (!App.LoginDataNotSaved) {
                 if (!Database.TryOpenConnection()) {
                     App.RunMySQLCommands = false;
-                    ErrorBox box = new ErrorBox() {
+                    while (!LocalizationManager.I.LocalLoaded()) await Task.Delay(25);
+                    ErrorBox box = new ErrorBox {
                         ErrorTitle = warnings[0],
                         ErrorDescription = warnings[1],
                         ErrorImage = ErrorBox.ErrorBoxEType.Network,
                     };
-                    //box.ErrorButton1 = new ErrorBox.ErrorBoxButton("Retry", false, true, (object sender,
-                    //RoutedEventArgs e) => { Process.Start(Path.Combine(Environment.CurrentDirectory,
-                    //"XGLauncher.exe")); box.Close(); });
-                    //box.ErrorButton2 = new ErrorBox.ErrorBoxButton("Offline mode", true, false, (object _sender,
-                    //RoutedEventArgs _e) => { box.Close(); });
+                    box.ErrorButton1 = new ErrorBox.ErrorBoxButton("Retry", false, true,
+                        (object sender, RoutedEventArgs e) => {
+                            Process.Start(Path.Combine(Environment.CurrentDirectory, "XGLauncher.exe"));
+                            box.Close();
+                        }
+                    );
+                    box.ErrorButton2 = new ErrorBox.ErrorBoxButton("Offline mode", true, false, (object sender, RoutedEventArgs e) => {
+                        ProcessStartInfo xglom = new ProcessStartInfo {
+                            UseShellExecute = true,
+                            FileName = Path.Combine(Environment.CurrentDirectory, "XGLauncher.exe"),
+                            Arguments = "-offline"
+                        };
+                        box.Close();
+                    });
                     box.Show();
                     Close();
                     return;
+                }
+            } else {
+                if (!Database.AccountEmailVerified(App.CurrentAccount)) {
+                    LoginPage.Visibility = Visibility.Collapsed;
+                    EmaiNotVerPage.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -106,10 +124,15 @@ namespace XGL.Dialogs.Login {
                     RegistrySLS.Save("Description", Database.GetValue(acc, "description"));
                     App.CurrentAccount = acc;
                     App.AccountData = new string[] { acc.Login, acc.Password };
+                    if (!Database.AccountEmailVerified(App.CurrentAccount)) {
+                        LoginPage.Visibility = Visibility.Collapsed;
+                        EmaiNotVerPage.Visibility = Visibility.Visible;
+                        return;
+                    }
                     NextWindow(acc);
                     return;
                 } else
-                    MessageBox.Show("This account isn't avaible currently. Please write to support@xan.ru if you have questions.");
+                    MessageBox.Show("This account isn't avaible currently. Please write to support@xanytka.ru if you have questions.");
             }
 
             LoginBtn.IsEnabled = true;
@@ -127,12 +150,6 @@ namespace XGL.Dialogs.Login {
             loginWarn.Opacity = 100;
             passwordWarn.Text = warnings[7];
             loginWarn.Text = warnings[8];
-
-        }
-
-        void TB_TextChanged(object sender, TextChangedEventArgs e) {
-
-
 
         }
 
@@ -224,11 +241,8 @@ namespace XGL.Dialogs.Login {
             }
 
             if (invalid) { return; }
-
             UIStabilize();
-
             string _pass = Base64.ToBase64String(Encoding.ASCII.GetBytes(passwordRTB.Text));
-
             Account acc = new Account(loginRTB.Text, _pass);
 
             if (!Database.AccountExisting(acc)) {
@@ -240,7 +254,13 @@ namespace XGL.Dialogs.Login {
                     App.CurrentAccount = acc;
                     App.AccountData = new string[] { acc.Login, acc.Password };
                     App.IsFirstRun = true;
-                    NextWindow(acc);
+                    if (EmailAuthencator.SendVerificationMsg(emailTB.Text)) {
+                        RegisterPage.Visibility = Visibility.Collapsed;
+                        EmailVerificationPage.Visibility = Visibility.Visible;
+                    } else {
+                        emailWarn.Opacity = 100;
+                        emailWarn.Text = warnings[9];
+                    }
                 }
             } else {
 
@@ -267,12 +287,14 @@ namespace XGL.Dialogs.Login {
         void NextWindow(Account acc) {
             //Hides this window.
             Hide();
-            if (Utils.NotEmptyAndNotNotSet(App.CurrentAccount.Password)) {
+            if (Utils.I.NotEmptyAndNotINS(App.CurrentAccount.Password)) {
                 //Save username and password to settings.
                 App.AccountData = new string[] { acc.Login, acc.Password};
                 App.CurrentAccount = new Account(App.AccountData[0], App.AccountData[1]);
                 RegistrySLS.Save("LastID", Database.GetID(acc));
                 Database.SetValue(Database.DBDataType.DT_ACTIVITY, 1);
+                if(!string.IsNullOrEmpty(EmailAuthencator.VerificationCode)) 
+                    Database.SetValue(Database.DBDataType.DT_EMAILCODE, "1");
             }
             //Opens the launcher.
             MainWindow.Show(this);
@@ -336,7 +358,7 @@ namespace XGL.Dialogs.Login {
 
         }
 
-        public void ReturnRequest(string c, WebResponse response) {
+        public void ReturnRequest(string c/*, WebResponse response*/) {
             Activate();
             string nl = string.Empty;
             string np = string.Empty;
@@ -371,84 +393,162 @@ namespace XGL.Dialogs.Login {
 
         void PassChanged_T(object sender, TextChangedEventArgs e) => passwordTBH.Password = passwordTB.Text;
 
-        public void ApplyLocalization(string localization) {
+        public async void ApplyLocalization() {
 
-            switch (localization) {
-                case "ru-RU":
-                    loginRT.Text = "Логин";
-                    loginT.Text = "Логин";
-                    nicknameT.Text = "Ник";
-                    emailT.Text = "Почта";
-                    passwordRT.Text = "Пароль";
-                    passwordT.Text = "Пароль";
-                    RegisterBtn.Content = "Регистрация";
-                    sw_login.Content = "Войти в аккаунт";
-                    swith_to_reg.Content = "Регистрация";
-                    LoginBtn.Content = "Войти в аккаунт";
-                    warnings = new string[] {
-                        "Ошибка сети", "Произошла ошибка при подключении к датабазе. Пожалуйста попробуйте позже.", "Нет логина",
-                            "Нет пароля", "Запрещённый логин", "Запрещённый пароль", "Нет почты", "Неправильный пароль", 
-                            "Неправильный логин", "Запрещённая почта", "Слишком длинный логин", "Слишком длинная почта", "Слишком длинный ник",
-                            "Слишком длинный пароль", "Нет ника", "Слишком малая почта", "Слишком малый логин", "Слишком малый пароль", 
-                            "Слишком малый ник", "Запрещённый ник" };
-                    break;
-                case "en-US":
-                    loginRT.Text = "Login";
-                    loginT.Text = "Login";
-                    nicknameT.Text = "Nickname";
-                    emailT.Text = "Email";
-                    passwordRT.Text = "Password";
-                    passwordT.Text = "Password";
-                    RegisterBtn.Content = "Register";
-                    sw_login.Content = "Login";
-                    swith_to_reg.Content = "Register";
-                    LoginBtn.Content = "Login";
-                    warnings = new string[] {
-                        "Network error", "Some error occured while trying to connect to database. Please try again later.", "No login",
-                            "No password", "Forbidden login", "Forbidden password", "No email", "Wrong password", "Wrong login", "Forbidden email",
-                            "Too long login", "Too long email", "Too long username", "Too long password", "No username", "Too short email", 
-                            "Too short login", "Too short password", "Too short username", "Forbidden username" };
-                    break;
-                case "es":
-                    loginRT.Text = "Inicio de sesión";
-                    loginT.Text = "Inicio de sesión";
-                    nicknameT.Text = "Título";
-                    emailT.Text = "Correo";
-                    passwordRT.Text = "Contraseña";
-                    passwordT.Text = "Contraseña";
-                    RegisterBtn.Content = "Registro";
-                    sw_login.Content = "Iniciar sesión";
-                    swith_to_reg.Content = "Registro";
-                    LoginBtn.Content = "Iniciar sesión";
-                    warnings = new string[] {
-                        "Error de red", "Se Produjo un error al conectarse a la base de datos. Por favor intente más tarde.", "Sin Inicio de sesión",
-                            "Sin contraseña", "Inicio de sesión Prohibido", "Contraseña Prohibida", "sin correo", "Contraseña Incorrecta",
-                            "Inicio de sesión incorrecto"," correo Prohibido"," Inicio de sesión Demasiado largo", "Correo demasiado largo",
-                            "apodo Demasiado largo", "Contraseña demasiado larga", "Sin rango", "Correo demasiado pequeño",
-                            "Inicio de sesión Demasiado pequeño", "Contraseña Demasiado pequeña", "Apodo Demasiado pequeño" , "Apodo Prohibido"};
-                    break;
-                case "ru-IM":
-                    loginRT.Text = "Логинъ";
-                    loginT.Text = "Логинъ";
-                    nicknameT.Text = "Званіе";
-                    emailT.Text = "Почта";
-                    passwordRT.Text = "Пароль";
-                    passwordT.Text = "Пароль";
-                    RegisterBtn.Content = "Регистрація";
-                    sw_login.Content = "Войти въ аккаунтъ";
-                    swith_to_reg.Content = "Регистрація";
-                    LoginBtn.Content = "Войти въ аккаунтъ";
-                    warnings = new string[] {
-                        "Ошибка сѣти", "Произошла ошибка при подключеніи къ датабазе. Пожалуйста попробуйте позже.", "Нѣтъ ​логина​",
-                            "Нѣтъ пароля", "Запрещенный ​логинъ​", "Запрещенный пароль", "Нѣтъ почты", "Неправильный пароль",
-                            "Неправильный ​логинъ​", "Запрещенная почта", "Слишкомъ длинный ​логинъ​", "Слишкомъ длинная почта", "Слишкомъ длинный никъ",
-                            "Слишкомъ длинный пароль", "Нѣтъ ника", "Слишкомъ малая почта", "Слишкомъ малый ​логинъ​", 
-                        "Слишкомъ малый пароль", "Слишкомъ малый никъ", "Запрещенный никъ"};
-                    break;
-            }
+            LocalizationManager l = LocalizationManager.I;
+
+            while (!l.LocalLoaded()) await Task.Delay(25);
+
+            loginT.Text = loginRT.Text = l.dictionary["gn.log"];
+            swith_to_reset_pass.Content = l.dictionary["gn.restore"];
+            nicknameT.Text = l.dictionary["lw.nick"];
+            passwordRT.Text = passwordT.Text = l.dictionary["gn.pass"];
+            RegisterBtn.Content = swith_to_reg.Content = l.dictionary["lw.reg"];
+            LoginBtn.Content = sw_login.Content = l.dictionary["lw.log"];
+            warnings = l.dictionary["lw.warns"].Split('|');
+            changeEmailT.Text = l.dictionary["lw.chemail.t"];
+            changeEmailD.Text = l.dictionary["lw.chemail.d"];
+            emailChangeB.Content = verificationCodeB.Content =
+            wrongDataB.Content = resetPassVerCodeB.Content = resetPassB.Content
+            = l.dictionary["gn.continue"];
+            sw_veremail.Content = sw_verResetPass.Content = sw_resetPass.Content
+            = l.dictionary["gn.back"];
+            emailVerT.Text = emailVerCT.Text = l.dictionary["lw.verify.t"];
+            emailVerD.Text = l.dictionary["lw.verify.d"];
+            emailVerCD.Text = l.dictionary["lw.verify.c.d"];
+            warnEmailVer.Text = resetPassWarn.Text = l.dictionary["lw.verify.c.warn"];
+            sw_email.Content = l.dictionary["lw.verify.c.nc"];
+            resetPassT.Text = resetPassVerCT.Text = l.dictionary["lw.resetpass.t"];
+            resetPassD.Text = l.dictionary["lw.resetpass.d"];
+            resetPassVerCD.Text = l.dictionary["lw.resetpass.c.d"];
+            rpNewPassT.Text = l.dictionary["lw.newpass"];
+            rpVCT.Text = l.dictionary["lw.vercode"];
+            emailT.Text = rpEmailT.Text = l.dictionary["gn.mail"];
 
         }
 
+        void EmailVerificationTB_Lost(object sender, RoutedEventArgs e) {
+            if(string.IsNullOrEmpty(verificationCodeTB.Text)) {
+                verificationCodeTB.Text = "00000";
+                verificationCodeTB.Foreground = new SolidColorBrush(Colors.Gray);
+            }
+            if (string.IsNullOrEmpty(resetPassVerCodeTB.Text)) {
+                resetPassVerCodeTB.Text = "00000";
+                resetPassVerCodeTB.Foreground = new SolidColorBrush(Colors.Gray);
+            }
+        }
+        void EmailVerificationTB_Gain(object sender, RoutedEventArgs e) {
+            if (verificationCodeTB.Text == "00000")
+                verificationCodeTB.Text = string.Empty;
+            verificationCodeTB.Foreground = new SolidColorBrush(Colors.White);
+            if (resetPassVerCodeTB.Text == "00000")
+                resetPassVerCodeTB.Text = string.Empty;
+            resetPassVerCodeTB.Foreground = new SolidColorBrush(Colors.White);
+        }
+        void WrongEmailBtn_Click(object sender, RoutedEventArgs e) {
+            EmailVerificationPage.Visibility = Visibility.Collapsed;
+            EmailWrongPage.Visibility = Visibility.Visible;
+            sw_veremail.Visibility = Visibility.Visible;
+        }
+
+        void CheckVerCode(object sender, RoutedEventArgs e) {
+            if (verificationCodeTB.Text == EmailAuthencator.VerificationCode) {
+                EmailAuthencator.SendRegOverMsg(Database.GetValue(App.CurrentAccount, "email").ToString());
+                NextWindow(App.CurrentAccount);
+            } else warnEmailVer.Visibility = Visibility.Visible;
+        }
+
+        void VerifyEmail(object sender, RoutedEventArgs e) {
+            if (EmailAuthencator.SendVerificationMsg(Database.GetValue(App.CurrentAccount, "email").ToString())) {
+                EmailWrongPage.Visibility = Visibility.Collapsed;
+                EmaiNotVerPage.Visibility = Visibility.Collapsed;
+                EmailVerificationPage.Visibility = Visibility.Visible;
+            } else {
+                EmaiNotVerPage.Visibility = Visibility.Collapsed;
+                EmailWrongPage.Visibility = Visibility.Visible;
+                sw_veremail.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        void ChangeEmail(object sender, RoutedEventArgs e) {
+            warnEmailChange.Visibility = Visibility.Collapsed;
+            bool invalid = false;
+            if (newEmailTB.Text.Length < 8) { warnEmailChange.Visibility = Visibility.Visible; warnEmailChange.Text = warnings[15]; invalid = true; }
+            if (string.IsNullOrEmpty(newEmailTB.Text)) {
+                warnEmailChange.Visibility = Visibility.Visible;
+                warnEmailChange.Text = warnings[6];
+                invalid = true;
+            }
+            if (newEmailTB.Text == "INS") {
+                warnEmailChange.Visibility = Visibility.Visible;
+                warnEmailChange.Text = warnings[4];
+                invalid = true;
+            }
+            if (!string.IsNullOrEmpty(newEmailTB.Text)) {
+                if (!newEmailTB.Text.Contains('@') ||
+                    !newEmailTB.Text.Contains('.')) {
+                    warnEmailChange.Visibility = Visibility.Visible;
+                    warnEmailChange.Text = warnings[9];
+                    invalid = true;
+                }
+            }
+            if (invalid) return;
+            Database.SetValue(Database.DBDataType.DT_EMAIL, newEmailTB.Text);
+            VerifyEmail(sender, e);
+        }
+
+        void BackNewEmailBtn_Click(object sender, RoutedEventArgs e) {
+            EmaiNotVerPage.Visibility = Visibility.Collapsed;
+            EmailVerificationPage.Visibility = Visibility.Visible;
+        }
+
+        void ResPassBtn_Click(object sender, RoutedEventArgs e) {
+            LoginPage.Visibility = Visibility.Collapsed;
+            PasswordResetPage.Visibility = Visibility.Visible;
+        }
+
+        void BackPassResetBtn_Click(object sender, RoutedEventArgs e) {
+            LoginPage.Visibility = Visibility.Visible;
+            PasswordResetPage.Visibility = Visibility.Collapsed;
+            PasswordResetVerificationPage.Visibility = Visibility.Collapsed;
+        }
+
+        void ResetPassword(object sender, RoutedEventArgs e) {
+            rpEmailWarn.Visibility = Visibility.Collapsed;
+            bool invalid = false;
+            if (rpEmailTB.Text.Length < 8) { rpEmailWarn.Visibility = Visibility.Visible; rpEmailWarn.Text = warnings[15]; invalid = true; }
+            if (string.IsNullOrEmpty(rpEmailTB.Text)) {
+                rpEmailWarn.Visibility = Visibility.Visible;
+                rpEmailWarn.Text = warnings[6];
+                invalid = true;
+            }
+            if (rpEmailTB.Text == "INS") {
+                rpEmailWarn.Visibility = Visibility.Visible;
+                rpEmailWarn.Text = warnings[4];
+                invalid = true;
+            }
+            if (!string.IsNullOrEmpty(rpEmailTB.Text)) {
+                if (!rpEmailTB.Text.Contains('@') ||
+                    !rpEmailTB.Text.Contains('.')) {
+                    rpEmailWarn.Visibility = Visibility.Visible;
+                    rpEmailWarn.Text = warnings[9];
+                    invalid = true;
+                }
+            }
+            if (invalid) return;
+            RegistrySLS.Save("LastID", Database.GetValue("email", rpEmailTB.Text, "id"));
+            EmailAuthencator.SendResetPasswordMsg(rpEmailTB.Text);
+            PasswordResetPage.Visibility = Visibility.Collapsed;
+            PasswordResetVerificationPage.Visibility = Visibility.Visible;
+        }
+
+        void CheckRPVerCode(object sender, RoutedEventArgs e) {
+            if (resetPassVerCodeTB.Text == EmailAuthencator.VerificationCode) {
+                Database.SetValue(Database.DBDataType.DT_PASSWORD, Base64.ToBase64String(
+                    Encoding.UTF8.GetBytes(rpNewPassTB.Text)));
+                BackPassResetBtn_Click(sender, e);
+            } else resetPassWarn.Visibility = Visibility.Visible;
+        }
     }
 
 }

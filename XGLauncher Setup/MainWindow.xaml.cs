@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace XGL {
+namespace XGLS {
     public partial class MainWindow : Window {
         public static MainWindow Instance { get; private set; }
         string path;

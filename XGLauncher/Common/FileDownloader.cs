@@ -75,14 +75,14 @@ namespace XGL.Networking.Google.Drive {
 
                 WebRequest request = base.GetWebRequest(address);
 
-                if (request is HttpWebRequest) {
+                if (request is HttpWebRequest r) {
 
                     string cookie = cookies[address];
                     if (cookie != null)
-                        ((HttpWebRequest)request).Headers.Set("cookie", cookie);
+                        r.Headers.Set("cookie", cookie);
 
                     if (ContentRangeTarget != null)
-                        ((HttpWebRequest)request).AddRange(0);
+                        r.AddRange(0);
 
                 }
 
@@ -226,8 +226,7 @@ namespace XGL.Networking.Google.Drive {
             
             if (!downloadingDriveFile) {
 
-                if (DownloadFileCompleted != null)
-                    DownloadFileCompleted(this, e);
+                DownloadFileCompleted?.Invoke(this, e);
 
             } else {
 
@@ -237,8 +236,7 @@ namespace XGL.Networking.Google.Drive {
                     driveDownloadAttempt++;
                     DownloadFileInternal();
 
-                } else if (DownloadFileCompleted != null)
-                    DownloadFileCompleted(this, e);
+                } else DownloadFileCompleted?.Invoke(this, e);
 
             }
 

@@ -72,9 +72,8 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Networking\Database.cs" />
-    <Compile Include="Networking\FileDownloader.cs" />
-    <Compile Include="Networking\LazyDownload.cs" />
+    <Compile Include="Common\Database.cs" />
+    <Compile Include="Common\FileDownloader.cs" />
     <Compile Include="Pages\Command.xaml.cs">
       <DependentUpon>Command.xaml</DependentUpon>
     </Compile>

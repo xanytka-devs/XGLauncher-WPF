@@ -140,6 +140,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ApplicationSData.cs" />
+    <Compile Include="Database.cs" />
     <Compile Include="Shortcut.cs" />
     <Compile Include="Styles.xaml.cs">
       <DependentUpon>Styles.xaml</DependentUpon>

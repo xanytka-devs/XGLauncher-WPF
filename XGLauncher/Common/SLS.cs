@@ -12,7 +12,7 @@ namespace XGL.SLS {
 
     public class RegistrySLS {
 
-        static RegistryKey softwareKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true);
+        static readonly RegistryKey softwareKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true);
         static RegistryKey curKey;
 
         public static void Save(string name, object value) {

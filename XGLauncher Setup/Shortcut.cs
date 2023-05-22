@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Interop;
 
-namespace XGL {
+namespace XGLS {
     static internal class NativeClasses {
         [Flags]
         internal enum SLR_MODE : uint {

@@ -13,7 +13,7 @@
             <RowDefinition Height="54*"/>
         </Grid.RowDefinitions>
         <Grid>
-            <Image Source="\Images\Gradients\RB Gradient Background 045.jpg" Margin="-13,-58,-13,0"/>
+            <Image Source="\Images\plain.jpg" Margin="-13,-58,-13,0"/>
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
                    Height="250" Margin="0, 0, 0, 30">
                 <Image Name="errorImg" Visibility="Collapsed"/>

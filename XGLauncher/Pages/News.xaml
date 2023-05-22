@@ -31,9 +31,10 @@
                     <Grid>
                         <StackPanel Orientation="Vertical">
                             <Border VerticalAlignment="Top"
-                                Height="200" CornerRadius="5, 5, 0, 0">
+                                Height="200" CornerRadius="5">
                                 <Grid>
-                                    <Image Name="BGImage" Stretch="Fill"/>
+                                    <Image Name="BGImage" Stretch="UniformToFill"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     <Button Click="ExitNewsPost" VerticalAlignment="Top" HorizontalAlignment="Right"
                                         Width="20" Margin="5">
                                         <Image Source="\Images\remove.png"/>

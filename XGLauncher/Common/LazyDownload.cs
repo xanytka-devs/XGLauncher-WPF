@@ -11,11 +11,11 @@ namespace XGL {
     public class LazyDownload {
 
         private volatile bool _allowedToRun;
-        private string _source;
-        private string _destination;
-        private int _chunkSize;
+        private readonly string _source;
+        private readonly string _destination;
+        private readonly int _chunkSize;
 
-        private Lazy<int> _contentLength;
+        private readonly Lazy<int> _contentLength;
 
         public int BytesWritten { get; private set; }
         public int ContentLength { get { return _contentLength.Value; } }

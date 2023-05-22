@@ -27,7 +27,13 @@ namespace XGL.Dialogs {
                 Content = content;
                 IsDefault = isDefault;
                 IsCancel = isCancel;
-                RoutedEventHandler buttonFunction = function;
+                ButtonFunction = function;
+                IsVisible = isVisible;
+            }
+            public ErrorBoxButton(string content, bool isDefault, bool isCancel, bool isVisible = false) {
+                Content = content;
+                IsDefault = isDefault;
+                IsCancel = isCancel;
                 IsVisible = isVisible;
             }
         }
@@ -71,7 +77,8 @@ namespace XGL.Dialogs {
             btn.Visibility = val.IsVisible ? Visibility.Collapsed : Visibility.Visible; 
             btn.Content = val.Content;
             btn.IsDefault = val.IsDefault;
-            btn.Click += val.ButtonFunction;
+            if(val.ButtonFunction != null)
+                btn.Click += val.ButtonFunction;
             btn.IsCancel = val.IsCancel;
         }
     }
