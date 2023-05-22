@@ -10,16 +10,15 @@
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Style="{StaticResource XGLauncherDialog}">
     <Grid>
-        <Grid Name="LoginPage">
+        <Grid Name="LoginPage" Visibility="Visible">
             <Image Name="logo" Source="/Images/xgl-wip.png" VerticalAlignment="Top" Margin="130, 40, 120, 0"/>
             <Grid Height="50" Margin="25, -10, 25, 0">
-                <TextBox Name="loginTB" FontSize="16" UndoLimit="5" Style="{StaticResource OldStyleTextBox}"/>
+                <TextBox Name="loginTB" FontSize="16" Style="{StaticResource OldStyleTextBox}"/>
                 <TextBlock Name="loginT" Text="Login" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
                 <TextBlock Name="loginWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="50,-25,0,50" Opacity="0"/>
             </Grid>
             <Grid Height="50" Margin="25, 170, 25, 0">
-                <TextBox Name="passwordTB" FontSize="16" Visibility="Collapsed" Margin="0, 0, 40, 0" TextChanged="PassChanged_T"
-                         UndoLimit="5"/>
+                <TextBox Name="passwordTB" FontSize="16" Visibility="Collapsed" Margin="0, 0, 40, 0" TextChanged="PassChanged_T"/>
                 <PasswordBox Name="passwordTBH" FontSize="16" PasswordChar="•" Margin="0, 0, 40, 0"/>
                 <ToggleButton Checked="PassToggle_C" Unchecked="PassToggle_U" Style="{StaticResource GrayToggle}"
                               HorizontalAlignment="Right" Width="40" VerticalAlignment="Stretch"/>
@@ -57,26 +56,118 @@
                     HorizontalAlignment="Center" VerticalAlignment="Bottom"
                     FontWeight="Bold" Click="RegBtn_Click" Margin="0, 0, 0, 10"
                     Name="swith_to_reg"/>
+            <Button Style="{StaticResource WindowControlBtn}" Content="Restore" 
+                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                    Click="ResPassBtn_Click" Margin="0, 90, 25, 0"
+                    Name="swith_to_reset_pass" FontSize="12"/>
         </Grid>
-        <Grid Name="RegisterPage" Background="#323233" Visibility="Collapsed">
+        <Grid Name="PasswordResetPage" Visibility="Collapsed">
+            <Image Source="/Images/password.png" VerticalAlignment="Top" Margin="130, 40, 120, 0"/>
+            <TextBlock Name="resetPassT" Text="Reset password" VerticalAlignment="Center" Margin="0, 0, 0, 80" 
+                       HorizontalAlignment="Center" FontWeight="Bold" FontSize="24"/>
+            <TextBlock Name="resetPassD" Text="Password for your account will be changed." VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"/>
+            <Grid Height="50" VerticalAlignment="Bottom" Margin="25, 0, 25, 100">
+                <TextBox Name="rpEmailTB" FontSize="16" Style="{StaticResource OldStyleTextBox}"/>
+                <TextBlock Name="rpEmailT" Text="Email" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
+                <TextBlock Name="rpEmailWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="50,-25,0,50" Opacity="0"/>
+            </Grid>
+            <Button Name="resetPassB" Content="Continue" Height="50" Style="{StaticResource OldStyleBigButtonGray}" FontWeight="Bold" FontSize="18" Margin="25, 0, 25, 40" 
+                VerticalAlignment="Bottom" Click="ResetPassword"/>
+            <Button Style="{StaticResource WindowControlBtn}" Content="Back" 
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="sw_resetPass"
+                    FontWeight="Bold" Click="BackPassResetBtn_Click" Margin="0, 0, 0, 10"/>
+        </Grid>
+        <Grid Name="PasswordResetVerificationPage" Visibility="Collapsed">
+            <Image Source="/Images/password.png" VerticalAlignment="Top" Margin="130, 40, 120, 0"/>
+            <TextBlock Name="resetPassVerCT" Text="Reset password" VerticalAlignment="Center" Margin="0, 0, 0, 100" 
+                       HorizontalAlignment="Center" FontWeight="Bold" FontSize="24"/>
+            <TextBlock Name="resetPassVerCD" Text="Enter code from email to continue." VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" Margin="0, 0, 0, 20"/>
+            <Grid Height="50" VerticalAlignment="Bottom" Margin="25, 0, 25, 180">
+                <TextBox Name="resetPassVerCodeTB" FontSize="24" Style="{StaticResource OldStyleTextBox}" 
+                         MaxLength="5" Text="00000" Foreground="Gray" TextAlignment="Center" 
+                         LostFocus="EmailVerificationTB_Lost" GotFocus="EmailVerificationTB_Gain"/>
+                <TextBlock Name="rpVCT" Text="Verification code" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
+                <TextBlock Name="resetPassWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="175, -25, 0, 50" Opacity="0"/>
+            </Grid>
+            <Grid Height="50" VerticalAlignment="Bottom" Margin="25, 0, 25, 100">
+                <TextBox Name="rpNewPassTB" FontSize="16" Style="{StaticResource OldStyleTextBox}"/>
+                <TextBlock Name="rpNewPassT" Text="New Password" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
+                <TextBlock Name="rpNewPassWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="175, -25, 0, 50" Opacity="0"/>
+            </Grid>
+            <Button Name="resetPassVerCodeB" Content="Continue" Height="50" Style="{StaticResource OldStyleBigButtonGray}" FontWeight="Bold" FontSize="18" Margin="25, 0, 25, 40" 
+                VerticalAlignment="Bottom" Click="CheckRPVerCode"/>
+            <Button Style="{StaticResource WindowControlBtn}" Content="Back" 
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="sw_verResetPass"
+                    FontWeight="Bold" Click="BackPassResetBtn_Click" Margin="0, 0, 0, 10"/>
+        </Grid>
+        <Grid Name="EmailWrongPage" Visibility="Collapsed">
+            <Image Source="/Images/email.png" VerticalAlignment="Top" Margin="130, 40, 120, 0"/>
+            <TextBlock Name="changeEmailT" Text="Change email" VerticalAlignment="Center" Margin="0, 0, 0, 80" 
+                       HorizontalAlignment="Center" FontWeight="Bold" FontSize="24"/>
+            <TextBlock Name="changeEmailD" Text="Enter new email." VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="Email error" VerticalAlignment="Center" FontSize="14"
+                       HorizontalAlignment="Center" Margin="0, 70, 0, 0" Foreground="#F44336"
+                       Name="warnEmailChange" Visibility="Collapsed"/>
+            <TextBox Name="newEmailTB" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"
+                     Height="80" Width="280" FontStretch="UltraExpanded" Margin="0, 200, 0, 0"
+                     LostFocus="EmailVerificationTB_Lost" GotFocus="EmailVerificationTB_Gain"/>
+            <Button Name="emailChangeB" Content="Continue" Height="50" Style="{StaticResource OldStyleBigButtonGray}" 
+                    FontWeight="Bold" FontSize="18" Margin="25, 0, 25, 40" VerticalAlignment="Bottom"
+                    Click="ChangeEmail"/>
+            <Button Style="{StaticResource WindowControlBtn}" Content="Back" 
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="sw_veremail"
+                    FontWeight="Bold" Click="BackNewEmailBtn_Click" Margin="0, 0, 0, 10"/>
+        </Grid>
+        <Grid Name="EmaiNotVerPage" Visibility="Collapsed">
+            <Image Source="/Images/email.png" VerticalAlignment="Top" Margin="130, 40, 120, 0"/>
+            <TextBlock Name="emailVerT" Text="Email verification" VerticalAlignment="Center" Margin="0, 0, 0, 80" 
+                       HorizontalAlignment="Center" FontWeight="Bold" FontSize="24"/>
+            <TextBlock Name="emailVerD" Text="Email on your account isn't verified." VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"/>
+            <Button Name="wrongDataB" Content="Continue" Height="50" Style="{StaticResource OldStyleBigButtonGray}" FontWeight="Bold" FontSize="18" Margin="25, 0, 25, 40" 
+                VerticalAlignment="Bottom" Click="VerifyEmail"/>
+        </Grid>
+        <Grid Name="EmailVerificationPage" Visibility="Collapsed">
+            <Image Source="/Images/email.png" VerticalAlignment="Top" Margin="130, 40, 120, 0"/>
+            <TextBlock Name="emailVerCT" Text="Email verification" VerticalAlignment="Center" Margin="0, 0, 0, 80" 
+                       HorizontalAlignment="Center" FontWeight="Bold" FontSize="24"/>
+            <TextBlock Name="emailVerCD" Text="Verify email to continue." VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="Incorrect code" VerticalAlignment="Center" FontSize="14"
+                       HorizontalAlignment="Center" Margin="0, 70, 0, 0" Foreground="#F44336"
+                       Name="warnEmailVer" Visibility="Collapsed"/>
+            <TextBox Name="verificationCodeTB" VerticalAlignment="Center" HorizontalAlignment="Center"
+                     Height="80" Width="280" FontStretch="UltraExpanded" Margin="0, 200, 0, 0"
+                     MaxLength="5" Text="00000" Foreground="Gray" FontSize="38" TextAlignment="Center"
+                     LostFocus="EmailVerificationTB_Lost" GotFocus="EmailVerificationTB_Gain"/>
+            <Button Name="verificationCodeB" Content="Continue" Height="50" Style="{StaticResource OldStyleBigButtonGray}" FontWeight="Bold" FontSize="18" Margin="25, 0, 25, 40" 
+                VerticalAlignment="Bottom" Click="CheckVerCode"/>
+            <Button Style="{StaticResource WindowControlBtn}" Content="Oh, wrong mail!" 
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="sw_email"
+                    FontWeight="Bold" Click="WrongEmailBtn_Click" Margin="0, 0, 0, 10"/>
+        </Grid>
+        <Grid Name="RegisterPage" Visibility="Collapsed">
             <Image Source="/Images/xgl-wip.png" VerticalAlignment="Top" Margin="130, 20, 120, 0" Height="92"/>
             <Grid Height="50" Margin="25, 0, 25, 360" VerticalAlignment="Bottom">
-                <TextBox Name="loginRTB" FontSize="16" UndoLimit="5" Style="{StaticResource OldStyleTextBox}"/>
+                <TextBox Name="loginRTB" FontSize="16" Style="{StaticResource OldStyleTextBox}"/>
                 <TextBlock Name="loginRT" Text="Login" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
                 <TextBlock Name="loginRWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="125,-25,0,50" Opacity="0"/>
             </Grid>
             <Grid Height="50" Margin="25, 0, 25, 280" VerticalAlignment="Bottom">
-                <TextBox Name="nicknameTB" FontSize="16" UndoLimit="5" Style="{StaticResource OldStyleTextBox}"/>
+                <TextBox Name="nicknameTB" FontSize="16" Style="{StaticResource OldStyleTextBox}"/>
                 <TextBlock Name="nicknameT" Text="Nickname" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
                 <TextBlock Name="nicknameWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="125,-25,0,50" Opacity="0"/>
             </Grid>
             <Grid Height="50" Margin="25, 0, 25, 200" VerticalAlignment="Bottom">
-                <TextBox Name="emailTB" FontSize="16" UndoLimit="5" Style="{StaticResource OldStyleTextBox}"/>
+                <TextBox Name="emailTB" FontSize="16" Style="{StaticResource OldStyleTextBox}"/>
                 <TextBlock Name="emailT" Text="Email" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50"/>
                 <TextBlock Name="emailWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="125,-25,0,50" Opacity="0"/>
             </Grid>
             <Grid Height="50" Margin="25, 0, 25, 120" VerticalAlignment="Bottom">
-                <TextBox Name="passwordRTB" FontSize="16" Grid.ColumnSpan="2" UndoLimit="5" Style="{StaticResource OldStyleTextBox}"/>
+                <TextBox Name="passwordRTB" FontSize="16" Grid.ColumnSpan="2" Style="{StaticResource OldStyleTextBox}"/>
                 <TextBlock Name="passwordRT" Text="Password" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,-25,0,50" Grid.ColumnSpan="2"/>
                 <TextBlock Name="passwordRWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="125,-25,0,50" Opacity="0"/>
             </Grid>

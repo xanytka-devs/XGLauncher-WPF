@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="XGL.Pages.LW.Friends"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:XGL.Pages.LW"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer Name="mainScroll" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Orientation="Vertical">
+            <Grid>
+                <TextBlock Text="Send friend request" Margin="5"/>
+                <TextBox Margin="5, 25, 25, 0" Height="25"/>
+                <Button Content=">" Margin="0, 25, 5, 0" HorizontalAlignment="Right" Width="15"/>
+            </Grid>
+            <StackPanel Orientation="Vertical" Name="friendsList">
+                <Border Background="#383839" Margin="5" Padding="3" CornerRadius="4">
+                    <Grid>
+                        <Image Source="\Images\plain.jpg" Width="30" Height="30" Stretch="UniformToFill"
+                           HorizontalAlignment="Left"/>
+                        <StackPanel Orientation="Horizontal" Margin="40, 0, 0, 0">
+                            <TextBlock Text="Username" VerticalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+                            <TextBlock Text="#1234" VerticalAlignment="Center" Margin="5, 0, 0, 0" Foreground="LightGray"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 0, 5, 0">
+                            <Border Background="#5ece00" VerticalAlignment="Center"
+                                    Width="7.5" Height="7.5" CornerRadius="100"/>
+                            <Button RenderTransformOrigin="0.5,0.5">
+                                <Button.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-90"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Button.RenderTransform>
+                                <TextBlock Text="..." FontSize="18"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

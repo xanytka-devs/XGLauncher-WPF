@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using XGL;
-using XGL.Networking.Database;
+using XGL.Networking;
 using XGL.SLS;
 
 namespace XGLauncher.Dialogs {

@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="XGL.Pages.LW.Settings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:XGL.Pages.LW"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Этот раздел ещё не готов"
+                   Margin="0, 15, 0, 0"/>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="¯\_(ツ)_/¯"
+                   Margin="0, 0, 0, 15"/>
+    </Grid>
+</UserControl>

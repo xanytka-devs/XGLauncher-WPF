@@ -7,10 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+        </Style>
+        <Style TargetType="{x:Type TextBlock}"/>
+        <Style TargetType="{x:Type TextBlock}" x:Key="Contrast">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
         <Style x:Key="GameBtn" TargetType="{x:Type ToggleButton}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="0, 5, 0, 0"/>
             <Setter Property="Template">
@@ -26,9 +32,9 @@
                                         Width="1.5" Height="20"
                                         HorizontalAlignment="Left" Margin="2.5, 0, 0, 0"/>
                                 <ContentPresenter x:Name="contentPresenter" Focusable="False" 
-                                          HorizontalAlignment="Stretch" RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="Center" Margin="10, 1, 0, 1"/>
+                                                  HorizontalAlignment="Stretch" RecognizesAccessKey="True"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  VerticalAlignment="Center" Margin="10, 1, 0, 1"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -49,7 +55,6 @@
         <Style x:Key="OldStyleGameBtn" TargetType="{x:Type ToggleButton}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -91,10 +96,10 @@
             </Grid.ColumnDefinitions>
             <Grid Name="LibraryBackground" Grid.ColumnSpan="2" Margin="-5, 0, -5, -5">
                 <Image Name="LibBG" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                       Source="\Images\Gradients\RB Gradient Background 045.jpg" Stretch="UniformToFill"/>
+                       Source="\Images\plain.jpg" Stretch="UniformToFill"/>
             </Grid>
             <Image Name="LibLogo" HorizontalAlignment="Center" VerticalAlignment="Top"
-                   Source="\Images\xgl-wip.png" Height="250" Margin="0, 35, 0, 5" Grid.Column="1"
+                   Height="250" Margin="0, 35, 0, 5" Grid.Column="1"
                    Visibility="Collapsed"/>
             <Border Grid.ColumnSpan="2" Height="60"
                     VerticalAlignment="Bottom" Margin="-5, 0, -5, -5">
@@ -117,39 +122,48 @@
                             <Image Source="\Images\refresh.png" Visibility="Collapsed"/>
                         </Grid>
                     </Button>
-                    <ProgressBar Name="downloaderPB" Minimum="0" Maximum="100"
-                                 VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                                 Margin="5" Width="250" Height="20" Visibility="Collapsed"/>
+                    <StackPanel Name="progress_bar_adv" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Width="250" Visibility="Collapsed" MouseDown="AdvancedDownloadsView">
+                        <TextBlock Name="downloaderPB_game"
+                                   Foreground="White" HorizontalAlignment="Center"
+                                   FontWeight="Bold" FontSize="16"/>
+                        <TextBlock Text="0%" Name="downloaderPB_perc" Margin="2"
+                                   Foreground="White" HorizontalAlignment="Center"
+                                   Visibility="Collapsed"/>
+                        <ProgressBar Name="downloaderPB" Minimum="0" Maximum="100"
+                                     Visibility="Visible" Height="10"
+                                     VerticalAlignment="Bottom"/>
+                    </StackPanel>
                 </Grid>
             </Border>
             <Grid Name="gBar" Grid.Column="0" Margin="-5, 0, 0, -5">
                 <Border Name="gBarV" Background="#232323" Opacity="0.25"/>
-                <Grid>
+                <StackPanel Margin="0, 0, 0, 60">
                     <Grid Name="gSearchBar" Height="65" VerticalAlignment="Top" 
                           Margin="5">
-                        <TextBlock Text="Search" FontSize="18" Foreground="White" 
-                                   VerticalAlignment="Top" Name="searchBarT"/>
+                        <TextBlock Text="Search" FontSize="18" 
+                                   VerticalAlignment="Top" Name="searchBarT" Style="{StaticResource Contrast}"/>
                         <TextBox Name="gSearchBarTB" Height="40" VerticalAlignment="Bottom"
-                                 TextChanged="GSearchBarTB_TextChanged" UndoLimit="5"/>
+                                 TextChanged="GSearchBarTB_TextChanged"/>
                     </Grid>
                     <Button Name="addGameBtn" Style="{StaticResource BigButtonGray}" Height="30"
-                            VerticalAlignment="Top" Margin="7, 75, 7, 0" Click="AddCustomGame"
+                            VerticalAlignment="Top" Margin="7, 0, 7, 5" Click="AddCustomGame"
                             Visibility="Visible">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="\Images\plus.png" Height="20" Margin="5"/>
-                            <TextBlock Text="Add application" Margin="5, 7, 5, 5"/>
+                            <Image Source="\Images\plus.png" Height="20" Margin="5" RenderOptions.BitmapScalingMode="LowQuality"/>
+                            <TextBlock Name="addApp_T" Text="Add application" Margin="5, 7, 5, 5"/>
                         </StackPanel>
                     </Button>
-                    <ScrollViewer Name="gGamesBar" Margin="5, 110, 5, 35" Background="Transparent" 
-                                 BorderThickness="0" HorizontalScrollBarVisibility="Disabled"
+                    <ScrollViewer Name="gGamesBar" Margin="5, 0, 5, 0" Background="Transparent" 
+                                  HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Top"
                                   VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical" Name="gBarSP"/>
                     </ScrollViewer>
-                    <Button Name="GBarBtn" Content=">" 
+                </StackPanel>
+                <Button Name="GBarBtn" Content=">" 
                                 Click="GBarBtn_Click"
                                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                 FontSize="24" Margin="5"/>
-                </Grid>
             </Grid>
         </Grid>
     </Grid>

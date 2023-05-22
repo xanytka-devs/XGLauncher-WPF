@@ -8,16 +8,16 @@
         xmlns:local="clr-namespace:XGL"
         mc:Ignorable="d"  Title="XGLauncher"
         Height="700" Width="1200"
-        MinHeight="500" MinWidth="800"
-        WindowStartupLocation="CenterScreen"
+        MinHeight="500" MinWidth="840"
         Style="{StaticResource XGLauncherMainWindow}"
-        Icon="\Images\xgl-wip.ico">
-    <Grid>
+        Icon="Images\xgl-main.ico">
+    <Grid Name="mainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="71*"/>
+            <RowDefinition Height="71*" MinHeight="61" MaxHeight="75"/>
             <RowDefinition Height="688*"/>
+            <RowDefinition Height="20" Name="UnSupBar"/>
         </Grid.RowDefinitions>
-        <Border Name="TopBar" Background="#393939" Margin="-5,-25,-5,0"
+        <Border Name="TopBar" Background="#393939" Margin="-5, -25, -5, 0"
                 SnapsToDevicePixels="True">
             <Grid>
                 <StackPanel Orientation="Horizontal">
@@ -25,9 +25,9 @@
                     <ToggleButton Name="games" Content="Library" Style="{StaticResource MWBtn}" Click="MainBtn_Click" IsChecked="True" Padding="0,20,0,0"/>
                     <ToggleButton Name="news" Content="News" Style="{StaticResource MWBtn}" Click="MainBtn_Click" Padding="0,20,0,0"/>
                     <ToggleButton Name="community" Content="Community" Style="{StaticResource MWBtn}" Click="MainBtn_Click" Visibility="Collapsed" Padding="0,20,0,0"/>
-                    <ToggleButton Name="profileBtn" Style="{StaticResource MWBtn}" Click="MainBtn_Click" Padding="0,20,0,0">
-                        <Grid MinWidth="200">
-                            <TextBlock Name="profile" Text="Profile" VerticalAlignment="Center"
+                    <ToggleButton Name="myProfileBtn" Style="{StaticResource MWBtn}" Click="MainBtn_Click" Padding="0,20,0,0">
+                        <Grid MinWidth="200" MaxWidth="310">
+                            <TextBlock Name="myProfile" Text="Profile" VerticalAlignment="Center"
                                        HorizontalAlignment="Left" Margin="5, 0, 70, 0"/>
                             <Image Name="profileIcon" Width="60" HorizontalAlignment="Right"
                                    Margin="0, 0, 5, 0"/>
@@ -36,20 +36,41 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <Border Grid.Row="1" Name="StorePg" Visibility="Collapsed">
-            <elements:Store x:Name="storeControl"/>
-        </Border>
-        <Border Grid.Row="1" Name="GamesPg">
-            <elements:Games x:Name="gamesControl"/>
-        </Border>
-        <Border Grid.Row="1" Name="NewsPg" Visibility="Collapsed">
-            <elements:News x:Name="newsControl"/>
-        </Border>
-        <Border Grid.Row="1" Name="CommunityPg" Visibility="Collapsed">
-            <elements:Community x:Name="communityControl"/>
-        </Border>
-        <Border Grid.Row="1" Name="ProfilePg" Visibility="Collapsed">
-            <elements:Profile x:Name="profileControl"/>
+        <Grid Grid.Row="1" Margin="-5, 0, -5, -5">
+            <Border Name="StorePg" Visibility="Collapsed">
+                <elements:Store x:Name="storeControl"/>
+            </Border>
+            <Border Name="GamesPg" Margin="5, 0, 5, 5">
+                <elements:Games x:Name="gamesControl"/>
+            </Border>
+            <Border Name="NewsPg" Visibility="Collapsed">
+                <elements:News x:Name="newsControl"/>
+            </Border>
+            <Border Name="CommunityPg" Visibility="Collapsed">
+                <elements:Community x:Name="communityControl"/>
+            </Border>
+            <Border Name="MyProfilePg" Visibility="Collapsed">
+                <elements:MyProfile x:Name="myProfileControl"/>
+            </Border>
+            <Border Name="PublisherPg" Visibility="Collapsed">
+                <elements:Publisher x:Name="publisherControl"/>
+            </Border>
+            <Border Name="DownloadsPg" Visibility="Collapsed">
+                <elements:Downloads x:Name="downloadsControl"/>
+            </Border>
+            <Border Name="ProfilePg" Visibility="Collapsed">
+                <elements:Profile x:Name="ProfileControl"/>
+            </Border>
+            <Border Name="FriendsPg" Visibility="Collapsed">
+                <elements:Friends x:Name="FriendsControl"/>
+            </Border>
+        </Grid>
+        <Border Name="UnsupportWarn" Background="#F44336" Grid.Row="2" Margin="-5, 0, -5, -5">
+            <Grid>
+                <Button Content="X" Click="HideUnsupportWarn" HorizontalAlignment="Right"
+                        Margin="0, 0, 5, 0"/>
+                <TextBlock Name="supUntil" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
         </Border>
         <Button Click="OpenSettings" Name="stg_btn"
                 HorizontalAlignment="Right" VerticalAlignment="Bottom"

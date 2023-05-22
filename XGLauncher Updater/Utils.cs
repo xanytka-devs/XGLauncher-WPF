@@ -1,13 +1,5 @@
-﻿using System;
-using MySql.Data.MySqlClient;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using System.Windows;
 
 namespace XGL {
     public class Utils {
@@ -31,44 +23,5 @@ namespace XGL {
             return false;
         }
     }
-    public class Database {
-        internal static readonly MySqlConnection Connection = new MySqlConnection(App.DBConnectorData);
-        internal static bool OpenConnection() {
-            try {
-                if (Connection.State == ConnectionState.Closed)
-                    Connection.Open();
-                return true;
-            }
-            catch (Exception) {
-                return false;
-            }
-        }
-        internal static bool CloseConnection() {
-            try {
-                if (Connection.State == ConnectionState.Open)
-                    Connection.Close();
-                return true;
-            }
-            catch (Exception) {
-                return false;
-            }
-        }
-        public static string GetValue() {
-            string output = string.Empty;
-            MySqlCommand command = new MySqlCommand($"SELECT `latest` FROM `applications` WHERE `id` = 1", Connection);
-            try {
-                OpenConnection();
-                MySqlDataReader dr;
-                dr = command.ExecuteReader();
-                while (dr.Read()) output = dr.GetString("latest");
-                dr.Close();
-                CloseConnection();
-                return output;
-            }
-            catch (Exception ex) {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-        }
-    }
+
 }

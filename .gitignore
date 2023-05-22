@@ -366,3 +366,10 @@ FodyWeavers.xsd
 /XGLauncher DevTools/ApplicationSData.cs
 /XGLauncher Updater/ApplicationSData.cs
 /XGLAPI/Keys.txt
+/XGLauncher/Common/Database.cs
+/XGLauncher/Common/Auth.cs
+/XGLauncher/Common/Database.cs
+/XGLauncher Updater/Database.cs
+/XGLauncher Setup/Database.cs
+/XGLauncher DevTools/Networking/Database.cs
+/XGLauncher DevTools/Common/Database.cs

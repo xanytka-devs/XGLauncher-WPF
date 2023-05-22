@@ -33,7 +33,11 @@ namespace XGL.Update {
                     file.Name != "MySql.Data.dll" &
                     file.Name != "WpfAnimatedGif.dll") file.Delete();
             }
-            foreach (DirectoryInfo dir in di.GetDirectories()) dir.Delete(true);
+            foreach (DirectoryInfo dir in di.GetDirectories()) {
+                if(dir.Name != "apps" 
+                    && dir.Name != "cache" 
+                    && dir.Name != "logs") dir.Delete(true);
+            }
             StartInstallation();
         }
         void StartInstallation() {
@@ -87,6 +91,7 @@ namespace XGL.Update {
                     Close();
                 }
             }
+            Close();
         }
 
         void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {

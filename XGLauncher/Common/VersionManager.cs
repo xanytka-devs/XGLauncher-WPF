@@ -12,20 +12,23 @@ using Windows.Foundation.Collections;
 using XGL.Common;
 using XGL.Networking.Google.Drive;
 using XGL.Pages.LW;
-using static XGL.Networking.Database.Database;
+using XGL.Networking;
+using XGL.SLS;
 
 namespace XGL.Networking {
 
     public class VersionManager {
 
-        Game _game;
         XGLApp app;
         string _name;
+        string _ver;
         string _archiveType;
+        long _id;
         string link;
         string databaseText;
         string appsDirectory;
         string latestExecutablePath;
+        bool _isUpdate;
 
         public string[] AvaibleProducts { get; private set; }
 
@@ -37,74 +40,27 @@ namespace XGL.Networking {
             return Directory.Exists(appsDirectory) && File.Exists(appFile);
         }
 
-        public bool IsOutDated(string name) {
-
-            string version = string.Empty;
-
-            //Initialize components.
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-            MySqlCommand command = new MySqlCommand($"SELECT * FROM `xgl_products` WHERE `name`=" + '"' + name + '"', Connection);
-            try {
-                //Fill adapter.
-                adapter.SelectCommand = command;
-                adapter.Fill(table);
-                //Open connection and read everything, what needed.
-                OpenConnection();
-                MySqlDataReader dr = command.ExecuteReader();
-                while (dr.Read()) {
-                    databaseText = dr.GetString("latestDownloadLinks");
-                    version = databaseText.Split('{')[0];
-                    link = databaseText.Split('{')[1];
-                }
-                //Close reader and connection.
-                dr.Close();
-                CloseConnection();
-            }
-            catch (Exception ex) {
-                //TODO: Implement custom dialog system.
-                MessageBox.Show(ex.Message);
-                return false;
-            }
-            string appsDirectory = Path.Combine(Environment.CurrentDirectory, "apps");
-            string gameDirectory = Path.Combine(appsDirectory, name);
-            //Check for existance of save file.
-            if (GameExist(name)) {
-                string[] installedVersions = Directory.EnumerateDirectories(gameDirectory).ToArray();
-                if (installedVersions.Count() > 0) {
-                    if (installedVersions.Last().Split("\\".ToCharArray().Last()).Last() != name + $"({version})") {
-                        //If version of game is older than last, return true.
-                        return true;
-                    } else {
-                        //Else, it isn't outdated, so return false
-                        return false;
-                    }
-                }
-            }
-            return false;
-
-        }
-
         string GetLatestLink(string name) {
             string version = string.Empty;
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
-            MySqlCommand command = new MySqlCommand($"SELECT * FROM `xgl_products` WHERE `name`=" + '"' + name + '"', Connection);
+            MySqlCommand command = new MySqlCommand($"SELECT * FROM `xgl_products` WHERE `name`=" + '"' + name + '"', Database.Connection);
             try {
                 //Fill adapter.
                 adapter.SelectCommand = command;
                 adapter.Fill(table);
                 //Open connection and read everything, what needed.
-                OpenConnection();
+                Database.OpenConnection();
                 MySqlDataReader dr = command.ExecuteReader();
                 while (dr.Read()) {
                     databaseText = dr.GetString("latestDownloadLinks");
-                    version = databaseText.Split('{')[0];
+                    _id = dr.GetInt64("id");
+                    _ver = version = databaseText.Split('{')[0];
                     link = databaseText.Split('{')[1];
                 }
                 //Close reader and connection.
                 dr.Close();
-                CloseConnection();
+                Database.CloseConnection();
                 return version;
             }
             catch (Exception ex) {
@@ -114,16 +70,14 @@ namespace XGL.Networking {
             }
         }
 
-        public void Launch(XGLApp game, string archiveType = "zip", string path = "") {
+        public void Launch(XGLApp game, string path = "") {
             if (game.Custom) {
                 Process.Start(path);
                 return;
             }
             //Define variables.
-            _game = new Game(game.Name);
             app = game;
             _name = game.Name;
-            _archiveType = archiveType;
             appsDirectory = Path.Combine(Environment.CurrentDirectory, "apps");
             latestExecutablePath = Path.Combine(appsDirectory, _name, _name + ".exe");
             //Check for existance of save file.
@@ -131,15 +85,29 @@ namespace XGL.Networking {
                 Process.Start(latestExecutablePath);
                 return;
             }
-            //If not - download it.
+        }
+
+        public void Install(XGLApp game, string archiveType = "zip", bool isUpdate = false) {
+            //Define variables.
+            _isUpdate = isUpdate;
+            app = game;
+            _name = game.Name;
+            _archiveType = archiveType;
+            appsDirectory = Path.Combine(Environment.CurrentDirectory, "apps");
+            latestExecutablePath = Path.Combine(appsDirectory, _name, _name + ".exe");
             try {
                 //Start downloading.
                 GetLatestLink(_name);
-                MainWindow.Instance.gamesControl.downloaderPB.Visibility = Visibility.Visible;
-                MainWindow.Instance.gamesControl.DisableControls();
+                MainWindow.Instance.gamesControl.progress_bar_adv.Visibility = Visibility.Visible;
+                MainWindow.Instance.gamesControl.UpdateControls(false);
+                if (!RegistrySLS.LoadBool("AdvancedDownloads", false))
+                    MainWindow.Instance.gamesControl.downloaderPB_game.Text = _name;
                 GDFileDownloader downloader = new GDFileDownloader();
                 downloader.DownloadProgressChanged += (object sender, GDFileDownloader.DownloadProgress progress) => {
+                    MainWindow.Instance.gamesControl.downloaderPB.Visibility = Visibility.Visible;
                     MainWindow.Instance.gamesControl.downloaderPB.Value = progress.ProgressPercentage;
+                    MainWindow.Instance.gamesControl.downloaderPB_perc.Text = progress.ProgressPercentage.ToString() + "%";
+                    MainWindow.Instance.gamesControl.downloaderPB_perc.Visibility = Visibility.Visible;
                 };
                 downloader.DownloadFileCompleted += Downloader_DownloadFileCompleted;
                 downloader.DownloadFileAsync(link, Path.Combine(appsDirectory, $"{_name}.{archiveType}"));
@@ -152,15 +120,35 @@ namespace XGL.Networking {
 
         private void Downloader_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
             try {
-                MainWindow.Instance.gamesControl.EnableControls();
+                MainWindow.Instance.gamesControl.UpdateControls(true);
                 //Extract files from zip.
                 ZipFile.ExtractToDirectory(Path.Combine(appsDirectory, $"{_name}.{_archiveType}"), Path.Combine(appsDirectory, _name));
                 File.Delete(Path.Combine(appsDirectory, $"{_name}.{_archiveType}"));
+                //Add to registred games.
+                MainWindow.Instance.gamesControl.WriteToGamesFile(Path.Combine(appsDirectory, _name, _name + ".exe"), false, _name, _ver, _id);
+                MainWindow.Instance.gamesControl.Clear();
+                MainWindow.Instance.gamesControl.Reload();
+                if(!RegistrySLS.LoadBool("AdvancedDownloads", false)) {
+                    MainWindow.Instance.gamesControl.progress_bar_adv.Visibility = Visibility.Collapsed;
+                    MainWindow.Instance.gamesControl.downloaderPB_game.Text = string.Empty;
+                } else MainWindow.Instance.gamesControl.downloaderPB.Visibility = Visibility.Collapsed;
+                MainWindow.Instance.gamesControl.downloaderPB.Value = 0;
+                MainWindow.Instance.gamesControl.downloaderPB_perc.Visibility = Visibility.Collapsed;
                 //Send notification.
-                new ToastContentBuilder()
+                if (!_isUpdate)
+                    new ToastContentBuilder()
+                        .AddArgument("action", "openLauncher")
+                        .AddText(_name + LocalizationManager.I.dictionary["mw.g.down.main"])
+                        .AddText(LocalizationManager.I.dictionary["mw.g.dru.splash"])
+                        .Show(toast => {
+                            toast.ExpirationTime = DateTime.Now.AddMinutes(10);
+                            toast.Activated += (Windows.UI.Notifications.ToastNotification _sender, object args) => MainWindow.Instance.gamesControl.OpenPageOf(app);
+                        });
+                else
+                    new ToastContentBuilder()
                     .AddArgument("action", "openLauncher")
-                    .AddText(_name + " downloaded")
-                    .AddText("Now you can try it out!")
+                    .AddText(_name + LocalizationManager.I.dictionary["mw.g.upd.main"])
+                    .AddText(LocalizationManager.I.dictionary["mw.g.dru.splash"])
                     .Show(toast => {
                         toast.ExpirationTime = DateTime.Now.AddMinutes(10);
                         toast.Activated += (Windows.UI.Notifications.ToastNotification _sender, object args) => MainWindow.Instance.gamesControl.OpenPageOf(app);

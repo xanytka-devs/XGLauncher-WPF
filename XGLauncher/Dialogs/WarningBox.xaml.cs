@@ -40,7 +40,7 @@ namespace XGL.Dialogs {
 
     public partial class WarningBox : Window {
 
-        public WBResult result { get; private set; } = WBResult.Null;
+        public WBResult Result { get; private set; } = WBResult.Null;
 
         public WarningBox() {
             InitializeComponent();
@@ -87,10 +87,10 @@ namespace XGL.Dialogs {
         }
 
         void ReturnResult(object sender, RoutedEventArgs e) {
-            if (sender == ok) result = WBResult.Ok;
-            else if (sender == cancel) result = WBResult.Cancel;
-            else if (sender == yes) result = WBResult.Yes;
-            else if (sender == no) result = WBResult.No;
+            if (sender == ok) Result = WBResult.Ok;
+            else if (sender == cancel) Result = WBResult.Cancel;
+            else if (sender == yes) Result = WBResult.Yes;
+            else if (sender == no) Result = WBResult.No;
         }
         void AnylizeButtonLayout(ButtonLayout layout) {
             switch (layout) {

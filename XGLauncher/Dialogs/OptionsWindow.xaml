@@ -10,6 +10,10 @@
         Height="500" Width="800"
         MinHeight="400" MinWidth="500"
         WindowStartupLocation="CenterScreen">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:OptionsWindow.BetaToggle}" 
+                     Executed="BetaToggled"/>
+    </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -37,11 +41,11 @@
                     Style="{StaticResource SmallBtn}"
                     Height="50" FontSize="18"
                     Click="SettingsBtn_Click"/>
-                <Button Name="aboutBtn" Content="About"
+                <Button Name="privacyBtn" Content="Privacy"
                     Style="{StaticResource SmallBtn}"
                     Height="50" FontSize="18"
                     Click="SettingsBtn_Click"/>
-                <Button Name="devBtn" Content="For Devs"
+                <Button Name="betaBtn" Content="Early Access"
                     Style="{StaticResource SmallBtn}"
                     Height="50" FontSize="18"
                     Click="SettingsBtn_Click"/>
@@ -59,6 +63,19 @@
                            HorizontalAlignment="Center"
                            VerticalAlignment="Top" Name="g_it"/>
                 <Grid Height="40">
+                    <TextBlock Text="Show Add application button in Library" FontSize="18" Name="gp_saab_T" VerticalAlignment="Center"/>
+                    <CheckBox Name="gp_saab_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="60" Click="GP_Element_Click"/>
+                </Grid>
+                <Grid Height="40">
+                    <TextBlock Text="Save window position and size on exit" FontSize="18" Name="gp_mpas_T" VerticalAlignment="Center"/>
+                    <CheckBox Name="gp_mpas_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="60" Click="GP_Element_Click"/>
+                </Grid>
+                <TextBlock Text="Utilities" FontSize="20"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top" Name="g_ut"/>
+                <Grid Height="40">
                     <TextBlock Text="Automatically search for products in shop" 
                                FontSize="18" VerticalAlignment="Center" 
                                Name="g_autostoresearch"/>
@@ -68,32 +85,20 @@
                                   Click="AutoStoreSearch_Click"/>
                 </Grid>
                 <Grid Height="40">
-                    <TextBlock Text="Show Add application button in Library" FontSize="18" Name="fd_saab_T" VerticalAlignment="Center"/>
-                    <CheckBox Name="fd_saab_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                  Height="30" Width="60" Click="FD_Element_Click"/>
-                </Grid>
-                <Grid Height="40">
-                    <TextBlock Text="Automatically reload on setting changed" FontSize="18" Name="fd_ar_T" VerticalAlignment="Center"/>
-                    <CheckBox Name="fd_ar_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                  Height="30" Width="60" Click="FD_Element_Click"
+                    <TextBlock Text="Automatically reload on setting changed" FontSize="18" Name="gp_ar_T" VerticalAlignment="Center"/>
+                    <CheckBox Name="gp_ar_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="60" Click="GP_Element_Click"
                                   ToolTip="[WARNING] It may lag a lot."/>
                 </Grid>
-                <TextBlock Text="Utilities" FontSize="20"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Top" Name="g_ut"/>
                 <Grid Height="40">
-                    <TextBlock Text="Run at start of system" 
-                               FontSize="18" VerticalAlignment="Center" 
-                               Name="ras_t"/>
-                    <CheckBox Name="autorunTgB"
-                                  Height="30" Width="60"
-                                  HorizontalAlignment="Right"
-                                  Click="AutorunTgB_Click"/>
+                    <TextBlock Text="Automatically search for updates" FontSize="18" Name="gp_sfu_T" VerticalAlignment="Center"/>
+                    <CheckBox Name="gp_sfu_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="60" Click="GP_Element_Click"/>
                 </Grid>
                 <Grid Height="40">
-                    <TextBlock Text="Automatically search for updates" FontSize="18" Name="fd_sfu_T" VerticalAlignment="Center"/>
-                    <CheckBox Name="fd_sfu_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                  Height="30" Width="60" Click="FD_Element_Click"/>
+                    <TextBlock Text="Double click to reload tab" FontSize="18" Name="gp_dctr_T" VerticalAlignment="Center"/>
+                    <CheckBox Name="gp_dctr_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="60" Click="GP_Element_Click"/>
                 </Grid>
                 <Grid Margin="0, 10, 0, 0">
                     <TextBlock FontWeight="Bold" Name="gp_cs" FontSize="18" Text="Cache"/>
@@ -174,33 +179,8 @@
                 <TextBlock Text="Language" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
                            VerticalAlignment="Top" Margin="5" Name="ti_L"/>
-                <StackPanel Orientation="Vertical" 
-                              Margin="5, 40, 5, 0">
-                    <Button Name="cl_ru_ru" Click="ChangeLanguage" Height="40">
-                        <Grid SnapsToDevicePixels="True" Width="590" HorizontalAlignment="Center">
-                            <Image Source="..\Images\LangIcons\ru-ru.png" Height="30" Margin="5" HorizontalAlignment="Left"/>
-                            <TextBlock Name="cl_ru_ru_tb" Text="Русский (RU)" Margin="58,0,10,0" VerticalAlignment="Center" FontSize="16"/>
-                        </Grid>
-                    </Button>
-                    <Button Name="cl_en_us" Click="ChangeLanguage" Height="40">
-                        <Grid SnapsToDevicePixels="True" Width="590" HorizontalAlignment="Center">
-                            <Image Source="..\Images\LangIcons\en-us.png" Height="30" Margin="5" HorizontalAlignment="Left"/>
-                            <TextBlock Name="cl_en_us_tb" Text="English (US)" Margin="58,0,10,0" VerticalAlignment="Center" FontSize="16"/>
-                        </Grid>
-                    </Button>
-                    <Button Name="cl_es" Click="ChangeLanguage" Height="40">
-                        <Grid SnapsToDevicePixels="True" Width="590" HorizontalAlignment="Center">
-                            <Image Source="..\Images\LangIcons\es.png" Height="30" Margin="5" HorizontalAlignment="Left"/>
-                            <TextBlock Name="cl_es_tb" Text="Español (ES)" Margin="58,0,10,0" VerticalAlignment="Center" FontSize="16"/>
-                        </Grid>
-                    </Button>
-                    <Button Name="cl_ru_im" Click="ChangeLanguage" Height="40">
-                        <Grid SnapsToDevicePixels="True" Width="590" HorizontalAlignment="Center">
-                            <Image Source="..\Images\LangIcons\ru_im.png" Height="30" Margin="5" HorizontalAlignment="Left"/>
-                            <TextBlock Name="cl_ru_im_tb" Text="Русскій (Дореволюционный Русский)" Margin="58,0,10,0" VerticalAlignment="Center" FontSize="16"/>
-                        </Grid>
-                    </Button>
-                </StackPanel>
+                <StackPanel Orientation="Vertical" Name="lang_pan"
+                              Margin="5, 40, 5, 0"/>
             </Grid>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" Name="appearancePage"
@@ -211,7 +191,7 @@
                 <TextBlock Text="Appearance" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
                            VerticalAlignment="Top" Margin="5" Name="ti_Ap"/>
-                <Grid Width="300">
+                <Grid Width="230" Name="ap_theme_panel" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Button Name="ap_theme_sys" Height="90" Margin="5" Click="ThemeBtn_Click">
                             <Grid Height="85">
@@ -243,7 +223,7 @@
                                        HorizontalAlignment="Center" Name="ap_theme_light_T"/>
                             </Grid>
                         </Button>
-                        <Button Name="ap_theme_ohio" Height="90" Margin="5" Click="ThemeBtn_Click">
+                        <Button Name="ap_theme_ohio" Height="90" Margin="5" Click="ThemeBtn_Click" Visibility="Collapsed">
                             <Grid Height="85">
                                 <Border Name="ap_theme_ohio_bg" Background="Black" Opacity="0" CornerRadius="4"/>
                                 <Border Height="60" Width="60" Background="DeepPink" 
@@ -266,85 +246,121 @@
                 </Grid>
             </StackPanel>
         </ScrollViewer>
-        <ScrollViewer Grid.Column="1" Name="aboutPage"
+        <ScrollViewer Grid.Column="1" Name="privacyPage"
                       Visibility="Collapsed"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Disabled">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
-                <TextBlock Text="About" FontSize="20"
+                <TextBlock Text="Privacy" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
-                           Name="ti_Ab"/>
-                <Grid>
-                    <TextBlock Text="Version" FontSize="18"
-                               FontWeight="Bold" Name="ver_t"/>
-                    <TextBlock Name="verT" Text="Version" 
-                               FontSize="18" Margin="70, 0, 0, 0"/>
-                </Grid>
+                           Name="ti_Pr"/>
+                <StackPanel Orientation="Vertical">
+                    <Grid Height="40">
+                        <TextBlock Text="Run at start of system" 
+                               FontSize="18" VerticalAlignment="Center" 
+                               Name="ras_t"/>
+                        <CheckBox Name="autorunTgB"
+                                  Height="30" Width="60"
+                                  HorizontalAlignment="Right"
+                                  Click="AutorunTgB_Click"/>
+                    </Grid>
+                    <Grid Height="40">
+                        <TextBlock Text="Hide in tray on closing" FontSize="18" Name="gp_hit_T" VerticalAlignment="Center"/>
+                        <CheckBox Name="gp_hit_CB" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                  Height="30" Width="60" Click="GP_Element_Click"/>
+                    </Grid>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
-        <ScrollViewer Grid.Column="1" Name="devPage"
+        <ScrollViewer Grid.Column="1" Name="betaPage"
                       Visibility="Collapsed"
                       HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Disabled">
+                      VerticalScrollBarVisibility="Visible" Panel.ZIndex="0">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
-                <TextBlock Text="For Devs" FontSize="20"
+                <TextBlock Text="Early Acess" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
-                           Name="ti_FD"/>
-                <Grid>
-                    <Button Height="40" Style="{StaticResource OldStyleBigButtonGray}" Content="Reload"
-                        ToolTip="This button reloads launcher." Name="fd_reload_btn"
-                        Click="RebootLauncher" Margin="5, 5, 70, 5"/>
-                    <TextBlock Text="Auto reload" VerticalAlignment="Top" HorizontalAlignment="Right"
-                               Name="fd_ard_T"/>
-                    <CheckBox Name="fd_ard_CB" Height="30" Width="60"
-                                  VerticalAlignment="Center" HorizontalAlignment="Right"
-                                  Margin="0, 12, 0, 0" Click="FD_Element_Click"/>
-                </Grid>
-                <StackPanel>
-                    <TextBlock Text="General" FontSize="22" Margin="10" FontWeight="Bold"/>
-                    <!--#region "Use XGLAPI"-->
-                    <Grid Margin="5">
-                        <CheckBox Name="fd_uapi_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="60" Click="FD_Element_Click"
-                                  ToolTip="Enables/Disables XGLAPI library use. [WARNING] All runtime events will be not avaible if this option isn't active."/>
-                        <TextBlock Text="Use XGLAPI" FontSize="18" Name="fd_uapi_T" Margin="60, 0, 0, 0"/>
-                    </Grid>
-                    <!--#endregion "Use XGLAPI"-->
-                    <!--#region "Use Plugins"-->
-                    <Grid Margin="5">
-                        <CheckBox Name="fd_uplg_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="60" Click="FD_Element_Click"
-                                  ToolTip="Enables/Disables plugins use. [WARNING] All already active plugins will be disabled if this option isn't active."/>
-                        <TextBlock Text="Use Plugins" FontSize="18" Name="fd_uplg_T" Margin="60, 0, 0, 0"/>
-                    </Grid>
-                    <!--#endregion "Use Plugins"-->
-                    <TextBlock Text="Main window" FontSize="22" Margin="10" FontWeight="Bold"/>
-                    <!--#region "Show Community section"-->
-                    <Grid Margin="5">
-                        <CheckBox Name="fd_scs_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="60" Click="FD_Element_Click"
-                                  ToolTip="Shows/Hides 'Community' tab in Main window."/>
-                        <TextBlock Text="Show Community section in Main window" FontSize="18" Name="fd_scs_T" Margin="60, 0, 0, 0"/>
-                    </Grid>
-                    <!--#endregion "Show Community section"-->
-                    <!--#region "Show Plugins section"-->
-                    <Grid Margin="5">
-                        <CheckBox Name="fd_sps_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="60" Click="FD_Element_Click"
-                                  ToolTip="Shows/Hides 'plugins' button for access plugins in Main window."/>
-                        <TextBlock Text="Show Plugins button in Main window" FontSize="18" Name="fd_sps_T" Margin="60, 0, 0, 0"/>
-                    </Grid>
-                    <!--#endregion "Show Plugins section"-->
-                    <TextBlock Text="Login window" FontSize="22" Margin="10" FontWeight="Bold"/>
-                    <!--#region "Show 'Login with' block"-->
-                    <Grid Margin="5">
-                        <CheckBox Name="fd_lwos_CB" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                                  Height="30" Width="60" Click="FD_Element_Click"
-                                  ToolTip="Shows/Hides 'Login with' *custom source* section in Login window."/>
-                        <TextBlock Text="Show 'Login with' block" FontSize="18" Name="fd_lwos_T" Margin="60, 0, 0, 0"/>
-                    </Grid>
-                    <!--#endregion "Show 'Login with' block"-->
-                </StackPanel>
+                           Name="ti_B" Margin="0, 0, 0, 5"/>
+                <TextBlock FontSize="17" HorizontalAlignment="Center" Name="beta_desc" Margin="5, 5, 5, 10"
+                           TextWrapping="WrapWithOverflow" TextAlignment="Justify">
+                    Данный раздел находится в разработке, как и его содержимое. Не все функции готовы
+                    даже к простому тестированию. Пожалуйста будьте готовы к непридвидемым последствиям,
+                    если хотит попробывать новые функции.
+                </TextBlock>
+                <ScrollViewer VerticalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Vertical">
+                        <Border Name="beta_fp1" Margin="0, 5, 0, 5" Visibility="Visible">
+                            <StackPanel Orientation="Vertical">
+                                <Border Background="Black" CornerRadius="4, 4, 0, 0" HorizontalAlignment="Stretch" 
+                                        Height="100"/>
+                                <TextBlock Text="Интеграции" FontSize="24" Name="beta_lwos_T" Margin="60, 10, 0, 10" 
+                                           FontWeight="Bold"/>
+                                <TextBlock FontSize="18" Name="beta_lwos_DT" Margin="20, 10, 0, 10" 
+                                           TextWrapping="WrapWithOverflow">Теперь при входе в аккаунт будут предлагаться 
+                                    возможности входа из сторонних сервисов, включая ЯндексID, VK, Telegram и другие.</TextBlock>
+                                <CheckBox Name="beta_lwos_CB" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="B_Element_Click" Margin="5"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Name="beta_fp2" Margin="0, 5, 0, 5" Visibility="Visible">
+                            <StackPanel Orientation="Vertical">
+                                <Border Background="Black" CornerRadius="4, 4, 0, 0" HorizontalAlignment="Stretch" 
+                                        Height="100"/>
+                                <TextBlock Text="Темы оформления" FontSize="24" Name="beta_themes_T" Margin="60, 10, 0, 10" 
+                                           FontWeight="Bold"/>
+                                <TextBlock FontSize="18" Name="beta_themes_DT" Margin="20, 10, 0, 10" 
+                                           TextWrapping="WrapWithOverflow">Позволяет пользоваться темами. В отличие от 'тематик' 
+                                    первого апреля они функционируют нормально - отдельным встроеным читателем. Также возможно 
+                                    создавать своё оформление.</TextBlock>
+                                <CheckBox Name="beta_themes_CB" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="B_Element_Click" Margin="5"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Name="beta_fp3" Margin="0, 5, 0, 5" Visibility="Visible">
+                            <StackPanel Orientation="Vertical">
+                                <Border Background="Black" CornerRadius="4, 4, 0, 0" HorizontalAlignment="Stretch" 
+                                        Height="100"/>
+                                <TextBlock Text="Сообщество" FontSize="24" Name="beta_scs_T" Margin="60, 10, 0, 10" 
+                                           FontWeight="Bold"/>
+                                <TextBlock FontSize="18" Name="beta_scs_DT" Margin="20, 10, 0, 10" 
+                                           TextWrapping="WrapWithOverflow">Позволяет вам просмотреть совершенно новый раздел - Сообщество. 
+                                    <LineBreak/> Здесь вы можете просмотреть контент, <Bold>созданный другими людьми</Bold>, которые 
+                                    используют лаунчер.</TextBlock>
+                                <CheckBox Name="beta_scs_CB" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="B_Element_Click" Margin="5"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Name="beta_fp4" Margin="0, 5, 0, 5" Visibility="Visible">
+                            <StackPanel Orientation="Vertical">
+                                <Border Background="Black" CornerRadius="4, 4, 0, 0" HorizontalAlignment="Stretch" 
+                                        Height="100"/>
+                                <TextBlock Text="Улучшенные загрузки" FontSize="24" Name="beta_adwnds_T" Margin="60, 10, 0, 10" 
+                                           FontWeight="Bold"/>
+                                <TextBlock FontSize="18" Name="beta_adwnds_DT" Margin="20, 10, 0, 10" 
+                                           TextWrapping="WrapWithOverflow">Теперь, заместо простого показателя загрузки можно 
+                                    будет перейти на страницу, где отображаются все завершённые, запланированные 
+                                    и текущие загрузки. <LineBreak/> Плюс к этому их можно приостанавливать, 
+                                    планировать (как сказано выше) и отменять.</TextBlock>
+                                <CheckBox Name="beta_adwnds_CB" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="B_Element_Click" Margin="5"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Name="beta_fp5" Margin="0, 5, 0, 5" Visibility="Visible">
+                            <StackPanel Orientation="Vertical">
+                                <Border Background="Black" CornerRadius="4, 4, 0, 0" HorizontalAlignment="Stretch" 
+                                        Height="100"/>
+                                <TextBlock Text="XGLAPI" FontSize="24" Name="beta_uapi_T" Margin="60, 10, 0, 10" 
+                                           FontWeight="Bold"/>
+                                <TextBlock FontSize="18" Name="beta_uapi_DT" Margin="20, 10, 0, 10" 
+                                           TextWrapping="WrapWithOverflow">Данная опция позволит лаунчеру пользоваться 
+                                    специальной библиотекой, необходимой для получения достижений, сетевой игры и приглашений, 
+                                    внутриигрового статуса и многого другого. <LineBreak/>Включение данной опции крайне 
+                                    рекомендуется для повышения комфорта.</TextBlock>
+                                <CheckBox Name="beta_uapi_CB" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="B_Element_Click" Margin="5"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
             </StackPanel>
         </ScrollViewer>
     </Grid>

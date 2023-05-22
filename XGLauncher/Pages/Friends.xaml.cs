@@ -12,31 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using XGL.SLS;
+using XGL.Networking;
 
 namespace XGL.Pages.LW {
 
     /// <summary>
-    /// Логика взаимодействия для Community.xaml
+    /// Логика взаимодействия для Friends.xaml
     /// </summary>
     
-    public partial class Community : UserControl {
+    public partial class Friends : UserControl {
 
-        internal int tabClicks = 2;
+        public List<Account> friends = new List<Account>();
 
-        public Community() {
+        public Friends() {
+
             InitializeComponent();
-        }
-
-        public void Clear() {
-            if (RegistrySLS.LoadBool("DClickToReloadTab", false))
-                if (tabClicks != 2) return;
-        }
-
-        public void ApplyLocalization() {
-
-            //LocalizationManager l = LocalizationManager.I;
 
         }
+
     }
+
 }
