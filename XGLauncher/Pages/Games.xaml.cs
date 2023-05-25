@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using XGL.Networking;
 using XGL.SLS;
@@ -130,11 +131,9 @@ namespace XGL.Pages.LW {
             else GBarChangeStatus(false);
         }
         void GBarChangeStatus(bool value) {
+            AnimateGBar(value);
+            AnimateSBPanel(value);
             if (value) {
-                if (RegistrySLS.LoadBool("GBarAddGame", false))
-                    addGameBtn.Visibility = Visibility.Collapsed;
-                gBarRow.Width = new GridLength(50);
-                gSearchBar.Visibility = Visibility.Collapsed;
                 GBarBtn.Content = ">";
                 gbarstatus = false;
                 RegistrySLS.Save("GBarStatus", false);
@@ -147,11 +146,9 @@ namespace XGL.Pages.LW {
                     miniLogos[i].Visibility = Visibility.Visible;
                     texts[i].Visibility = Visibility.Collapsed;
                 }
-            } else {
                 if (RegistrySLS.LoadBool("GBarAddGame", false))
-                    addGameBtn.Visibility = Visibility.Visible;
-                gBarRow.Width = new GridLength(265);
-                gSearchBar.Visibility = Visibility.Visible;
+                    addGameBtn.Visibility = Visibility.Collapsed;
+            } else {
                 GBarBtn.Content = "<";
                 gbarstatus = true;
                 RegistrySLS.Save("GBarStatus", true);
@@ -164,8 +161,58 @@ namespace XGL.Pages.LW {
                     miniLogos[i].Visibility = Visibility.Collapsed;
                     texts[i].Visibility = Visibility.Visible;
                 }
+                if (RegistrySLS.LoadBool("GBarAddGame", false))
+                    addGameBtn.Visibility = Visibility.Visible;
             }
         }
+
+        void AnimateGBar(bool state) {
+            Storyboard storyboard = new Storyboard();
+            Duration duration = new Duration(TimeSpan.FromMilliseconds(500));
+            CubicEase ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+            DoubleAnimation animation = new DoubleAnimation {
+                EasingFunction = ease,
+                Duration = duration
+            };
+            storyboard.Children.Add(animation);
+            Storyboard.SetTarget(animation, gBarRow);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("(ColumnDefinition.MaxWidth)"));
+            if (state) {
+                animation.From = 265;
+                animation.To = 50;
+                storyboard.Begin();
+                return;
+            }
+            animation.From = 50;
+            animation.To = 265;
+            storyboard.Begin();
+
+        }
+        void AnimateSBPanel(bool state) {
+            Storyboard storyboardSB = new Storyboard();
+            Duration duration = new Duration(TimeSpan.FromMilliseconds(500));
+            CubicEase ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+            DoubleAnimation animationSB = new DoubleAnimation {
+                EasingFunction = ease,
+                Duration = duration
+            };
+            storyboardSB.Children.Add(animationSB);
+            Storyboard.SetTarget(animationSB, gBarSB);
+            Storyboard.SetTargetProperty(animationSB, new PropertyPath("(StackPanel.Height)"));
+            if (state) {
+                animationSB.From = 110;
+                animationSB.To = 0;
+                storyboardSB.Begin();
+                storyboardSB.Completed += (object sender, EventArgs e) => gSearchBar.Visibility = Visibility.Collapsed;
+                return;
+            }
+            animationSB.From = 0;
+            animationSB.To = 110;
+            storyboardSB.Begin();
+            storyboardSB.Completed += (object sender, EventArgs e) => gSearchBar.Visibility = Visibility.Visible;
+
+        }
+
         void GSearchBarTB_TextChanged(object sender, TextChangedEventArgs e) {
             if (!string.IsNullOrEmpty(gSearchBarTB.Text)) {
                 for (int i = 0; i < toggles.Count; i++) {

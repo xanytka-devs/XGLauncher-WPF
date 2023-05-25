@@ -28,10 +28,7 @@
                             <Button RenderTransformOrigin="0.5,0.5">
                                 <Button.RenderTransform>
                                     <TransformGroup>
-                                        <ScaleTransform/>
-                                        <SkewTransform/>
                                         <RotateTransform Angle="-90"/>
-                                        <TranslateTransform/>
                                     </TransformGroup>
                                 </Button.RenderTransform>
                                 <TextBlock Text="..." FontSize="18"/>

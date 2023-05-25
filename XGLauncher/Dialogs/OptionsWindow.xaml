@@ -13,6 +13,8 @@
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:OptionsWindow.BetaToggle}" 
                      Executed="BetaToggled"/>
+        <CommandBinding Command="{x:Static local:OptionsWindow.SecretToggle}" 
+                     Executed="SecretToggled"/>
     </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -54,7 +56,7 @@
         <ScrollViewer Grid.Column="1" Name="generalPage"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Disabled"
-                      Visibility="Visible">
+                      Visibility="Collapsed">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
                 <TextBlock Text="General" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
@@ -273,7 +275,7 @@
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" Name="betaPage"
-                      Visibility="Collapsed"
+                      Visibility="Visible"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Visible" Panel.ZIndex="0">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
@@ -286,6 +288,14 @@
                     даже к простому тестированию. Пожалуйста будьте готовы к непридвидемым последствиям,
                     если хотит попробывать новые функции.
                 </TextBlock>
+                <Grid Name="beta_sso" Visibility="Collapsed">
+                    <TextBlock FontSize="17" HorizontalAlignment="Left" Margin="45, 5, 5, 10" Name="beta_sso_l"
+                           TextWrapping="WrapWithOverflow" TextAlignment="Justify" Foreground="#f49b36" Text="(⌐■_■)"/>
+                    <TextBlock FontSize="20" HorizontalAlignment="Center" Name="beta_sso_m" Margin="5, 5, 5, 10" FontWeight="Black"
+                           TextWrapping="WrapWithOverflow" TextAlignment="Justify" Foreground="#f49b36" Text="СЕКРЕТНЫЙ РЕЖИМ ВКЛЮЧЁН"/>
+                    <TextBlock FontSize="17" HorizontalAlignment="Right" Margin="5, 5, 45, 10" Name="beta_sso_r"
+                           TextWrapping="WrapWithOverflow" TextAlignment="Justify" Foreground="#f49b36" Text="(⌐■_■)"/>
+                </Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Disabled">
                     <StackPanel Orientation="Vertical">
                         <Border Name="beta_fp1" Margin="0, 5, 0, 5" Visibility="Visible">
@@ -298,6 +308,21 @@
                                            TextWrapping="WrapWithOverflow">Теперь при входе в аккаунт будут предлагаться 
                                     возможности входа из сторонних сервисов, включая ЯндексID, VK, Telegram и другие.</TextBlock>
                                 <CheckBox Name="beta_lwos_CB" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                  Height="30" Width="60" Click="B_Element_Click" Margin="5"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Name="beta_fp6" Margin="0, 5, 0, 5" Visibility="Collapsed">
+                            <StackPanel Orientation="Vertical">
+                                <Border Background="Black" CornerRadius="4, 4, 0, 0" HorizontalAlignment="Stretch" 
+                                        Height="100"/>
+                                <TextBlock Text="Плагины" FontSize="24" Name="beta_plugins_T" Margin="60, 10, 0, 10" 
+                                           FontWeight="Bold"/>
+                                <TextBlock FontSize="18" Name="beta_plugins_DT" Margin="20, 10, 0, 10" 
+                                           TextWrapping="WrapWithOverflow">Поддержка модификаций для изменения
+                                функционала лаунчера, добавление новых элементов, перепись старых и другое ожидает вас
+                                при включении этой опции. <LineBreak/>Не все возможности могут быть доступны из-за
+                                уровня модификабельности лаунчера.</TextBlock>
+                                <CheckBox Name="beta_plugins_CB" HorizontalAlignment="Right" VerticalAlignment="Top" 
                                   Height="30" Width="60" Click="B_Element_Click" Margin="5"/>
                             </StackPanel>
                         </Border>
@@ -315,7 +340,7 @@
                                   Height="30" Width="60" Click="B_Element_Click" Margin="5"/>
                             </StackPanel>
                         </Border>
-                        <Border Name="beta_fp3" Margin="0, 5, 0, 5" Visibility="Visible">
+                        <Border Name="beta_fp3" Margin="0, 5, 0, 5" Visibility="Collapsed">
                             <StackPanel Orientation="Vertical">
                                 <Border Background="Black" CornerRadius="4, 4, 0, 0" HorizontalAlignment="Stretch" 
                                         Height="100"/>
