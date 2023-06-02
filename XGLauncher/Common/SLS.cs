@@ -17,11 +17,11 @@ namespace XGL.SLS {
 
         public static void Save(string name, object value) {
             if (RegHasXGLSubKey()) {
-                curKey = softwareKey.OpenSubKey("XGLauncher", RegistryKeyPermissionCheck.ReadWriteSubTree);
+                curKey = softwareKey.OpenSubKey("Xanytka Software", RegistryKeyPermissionCheck.ReadWriteSubTree);
                 curKey.SetValue(name, value);
             } else {
-                softwareKey.CreateSubKey("XGLauncher", true);
-                curKey = softwareKey.OpenSubKey("XGLauncher");
+                softwareKey.CreateSubKey("Xanytka Software", true);
+                curKey = softwareKey.OpenSubKey("Xanytka Software");
                 curKey.SetValue(name, value);
             }
         }
@@ -35,10 +35,10 @@ namespace XGL.SLS {
 
         public static object Load(string name) {
             if (RegHasXGLSubKey())  {
-                curKey = softwareKey.OpenSubKey("XGLauncher");
+                curKey = softwareKey.OpenSubKey("Xanytka Software");
                 return curKey.GetValue(name);
             } else {
-                softwareKey.CreateSubKey("XGLauncher");
+                softwareKey.CreateSubKey("Xanytka Software");
                 softwareKey.CreateSubKey(name);
                 return null;
             }
@@ -46,26 +46,26 @@ namespace XGL.SLS {
 
         public static object Load(string name, object def) {
             if (RegHasXGLSubKey()) {
-                curKey = softwareKey.OpenSubKey("XGLauncher");
+                curKey = softwareKey.OpenSubKey("Xanytka Software");
                 return curKey.GetValue(name, def);
             } else {
-                softwareKey.CreateSubKey("XGLauncher", RegistryKeyPermissionCheck.ReadWriteSubTree);
-                curKey = softwareKey.OpenSubKey("XGLauncher", true);
+                softwareKey.CreateSubKey("Xanytka Software", RegistryKeyPermissionCheck.ReadWriteSubTree);
+                curKey = softwareKey.OpenSubKey("Xanytka Software", true);
                 curKey.SetValue(name, def);
                 return def;
             }
         }
 
-        static bool RegHasXGLSubKey() { return softwareKey.GetSubKeyNames().Contains("XGLauncher"); }
+        static bool RegHasXGLSubKey() { return softwareKey.GetSubKeyNames().Contains("Xanytka Software"); }
 
         public static void Reset() {
-            softwareKey.DeleteSubKey("XGLauncher");
+            softwareKey.DeleteSubKey("Xanytka Software");
             Setup();
         }
 
         public static void Setup() {
-            softwareKey.CreateSubKey("XGLauncher");
-            curKey = softwareKey.OpenSubKey("XGLauncher");
+            softwareKey.CreateSubKey("Xanytka Software");
+            curKey = softwareKey.OpenSubKey("Xanytka Software");
             Save("Theme", "Dark");
         }
 

@@ -74,6 +74,9 @@ namespace XGL {
             LoadImage();
             //Check for unsupportion.
             CheckVersion();
+            //Show changelog if it wasn't shown before.
+            if(RegistrySLS.LoadString("ShownChangelog", string.Empty) != App.CurrentVersion)
+                ChangelogPg.Visibility = Visibility.Visible;
             //Reload parts.
             UpdateControls(true);
             //Tray icon.

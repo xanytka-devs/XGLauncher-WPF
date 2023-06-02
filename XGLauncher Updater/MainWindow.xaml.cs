@@ -14,7 +14,7 @@ namespace XGL.Update {
         static RegistryKey softwareKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true);
         public MainWindow() { 
             InitializeComponent();
-            softwareKey = softwareKey.OpenSubKey("XGLauncher");
+            softwareKey = softwareKey.OpenSubKey("Xanytka Software");
             path = softwareKey.GetValue("Path").ToString();
             if (App.UpdateIteration == 0) {
                 pageWelcome.Visibility = Visibility.Visible;

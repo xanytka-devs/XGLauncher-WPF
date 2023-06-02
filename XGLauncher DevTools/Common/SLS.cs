@@ -12,7 +12,7 @@ namespace XGL.SLS {
     public class RegistrySLS {
 
         static RegistryKey softwareKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true);
-        static RegistryKey launcherKey = softwareKey.OpenSubKey("XGLauncher", true);
+        static RegistryKey launcherKey = softwareKey.OpenSubKey("Xanytka Software", true);
         static RegistryKey curKey;
 
         public static void Save(string name, object value) {
@@ -20,7 +20,7 @@ namespace XGL.SLS {
                 curKey = launcherKey.OpenSubKey("DevTools", RegistryKeyPermissionCheck.ReadWriteSubTree);
                 curKey.SetValue(name, value);
             } else {
-                softwareKey.CreateSubKey("XGLauncher", true);
+                softwareKey.CreateSubKey("Xanytka Software", true);
                 launcherKey.CreateSubKey("DevTools", true);
                 curKey = launcherKey.OpenSubKey("DevTools", RegistryKeyPermissionCheck.ReadWriteSubTree);
                 curKey.SetValue(name, value);
@@ -41,7 +41,7 @@ namespace XGL.SLS {
                 curKey = launcherKey.OpenSubKey("DevTools");
                 return curKey.GetValue(name);
             } else {
-                softwareKey.CreateSubKey("XGLauncher", true);
+                softwareKey.CreateSubKey("Xanytka Software", true);
                 launcherKey.CreateSubKey("DevTools", true);
                 curKey = launcherKey.OpenSubKey("DevTools", RegistryKeyPermissionCheck.ReadWriteSubTree);
                 curKey.SetValue(name, string.Empty);
@@ -54,7 +54,7 @@ namespace XGL.SLS {
                 curKey = launcherKey.OpenSubKey("DevTools");
                 return curKey.GetValue(name, def);
             } else {
-                softwareKey.CreateSubKey("XGLauncher", true);
+                softwareKey.CreateSubKey("Xanytka Software", true);
                 launcherKey.CreateSubKey("DevTools", true);
                 curKey = launcherKey.OpenSubKey("DevTools", RegistryKeyPermissionCheck.ReadWriteSubTree);
                 curKey.SetValue(name, def);
@@ -67,9 +67,9 @@ namespace XGL.SLS {
                 curKey = launcherKey;
                 return curKey.GetValue(name);
             } else {
-                softwareKey.CreateSubKey("XGLauncher", true);
+                softwareKey.CreateSubKey("Xanytka Software", true);
                 launcherKey.CreateSubKey("DevTools", true);
-                curKey = softwareKey.OpenSubKey("XGLauncher", RegistryKeyPermissionCheck.ReadWriteSubTree);
+                curKey = softwareKey.OpenSubKey("Xanytka Software", RegistryKeyPermissionCheck.ReadWriteSubTree);
                 curKey.SetValue(name, string.Empty);
                 return null;
             }
@@ -80,23 +80,23 @@ namespace XGL.SLS {
                 curKey = launcherKey;
                 return curKey.GetValue(name, def);
             } else {
-                softwareKey.CreateSubKey("XGLauncher", true);
+                softwareKey.CreateSubKey("Xanytka Software", true);
                 launcherKey.CreateSubKey("DevTools", true);
-                curKey = softwareKey.OpenSubKey("XGLauncher", RegistryKeyPermissionCheck.ReadWriteSubTree);
+                curKey = softwareKey.OpenSubKey("Xanytka Software", RegistryKeyPermissionCheck.ReadWriteSubTree);
                 curKey.SetValue(name, def);
                 return def;
             }
         }
 
-        static bool RegHasXGLSubKey() { return softwareKey.GetSubKeyNames().Contains("XGLauncher") && launcherKey.GetSubKeyNames().Contains("DevTools"); }
+        static bool RegHasXGLSubKey() { return softwareKey.GetSubKeyNames().Contains("Xanytka Software") && launcherKey.GetSubKeyNames().Contains("DevTools"); }
 
         public static void Reset() {
-            softwareKey.DeleteSubKey("XGLauncher");
+            softwareKey.DeleteSubKey("Xanytka Software");
             Setup();
         }
 
         public static void Setup() {
-            softwareKey.CreateSubKey("XGLauncher", true);
+            softwareKey.CreateSubKey("Xanytka Software", true);
             launcherKey.CreateSubKey("DevTools", true);
             curKey = launcherKey.OpenSubKey("DevTools", RegistryKeyPermissionCheck.ReadWriteSubTree);
         }

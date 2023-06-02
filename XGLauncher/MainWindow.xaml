@@ -82,5 +82,8 @@
                 FontSize="20" Margin="0, 41, 37, 0" Height="25">
             <Image Source="/Images/plugins.png"/>
         </Button>
+        <Border Name="ChangelogPg" Visibility="Collapsed" Grid.RowSpan="3" Margin="-5, -25, -5, -5">
+            <elements:Changelog x:Name="changelogControl"/>
+        </Border>
     </Grid>
 </Window>
