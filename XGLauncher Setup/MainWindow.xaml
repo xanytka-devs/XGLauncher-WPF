@@ -76,27 +76,6 @@
             <TextBlock Text="Создать ярлык на рабочем столе" FontFamily="Ubuntu Light" FontSize="20"
                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="80, 265, 0, 0" Name="createShortcutT"/>
         </Grid>
-        <Grid Name="pageSelectInstall">
-            <Border Background="Black"/>
-            <TextBlock Text="XGLauncher" FontFamily="Ubuntu Bold" FontSize="30"
-                       VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40, 25, 0, 0"/>
-            <TextBlock Text="Выбор компонента" FontFamily="Ubuntu Light" FontSize="24"
-                       VerticalAlignment="Top" HorizontalAlignment="Left" Margin="230, 30, 0, 0"/>
-            <Button Content="Продолжить" Style="{StaticResource BorderButton}" Name="nextSelectInstall"
-                    VerticalAlignment="Bottom" HorizontalAlignment="Right" 
-                    Width="150" Height="30" FontFamily="Ubuntu"
-                    Margin="0, 0, 40, 20" Click="Next" IsEnabled="False"/>
-            <Button Content="Назад" Name="backSelectInstall"
-                    VerticalAlignment="Bottom" HorizontalAlignment="Right" 
-                    Width="150" Height="30" FontFamily="Ubuntu"
-                    Margin="0, 0, 200, 20" Click="Back"/>
-            <ToggleButton Name="inXGL" Content="XGLauncher | Лаунчер для игр и приложений" Click="InstallSelectApp" VerticalAlignment="Top" 
-                    HorizontalAlignment="Stretch" Margin="40, 121, 40, 0"
-                    Style="{StaticResource AppBtn}"/>
-            <ToggleButton Name="inXGLDT" Content="XGLauncher DevTools | Инструменты для разработчиков" Click="InstallSelectApp" VerticalAlignment="Top" 
-                    Margin="40, 201, 40, 0" HorizontalAlignment="Stretch"
-                    Style="{StaticResource AppBtn}"/>
-        </Grid>
         <Grid Name="pageEULA">
             <Border Background="Black"/>
             <TextBlock Text="XGLauncher" FontFamily="Ubuntu Bold" FontSize="30"

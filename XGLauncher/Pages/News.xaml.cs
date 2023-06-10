@@ -78,7 +78,7 @@ namespace XGL.Pages.LW {
                 //Border for text visibility.
                 Border visArea = new Border() {
                     Background = new LinearGradientBrush(Color.FromRgb(0, 0, 0), Color.FromArgb(0, 0, 0, 0),
-                        new Point(0.5, 0.9), new Point(0.5, 0))
+                        new Point(0.5, 1), new Point(0.5, 0))
                 };
                 //Text block with news name.
                 TextBlock tbName = new TextBlock() {
@@ -107,8 +107,8 @@ namespace XGL.Pages.LW {
                 mainGrid.Children.Add(visArea);
                 //Display box.
                 Button mainBorder = new Button {
-                    Width = 180,
-                    Height = 180,
+                    Width = 200,
+                    Height = 200,
                     Margin = new Thickness(0, 5, 0, 5),
                     Content = mainGrid,
                     Style = (Style)FindResource("NewsButton")

@@ -35,6 +35,7 @@ namespace XGL.Dialogs {
         readonly List<TextBlock> langBtnTexts = new List<TextBlock>();
         bool isChangeCritical = false;
         public static RoutedCommand BetaToggle = new RoutedCommand();
+        public static RoutedCommand SecretToggle = new RoutedCommand();
 
         public OptionsWindow() {
             InitializeComponent();
@@ -99,8 +100,11 @@ namespace XGL.Dialogs {
             //fd_uplg_CB.IsChecked = RegistrySLS.LoadBool("Plugins", false);
             //Hotkeys
             BetaToggle.InputGestures.Add(new KeyGesture(Key.Q, ModifierKeys.Control));
-            if (RegistrySLS.LoadBool("Beta", false)) betaBtn.Visibility = Visibility.Visible;
-            else betaBtn.Visibility = Visibility.Collapsed;
+            RegistrySLS.Save("Beta", !RegistrySLS.LoadBool("Beta", false));
+            BetaToggled(null, null);
+            SecretToggle.InputGestures.Add(new KeyGesture(Key.Up, ModifierKeys.Alt));
+            RegistrySLS.Save("SS", !RegistrySLS.LoadBool("SS", false));
+            SecretToggled(null, null);
         }
 
         class LocalBtn {
@@ -508,6 +512,26 @@ namespace XGL.Dialogs {
             else betaBtn.Visibility = Visibility.Collapsed;
 
         }
+
+        void SecretToggled(object sender, ExecutedRoutedEventArgs e) {
+
+            RegistrySLS.Save("SS", !RegistrySLS.LoadBool("SS", false));
+            if (RegistrySLS.LoadBool("SS", false)) {
+                Random r = new Random(DateTime.Now.ToString().GetHashCode());
+                if(r.Next(0, 1000) == 777) beta_sso_l.Text = beta_sso_r.Text = "╰（‵□′）╯";
+                beta_sso.Visibility = Visibility.Visible;
+                beta_fp3.Visibility = Visibility.Visible;
+                beta_fp5.Visibility = Visibility.Visible;
+                beta_fp6.Visibility = Visibility.Visible;
+            } else {
+                beta_sso.Visibility = Visibility.Collapsed;
+                beta_fp3.Visibility = Visibility.Collapsed;
+                beta_fp5.Visibility = Visibility.Collapsed;
+                beta_fp6.Visibility = Visibility.Collapsed;
+            }
+
+        }
+
     }
 
 }

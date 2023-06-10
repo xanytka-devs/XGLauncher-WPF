@@ -187,6 +187,12 @@
     <Compile Include="Pages\Store.xaml.cs">
       <DependentUpon>Store.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Unique\Changelog.xaml.cs">
+      <DependentUpon>Changelog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Unique\Shop\ShopFeatured.xaml.cs">
+      <DependentUpon>ShopFeatured.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Styles.xaml.cs">
       <DependentUpon>Styles.xaml</DependentUpon>
     </Compile>
@@ -271,6 +277,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Store.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Unique\Changelog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Unique\Shop\ShopFeatured.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -435,6 +449,7 @@
     <Resource Include="Images\def_icon.png" />
     <Resource Include="Images\premium.png" />
     <Resource Include="Images\promocode.png" />
+    <Resource Include="Images\Unique\changelog.png" />
     <Content Include="Libs\MySql.Data.dll" />
   </ItemGroup>
   <ItemGroup>

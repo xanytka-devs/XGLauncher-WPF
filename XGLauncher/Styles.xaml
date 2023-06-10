@@ -36,15 +36,33 @@
                             UseLayoutRounding="True" CornerRadius="6"
                             BorderBrush="Transparent">
                         <Grid>
-                            <Border Opacity="0.5" Name="Border" Background="Black"
-                                    CornerRadius="4"/>
+                            <Border Opacity="0.5" Name="Border"
+                                    CornerRadius="4" Background="Black"/>
                             <ScrollViewer Margin="0" x:Name="PART_ContentHost" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Opacity"
-                                    Value="0.75"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Border"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0.75"
+                                                        Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Border"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0.5"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity"
@@ -83,7 +101,26 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Opacity" TargetName="border" Value="0.125"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0.125"
+                                                        Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -213,7 +250,26 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Opacity" TargetName="blacker" Value="0.125"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="blacker"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0.125"
+                                                        Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="blacker"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -235,9 +291,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Name="border" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" 
-                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="True">
+                        <Border.Background>
+                            <SolidColorBrush x:Name="borderC" Color="#00444444"/>
+                        </Border.Background>
                         <Grid>
                             <Border>
                                 <Border.Background>
@@ -256,7 +314,26 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#444444"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="borderC"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="#ff444444"
+                                                        Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="borderC"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="#00444444"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" TargetName="border" Value="#484848"/>
@@ -359,7 +436,26 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Opacity" TargetName="Border" Value="0.75"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Border"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0.75"
+                                                        Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Border"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0.5"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" TargetName="Border" Value="0.25"/>
@@ -424,9 +520,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border Name="border" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" 
-                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="True" CornerRadius="5">
+                        <Border.Background>
+                            <SolidColorBrush x:Name="borderC" Color="#00F44336"/>
+                        </Border.Background>
                         <ContentPresenter x:Name="contentPresenter" Focusable="False" 
                                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                           Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
@@ -435,6 +533,26 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="borderC"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="#FFF44336"
+                                                        Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="borderC"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="#00F44336"
+                                                        Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                             <Setter Property="Background" TargetName="border" Value="#F44336"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -464,11 +582,6 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
                     </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#393939"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -502,16 +615,15 @@
                     <Border Name="Border"
                             Padding="2"
                             BorderThickness="1"
-                            Background="#262627" UseLayoutRounding="True" CornerRadius="6"
+                            UseLayoutRounding="True" CornerRadius="6"
                             BorderBrush="Transparent">
+                        <Border.Background>
+                            <SolidColorBrush x:Name="borderC" Color="#262627"/>
+                        </Border.Background>
                         <ScrollViewer Margin="0"
                         x:Name="PART_ContentHost" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background"
-                                    Value="#393939"/>
-                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity"
                                     Value="0.5"/>
@@ -555,14 +667,32 @@
                             Padding="2"
                             BorderThickness="1"
                             UseLayoutRounding="True" CornerRadius="6"
-                            BorderBrush="Transparent"/>
+                            Background="Black" Opacity="0"/>
                             <ScrollViewer Margin="0" x:Name="PART_ContentHost" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="EffectBorder" Value="Black"/>
-                            <Setter Property="Opacity" TargetName="EffectBorder" Value="0.125"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="EffectBorder"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0.125"
+                                                        Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="EffectBorder"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        To="0"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -594,16 +724,15 @@
                     <Border Name="Border"
                             Padding="2"
                             BorderThickness="1"
-                            Background="#262627" UseLayoutRounding="True" CornerRadius="6"
+                            UseLayoutRounding="True" CornerRadius="6"
                             BorderBrush="Transparent">
+                        <Border.Background>
+                            <SolidColorBrush x:Name="borderC" Color="#262627"/>
+                        </Border.Background>
                         <ScrollViewer Margin="0"
                         x:Name="PART_ContentHost" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background"
-                                    Value="#393939"/>
-                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity"
                                     Value="0.5"/>
@@ -666,16 +795,15 @@
                     <Border Name="Border"
                             Padding="2"
                             BorderThickness="1"
-                            Background="#262627" UseLayoutRounding="True" CornerRadius="6"
+                            UseLayoutRounding="True" CornerRadius="6"
                             BorderBrush="Transparent">
+                        <Border.Background>
+                            <SolidColorBrush x:Name="borderC" Color="#262627"/>
+                        </Border.Background>
                         <ScrollViewer Margin="0"
                         x:Name="PART_ContentHost" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background"
-                                    Value="#393939"/>
-                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity"
                                     Value="0.5"/>
@@ -717,8 +845,12 @@
                         <Border Name="Border"
                             Padding="2"
                             BorderThickness="1"
-                            Background="Black" UseLayoutRounding="True" CornerRadius="6"
-                            BorderBrush="Transparent" Opacity="0.125"/>
+                            UseLayoutRounding="True" CornerRadius="6"
+                            BorderBrush="Transparent" Opacity="0.125">
+                            <Border.Background>
+                                <SolidColorBrush x:Name="borderC" Color="Black"/>
+                            </Border.Background>
+                        </Border>
                         <Border
                             Padding="2"
                             BorderThickness="1"
@@ -730,8 +862,26 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background"
-                                    Value="#393939"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="borderC"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="#393939"
+                                                        Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="borderC"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="Black"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background"
@@ -762,9 +912,12 @@
                                 Grid.Column="0"
                                 CornerRadius="6"
                                 Margin="1"
-                                Background="#262627"
                                 BorderBrush="#262627"
-                                BorderThickness="2"/>
+                                BorderThickness="2">
+                            <Border.Background>
+                                <SolidColorBrush x:Name="borderC" Color="#262627"/>
+                            </Border.Background>
+                        </Border>
                         <Image x:Name="arrow" Source="\Images\eye.png"
                                Opacity="1" Margin="5"/>
                         <Image x:Name="arrow1" Source="\Images\minus.png"
@@ -772,8 +925,26 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="checkBg"
-                                    Value="#393939"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="borderC"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="#393939"
+                                                        Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="borderC"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="#262627"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Opacity" TargetName="arrow" Value="0"/>

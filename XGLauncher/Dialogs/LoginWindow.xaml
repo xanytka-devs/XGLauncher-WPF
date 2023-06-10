@@ -18,7 +18,8 @@
                 <TextBlock Name="loginWarn" Text="Warning" FontSize="16" Foreground="#F44336" Margin="50,-25,0,50" Opacity="0"/>
             </Grid>
             <Grid Height="50" Margin="25, 170, 25, 0">
-                <TextBox Name="passwordTB" FontSize="16" Visibility="Collapsed" Margin="0, 0, 40, 0" TextChanged="PassChanged_T"/>
+                <TextBox Name="passwordTB" FontSize="16" Visibility="Collapsed" Margin="0, 0, 40, 0" TextChanged="PassChanged_T"
+                         Style="{StaticResource OldStyleTextBox}"/>
                 <PasswordBox Name="passwordTBH" FontSize="16" PasswordChar="•" Margin="0, 0, 40, 0"/>
                 <ToggleButton Checked="PassToggle_C" Unchecked="PassToggle_U" Style="{StaticResource GrayToggle}"
                               HorizontalAlignment="Right" Width="40" VerticalAlignment="Stretch"/>

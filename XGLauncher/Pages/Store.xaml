@@ -19,6 +19,16 @@
             </Grid.ColumnDefinitions>
             <Border Grid.Column="1">
                 <Grid>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <Border Background="#262627" Name="promocode_tbf"
+                             Width="0" Height="40" Margin="10, 0, 0, 0" CornerRadius="6" UseLayoutRounding="True">
+                            <TextBox Name="promocode_tb" Style="{StaticResource TransparentTB}" TextChanged="Promocode_tb_TextChanged"/>
+                        </Border>
+                        <Button Name="promocode_btn" Click="EnterPromocode"
+                            Margin="10, 7.5, 0, 7.5">
+                            <Image Source="\Images\promocode.png"/>
+                        </Button>
+                    </StackPanel>
                     <Border Background="#262627" VerticalAlignment="Center" HorizontalAlignment="Right"
                              Width="300" Height="40" Margin="0, 0, 10, 0" CornerRadius="6" UseLayoutRounding="True">
                         <Grid>
@@ -40,7 +50,7 @@
                     <StackPanel Name="ShopBelt"/>
                 </Grid>
             </ScrollViewer>
-            <Border Background="#303031" Grid.ColumnSpan="3" Grid.RowSpan="2" Name="StorePagePresenter" Visibility="Visible">
+            <Border Background="#303031" Grid.ColumnSpan="3" Grid.RowSpan="2" Name="StorePagePresenter" Visibility="Collapsed">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
                           Margin="15, 15, 15, 0">
                     <StackPanel Orientation="Vertical">
@@ -81,6 +91,16 @@
                     </StackPanel>
                 </ScrollViewer>
             </Border>
+        </Grid>
+        <Grid Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Grid Name="pC_Premium" Visibility="Collapsed">
+                <TextBlock Text="Premium Activated" FontSize="48" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Name="pC_Ptitle"/>
+                <TextBlock Text="This is temporal effect" FontSize="20" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" Margin="0, 85, 0, 0" Name="pC_Pte"/>
+                <TextBlock Text="CREATOR DEAL" FontSize="20" HorizontalAlignment="Center" Name="pC_Pdeal"
+                           VerticalAlignment="Center" Margin="0, 0, 0, 85" Foreground="#8e7cc3" Visibility="Collapsed"/>
+            </Grid>
         </Grid>
         <local:Publisher x:Name="PublisherPage" Visibility="Collapsed"/>
     </Grid>

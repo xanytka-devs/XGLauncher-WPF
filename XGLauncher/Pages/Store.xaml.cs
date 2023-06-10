@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.IO;
 using XGL.SLS;
 using XGL.Networking;
+using System.Windows.Media.Animation;
 
 namespace XGL.Pages.LW {
 
@@ -284,6 +285,79 @@ namespace XGL.Pages.LW {
             MainWindow.Instance.curP = 6;
         }
 
+        bool pbState = false;
+        void EnterPromocode(object sender, RoutedEventArgs e) {
+
+            if(pbState && !string.IsNullOrEmpty(promocode_tb.Text)) {
+                if(PromocodeSystem.Check(promocode_tb.Text) == "inv") promocode_tb.Foreground = new SolidColorBrush(Colors.Red);
+                return;
+            }
+            Storyboard storyboard = new Storyboard();
+            Duration duration = new Duration(TimeSpan.FromMilliseconds(500));
+            CubicEase ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+            DoubleAnimation animation = new DoubleAnimation {
+                EasingFunction = ease,
+                Duration = duration
+            };
+            storyboard.Children.Add(animation);
+            Storyboard.SetTarget(animation, promocode_tbf);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("(Border.Width)"));
+            if (pbState) {
+                animation.From = 300;
+                animation.To = 0;
+            } else {
+                promocode_tbf.Visibility = Visibility.Visible;
+                animation.From = 0;
+                animation.To = 300;
+            }
+            storyboard.Begin();
+            pbState = !pbState;
+            animation.Completed += (object s, EventArgs _e) => {
+                if (!pbState) promocode_tbf.Visibility = Visibility.Collapsed;
+            };
+
+        }
+
+        void Promocode_tb_TextChanged(object sender, TextChangedEventArgs e) => promocode_tb.Foreground = new SolidColorBrush(Colors.White);
+
+        public void ShowPremiumPopup(bool sD) {
+            if(sD) pC_Pdeal.Visibility = Visibility.Visible;
+            else pC_Pdeal.Visibility = Visibility.Collapsed;
+            promocode_tb.Text = string.Empty;
+            EnterPromocode(null, null);
+            pC_Premium.Visibility = Visibility.Visible;
+            Storyboard storyboard = new Storyboard();
+            Duration duration = new Duration(TimeSpan.FromMilliseconds(750));
+            CubicEase ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+            DoubleAnimation animation = new DoubleAnimation {
+                EasingFunction = ease,
+                Duration = duration
+            };
+            animation.Completed += TBTransparentFadeAnim_Completed;
+            storyboard.Children.Add(animation);
+            Storyboard.SetTarget(animation, pC_Premium);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("(Grid.Opacity)"));
+            animation.From = 0;
+            animation.To = 1;
+            storyboard.Begin();
+        }
+
+        async void TBTransparentFadeAnim_Completed(object sender, EventArgs e) {
+            await Task.Delay(1000);
+            Storyboard storyboard = new Storyboard();
+            Duration duration = new Duration(TimeSpan.FromMilliseconds(750));
+            CubicEase ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+            DoubleAnimation animation = new DoubleAnimation {
+                EasingFunction = ease,
+                Duration = duration
+            };
+            storyboard.Children.Add(animation);
+            Storyboard.SetTarget(animation, pC_Premium);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("(Grid.Opacity)"));
+            animation.From = 1;
+            animation.To = 0;
+            storyboard.Begin();
+        }
     }
 
 }
