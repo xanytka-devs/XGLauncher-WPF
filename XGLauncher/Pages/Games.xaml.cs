@@ -64,9 +64,7 @@ namespace XGL.Pages.LW {
         }
 
         public int CompareTo(object obj) {
-
             return Name.CompareTo((obj as XGLApp).Name);
-
         }
     }
 
@@ -327,7 +325,7 @@ namespace XGL.Pages.LW {
         }
 
         async void GenerateButtons() {
-            while(!LocalizationManager.I.LocalLoaded()) await Task.Delay(25);
+            while (!LocalizationManager.I.LocalLoaded()) await Task.Delay(25);
             for (int i = 0; i < apps.Count; i++) {
                 Regex sWhitespace = new Regex(@"\s+");
                 ToggleButton btn = new ToggleButton {
@@ -431,7 +429,6 @@ namespace XGL.Pages.LW {
             canEnableLaunchBtn = true;
         }
         void AddCustomGame(object sender, RoutedEventArgs e) {
-            Clear();
             OpenFileDialog fileDialog = new OpenFileDialog() {
                 InitialDirectory = App.AppsFolder,
                 Filter = "Application (*.exe)|*.exe|All files (*.*)|*.*"
@@ -442,11 +439,18 @@ namespace XGL.Pages.LW {
                     //TODO: Implement custom dialog system.
                     MessageBox.Show("Path empty.", "XGLauncher");
             }
+            Clear();
             Reload();
         }
         public void WriteToGamesFile(string path, bool isCustom = true, string name = "", string version = "1.0", long id = 0) {
             string appsFile = Path.Combine(App.AppsFolder, "Applications");
             if (string.IsNullOrEmpty(name)) name = path.Split('\\')[path.Split('\\').Length - 1];
+            if (isCustom && apps.Count != 0) {
+                int cInt = 0;
+                for (int i = 0; i < apps.Count; i++)
+                    if (apps[i].Custom) cInt++;
+                id = 0 - cInt;
+            }
             string add = $"{id}^{name}^{isCustom}^{version}^{path}\n";
             try {
                 File.WriteAllText(appsFile, File.ReadAllText(appsFile) + add);
@@ -481,10 +485,13 @@ namespace XGL.Pages.LW {
             if (File.Exists(appsFile)) {
                 string[] applications = File.ReadAllText(appsFile).Split('\n');
                 string[] newList = new string[applications.Length - 1];
+                int cInd = 0;
                 for (int i = 0; i < applications.Length; i++) {
                     if(!string.IsNullOrEmpty(applications[i])) {
-                        if (applications[i].Split('^')[0] != id.ToString())
-                            newList[i] = applications[i];
+                        if (applications[i].Split('^')[0] != id.ToString()) {
+                            newList[cInd] = applications[i];
+                            cInd++;
+                        }
                     }
                 }
                 File.WriteAllText(appsFile, string.Join("\n", newList));

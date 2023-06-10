@@ -20,7 +20,7 @@ namespace XGL {
     public partial class App : Application {
 
         public static bool LoginDataNotSaved = false; //Is password and login saved
-        public static string CurrentVersion { get; private set; } = "0.1.5"; //Version
+        public static string CurrentVersion { get; private set; } = "0.1.6"; //Version
         public static string[] AccountData; // TMP / Raw account data. Soon will be replaced by token
         public static string CurrentFolder { get; private set; } //Application dir
         public static string AppDataFolder { get; private set; }//Application data dir
