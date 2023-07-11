@@ -186,7 +186,7 @@ namespace XGL {
 
         }
 
-        public static bool IsRunningApp { get; set; } = false;
+        public static bool IsRunningApp = false;
 
         async void CreateTrayIcon() {
             if(!RegistrySLS.LoadBool("HideInTray", true)) return;

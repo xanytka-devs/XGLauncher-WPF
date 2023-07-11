@@ -152,7 +152,7 @@ namespace XGL.Pages.LW {
         }
 
         async void LoadImage(int i) {
-            string nameOfImg = Path.Combine(App.CurrentFolder, "cache", news[i].Icon.Split('{')[0] + ".png");
+            string nameOfImg = Path.Combine(App.CurrentFolder, "cache", news[i].Icon.Split('{')[0] + ".jpg");
             if(!File.Exists(nameOfImg))
                 await Utils.I.DownloadFileAsync(news[i].Icon.Split('{')[1], nameOfImg);
             BitmapImage logo = new BitmapImage();

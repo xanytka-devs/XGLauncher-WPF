@@ -81,13 +81,22 @@ namespace XGL.Pages.LW {
         readonly List<Image> miniLogos = new List<Image>();
         readonly List<TextBlock> texts = new List<TextBlock>();
         public List<XGLApp> apps = new List<XGLApp>();
-        List<XGLApp> customApps = new List<XGLApp>();
+        readonly List<XGLApp> customApps = new List<XGLApp>();
         bool oldStyle = false;
         string gBtnStyleName = "GameBtn";
         internal int tabClicks = 2;
 
         public Games() {
             InitializeComponent();
+        }
+
+        protected override void OnGotFocus(RoutedEventArgs e) {
+            if (MainWindow.IsRunningApp) {
+                MainWindow.IsRunningApp = false;
+                Clear();
+                Reload();
+            }
+            base.OnGotFocus(e);
         }
 
         public void Reload() {
@@ -274,8 +283,9 @@ namespace XGL.Pages.LW {
                 SelectedPoint = apps[toggles.IndexOf(tb)];
                 launchBtn.Visibility = Visibility.Visible;
                 LibLogo.Visibility = Visibility.Collapsed;
-                BitmapImage logoBG = new BitmapImage();
-                logoBG.CacheOption = BitmapCacheOption.OnLoad;
+                BitmapImage logoBG = new BitmapImage {
+                    CacheOption = BitmapCacheOption.OnLoad
+                };
                 logoBG.BeginInit();
                 logoBG.UriSource = new Uri("pack://application:,,,/Images/plain.jpg");
                 logoBG.EndInit();

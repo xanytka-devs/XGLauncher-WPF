@@ -12,16 +12,24 @@ namespace XGL.Update {
         string path;
         string link;
         static RegistryKey softwareKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true);
+        static RegistryKey curKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true);
         public MainWindow() { 
             InitializeComponent();
-            softwareKey = softwareKey.OpenSubKey("Xanytka Software");
-            path = softwareKey.GetValue("Path").ToString();
-            if(App.UpdateIteration == 0) {
-                pageWelcome.Visibility = Visibility.Visible;
-                link = Database.GetValue();
-                if(softwareKey.GetValue("Version").ToString() == link.Split('{')[0]) pageNoUpdates.Visibility = Visibility.Visible;
-            } else if(App.UpdateIteration == 1) ContinueUpdate();
-            else if(App.UpdateIteration == 2) EndUpdate();
+            try {
+                curKey = softwareKey.OpenSubKey("Xanytka Software", true);
+                curKey = curKey.OpenSubKey("XGLauncher", true);
+                path = curKey.GetValue("Path").ToString();
+                if (App.UpdateIteration == 0) {
+                    pageWelcome.Visibility = Visibility.Visible;
+                    link = Database.GetValue();
+                    if (curKey.GetValue("Version").ToString() == link.Split('{')[0]) pageNoUpdates.Visibility = Visibility.Visible;
+                }
+                else if (App.UpdateIteration == 1) ContinueUpdate();
+                else if (App.UpdateIteration == 2) EndUpdate();
+            }
+            catch {
+                pageNoUpdates.Visibility = Visibility.Visible;
+            }
         }
         void Update(object sender, RoutedEventArgs e) {
             pageWelcome.Visibility = Visibility.Collapsed;
@@ -43,8 +51,8 @@ namespace XGL.Update {
         void StartInstallation() {
             try {
                 using (WebClient client = new WebClient()) {
-                    client.DownloadFileCompleted += Client_DownloadFileCompleted;
                     Directory.CreateDirectory(Path.Combine(path, "temp"));
+                    client.DownloadFileCompleted += Client_DownloadFileCompleted;
                     client.DownloadFileAsync(new Uri(link.Split('{')[1]), Path.Combine(path, "temp", "XGLauncher.zip"));
                 }
             }
