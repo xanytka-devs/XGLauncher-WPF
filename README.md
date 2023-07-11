@@ -1,6 +1,5 @@
-ДАННЫЙ РЕПОЗИТОРИЙ ЯВЛЯЕТСЯ АРХИВОМ СТАРОЙ ВЕТВИ XGLAUNCHER НА C# WPF.
-НОВАЯ ВЕТВЬ РАСПОЛОГАЕТСЯ ПО АДРЕСУ:
-https://github.com/XanytkaDevs/XGLauncher
+## Будущее проекта
+Встретимся с XGL уже скоро. Ранние версии будут доступны в [Poligon](https://github.com/XanytkaDevs/Poligon). А также весь код будет расположен в [репозитории под XEngine](https://github.com/XanytkaDevs/XGLauncher).
 
 # XGLauncher
 *XGLauncher - русский лаунчер.*
