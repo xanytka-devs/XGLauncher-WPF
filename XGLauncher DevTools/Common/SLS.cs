@@ -16,7 +16,7 @@ namespace XGL.SLS {
         static RegistryKey curKey;
 
         public static void Save(string name, object value) {
-            if (RegHasXGLSubKey()) {
+            if(RegHasXGLSubKey()) {
                 curKey = launcherKey.OpenSubKey("DevTools", RegistryKeyPermissionCheck.ReadWriteSubTree);
                 curKey.SetValue(name, value);
             } else {
@@ -37,7 +37,7 @@ namespace XGL.SLS {
         public static int LoadInt(string name, int def) { return int.Parse(Load(name, def).ToString()); }
 
         public static object Load(string name) {
-            if (RegHasXGLSubKey())  {
+            if(RegHasXGLSubKey())  {
                 curKey = launcherKey.OpenSubKey("DevTools");
                 return curKey.GetValue(name);
             } else {
@@ -50,7 +50,7 @@ namespace XGL.SLS {
         }
 
         public static object Load(string name, object def) {
-            if (RegHasXGLSubKey()) {
+            if(RegHasXGLSubKey()) {
                 curKey = launcherKey.OpenSubKey("DevTools");
                 return curKey.GetValue(name, def);
             } else {
@@ -63,7 +63,7 @@ namespace XGL.SLS {
         }
 
         public static object LoadXGL(string name) {
-            if (RegHasXGLSubKey()) {
+            if(RegHasXGLSubKey()) {
                 curKey = launcherKey;
                 return curKey.GetValue(name);
             } else {
@@ -76,7 +76,7 @@ namespace XGL.SLS {
         }
 
         public static object LoadXGL(string name, object def) {
-            if (RegHasXGLSubKey()) {
+            if(RegHasXGLSubKey()) {
                 curKey = launcherKey;
                 return curKey.GetValue(name, def);
             } else {

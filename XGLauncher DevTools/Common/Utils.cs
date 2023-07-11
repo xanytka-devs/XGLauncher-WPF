@@ -36,7 +36,7 @@ namespace XGL {
 
             for (int i = 0; i < tmp.Length; i++){
                 if(i == index) tmp[i] = value.ToString();
-                if (!string.IsNullOrEmpty(tmp[i])) output += tmp[i] + ";";
+                if(!string.IsNullOrEmpty(tmp[i])) output += tmp[i] + ";";
             }
 
             return output;
@@ -46,9 +46,9 @@ namespace XGL {
             string[] parts = original.Split(charToSplit);
             string output = string.Empty;
             for (int i = 0; i < parts.Length; i++) {
-                if (i != indexToRemove) {
+                if(i != indexToRemove) {
                     output += parts[i];
-                    if (addCharToSplit) output += charToSplit.ToString();
+                    if(addCharToSplit) output += charToSplit.ToString();
                 }
             }
             return output;
@@ -56,8 +56,8 @@ namespace XGL {
 
         public static int BoolToInt(bool input) { return input ? 1 : 0; }
         public static object BoolToObj(bool input, object tV, object fV) { return input ? tV : fV; }
-        public static bool BoolFromInt(int input) { if (input == 0) return false; else return true; }
-        public static bool BoolFromObj(object tV, object fV) { if (tV == fV) return true; else return false; }
+        public static bool BoolFromInt(int input) { if(input == 0) return false; else return true; }
+        public static bool BoolFromObj(object tV, object fV) { if(tV == fV) return true; else return false; }
         public static bool? BoolFromString(string v) {
             switch (v) {
                 case "0": return false;
@@ -68,7 +68,7 @@ namespace XGL {
 
         public static long GetTotalFreeSpace(string driveName) {
             foreach (DriveInfo drive in DriveInfo.GetDrives()) {
-                if (drive.IsReady && drive.Name == driveName) {
+                if(drive.IsReady && drive.Name == driveName) {
                     return drive.TotalFreeSpace;
                 }
             }
@@ -93,7 +93,7 @@ namespace XGL {
                     using (var response = request.GetResponse()) {
                         using (var stream = response.GetResponseStream()) {
                             int read;
-                            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0) {
+                            while((read = stream.Read(buffer, 0, buffer.Length)) > 0) {
                                 target.Write(buffer, 0, read);
                             }
                         }
@@ -125,7 +125,7 @@ namespace XGL {
             WebRequest req = WebRequest.Create(url);
             req.Method = "HEAD";
             using (WebResponse resp = req.GetResponse()) {
-                if (long.TryParse(resp.Headers.Get("Content-Length"), out long ContentLength))
+                if(long.TryParse(resp.Headers.Get("Content-Length"), out long ContentLength))
                     result = ContentLength;
             }
             return result;
@@ -144,10 +144,10 @@ namespace XGL {
         }
 
         public static bool IsControlVisible(UIElement c) {
-            if (c.IsVisible == false)
+            if(c.IsVisible == false)
                 return false;
             else
-                if (VisualTreeHelper.GetParent(c) as UIElement != null)
+                if(VisualTreeHelper.GetParent(c) as UIElement != null)
                 return IsControlVisible(VisualTreeHelper.GetParent(c) as UIElement);
             else
                 return c.IsVisible;

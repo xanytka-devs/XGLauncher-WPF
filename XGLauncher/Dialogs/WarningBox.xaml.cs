@@ -87,10 +87,10 @@ namespace XGL.Dialogs {
         }
 
         void ReturnResult(object sender, RoutedEventArgs e) {
-            if (sender == ok) Result = WBResult.Ok;
-            else if (sender == cancel) Result = WBResult.Cancel;
-            else if (sender == yes) Result = WBResult.Yes;
-            else if (sender == no) Result = WBResult.No;
+            if(sender == ok) Result = WBResult.Ok;
+            else if(sender == cancel) Result = WBResult.Cancel;
+            else if(sender == yes) Result = WBResult.Yes;
+            else if(sender == no) Result = WBResult.No;
         }
         void AnylizeButtonLayout(ButtonLayout layout) {
             switch (layout) {

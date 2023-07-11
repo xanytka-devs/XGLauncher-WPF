@@ -31,24 +31,24 @@ namespace XGL.Dev.Pages {
 
         bool inv = false;
         void Create(object sender, RoutedEventArgs e) {
-            if (!App.RunMySQLCommands) return;
+            if(!App.RunMySQLCommands) return;
             RB();
-            if (string.IsNullOrEmpty(TB_name.Text)) SRB(T_name);
-            if (string.IsNullOrEmpty(TB_desc.Text)) SRB(T_desc);
-            if (string.IsNullOrEmpty(TB_genr.Text)) SRB(T_genr);
-            if (string.IsNullOrEmpty(TB_urll.Text)) SRB(T_urll);
-            if (string.IsNullOrEmpty(TB_icon.Text)) SRB(T_icon);
-            if (string.IsNullOrEmpty(TB_scsh.Text)) SRB(T_scsh);
-            if (string.IsNullOrEmpty(TB_pric.Text)) SRB(T_pric);
-            if (string.IsNullOrEmpty(TB_vers.Text)) SRB(T_vers);
-            if (inv) return;
+            if(string.IsNullOrEmpty(TB_name.Text)) SRB(T_name);
+            if(string.IsNullOrEmpty(TB_desc.Text)) SRB(T_desc);
+            if(string.IsNullOrEmpty(TB_genr.Text)) SRB(T_genr);
+            if(string.IsNullOrEmpty(TB_urll.Text)) SRB(T_urll);
+            if(string.IsNullOrEmpty(TB_icon.Text)) SRB(T_icon);
+            if(string.IsNullOrEmpty(TB_scsh.Text)) SRB(T_scsh);
+            if(string.IsNullOrEmpty(TB_pric.Text)) SRB(T_pric);
+            if(string.IsNullOrEmpty(TB_vers.Text)) SRB(T_vers);
+            if(inv) return;
             MySqlCommand command = new MySqlCommand(
                 $"INSERT INTO `xgl_products`(`name`, `publisherID`, `genres`, `storeBanner`, `storeMedia`, `price`, `description`, `latestDownloadLinks`) VALUES ('{TB_name.Text}', {RegistrySLS.LoadString("LastID")}, '{TB_genr.Text}', '{TB_icon.Text}', '{TB_scsh.Text}', '{TB_pric.Text}', '{TB_desc.Text}', '{TB_vers.Text + "{" + TB_urll.Text}')"
                 , Connection);
             //Start the connection.
             OpenConnection();
             //Execute the data query.
-            if (command.ExecuteNonQuery() == 1) {
+            if(command.ExecuteNonQuery() == 1) {
                 //Close the connection.
                 CloseConnection();
             }
@@ -64,7 +64,7 @@ namespace XGL.Dev.Pages {
                 OpenConnection();
                 MySqlDataReader dr;
                 dr = command.ExecuteReader();
-                while (dr.Read()) {
+                while(dr.Read()) {
                     appid = dr.GetInt64("id").ToString();
                 }
                 dr.Close();
@@ -84,7 +84,7 @@ namespace XGL.Dev.Pages {
             //Start the connection.
             OpenConnection();
             //Execute the data query.
-            if (command.ExecuteNonQuery() == 1) {
+            if(command.ExecuteNonQuery() == 1) {
                 //Close the connection.
                 CloseConnection();
             }

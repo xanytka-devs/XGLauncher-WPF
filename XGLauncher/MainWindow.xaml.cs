@@ -51,49 +51,48 @@ namespace XGL {
             //Update controls.
             CheckTheme();
             UpdateControls(false);
-            //Update public variables.
-            myProfile.Text = RegistrySLS.LoadString("Username");
-            App.IsPremium = Database.IsPremium(App.CurrentAccount);
-            Manager = new VersionManager();
             //Update visibility of dev elements.
-            community.Visibility = Visibility.Collapsed;
-            plg_btn.Visibility = Visibility.Collapsed;
-            if (RegistrySLS.LoadBool("Community", false)) {
+            if(RegistrySLS.LoadBool("Community", false)) {
                 community.Visibility = Visibility.Visible;
                 MinWidth = 1040;
             }
-            if (RegistrySLS.LoadBool("Plugins", false) &&
-                RegistrySLS.LoadBool("PluginsButton", false)) plg_btn.Visibility = Visibility.Visible;
-            storeControl.Clear();
-            gamesControl.Clear();
-            newsControl.Clear();
-            if (curP == 1) storeControl.Reload();
-            if(curP == 2) gamesControl.Reload();
-            if(curP == 3) newsControl.Reload();
+            if(curP != 1) { storeControl.Clear(); storeControl.Reload(); }
+            if(curP != 2) { gamesControl.Clear(); gamesControl.Reload(); }
+            if(curP != 3) { newsControl.Clear(); newsControl.Reload(); }
             ApplyLocalization();
-            LoadImage();
-            //Check for unsupportion.
-            CheckVersion();
-            //Show changelog if it wasn't shown before.
-            if(RegistrySLS.LoadString("ShownChangelog", string.Empty) != App.CurrentVersion)
-                ChangelogPg.Visibility = Visibility.Visible;
             //Reload parts.
             UpdateControls(true);
             //Tray icon.
             App.TrayIcon?.Dispose();
             CreateTrayIcon();
         }
+        void Preload() {
+            //Check for unsupportion.
+            CheckVersion();
+            App.IsPremium = Database.IsPremium(App.CurrentAccount);
+            //Update public variables.
+            myProfile.Text = RegistrySLS.LoadString("Username");
+            LoadImage();
+            Manager = new VersionManager();
+            //Show changelog if it wasn't shown before.
+            if (RegistrySLS.LoadString("ShownChangelog", string.Empty) != App.CurrentVersion)
+                ChangelogPg.Visibility = Visibility.Visible;
+            gamesControl.Clear();
+            gamesControl.Reload();
+            if (RegistrySLS.LoadBool("Plugins", false) &&
+                RegistrySLS.LoadBool("PluginsButton", false)) plg_btn.Visibility = Visibility.Visible;
+        }
 
         void GetPosSize() {
 
-            if (!RegistrySLS.LoadBool("SavePosSize", true)) return;
+            if(!RegistrySLS.LoadBool("SavePosSize", true)) return;
             string saved = RegistrySLS.LoadString("PosSize", "INS");
             if(saved == "INS") {
                 SetPosSize();
                 return;
             }
             string[] saveData = saved.Split(';');
-            if (saveData[0] == "max") {
+            if(saveData[0] == "max") {
                 WindowState = WindowState.Maximized;
                 WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 return;
@@ -105,16 +104,15 @@ namespace XGL {
             Top = pos.Y;
 
         }
-
         void SetPosSize() {
-            if (!RegistrySLS.LoadBool("SavePosSize", true)) return;
+            if(!RegistrySLS.LoadBool("SavePosSize", true)) return;
             Point pos = new Point(Left, Top);
             RegistrySLS.Save("PosSize", $"{pos.X};{pos.Y};{Height};{Width}");
             if(WindowState == WindowState.Maximized) RegistrySLS.Save("PosSize", $"max");
         }
 
         async void CheckVersion() {
-            while (!LocalizationManager.I.LocalLoaded()) await Task.Delay(25);
+            while(!LocalizationManager.I.LocalLoaded()) await Task.Delay(25);
             string curSup = Database.GetVersionSupport();
             if(bool.Parse(curSup.Split(';')[0])) {
                 try {
@@ -137,12 +135,11 @@ namespace XGL {
             m.gamesControl.Reload();
 
         }
-
         void CheckTheme() {
             //TODO: Implement. Please.
             //string theme = RegistrySLS.LoadString("Theme", "System");
             //var uri = new Uri("Themes\\" + "Dark" + ".xaml", UriKind.Relative);
-            //if (theme != "System")
+            //if(theme != "System")
             //    uri = new Uri("Themes\\" + theme + ".xaml", UriKind.Relative);
             //ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
             //Application.Current.Resources.Clear();
@@ -152,10 +149,10 @@ namespace XGL {
         async void LoadImage() {
             if(!App.RunMySQLCommands || App.CurrentAccount == null) return;
             string URL;
-            if (App.IsFirstRun) URL = "default{https://drive.google.com/uc?export=download&id=1hKSUYQgTaJIp8V-coY8Y8Bmod0eIupzy";
+            if(App.IsFirstRun) URL = "default{https://drive.google.com/uc?export=download&id=1hKSUYQgTaJIp8V-coY8Y8Bmod0eIupzy";
             else URL = Database.GetValue(App.CurrentAccount, "icon").ToString();
             string nameOfImg = Path.Combine(App.CurrentFolder, "cache", URL.Split('{')[0] + ".jpg");
-            if (!File.Exists(nameOfImg))
+            if(!File.Exists(nameOfImg))
                 await Utils.I.DownloadFileAsync(URL.Split('{')[1], nameOfImg);
             BitmapImage logo = new BitmapImage {
                 CacheOption = BitmapCacheOption.OnLoad
@@ -175,6 +172,7 @@ namespace XGL {
             if(!RegistrySLS.LoadBool("SavePosSize", true))
                 WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ApplyLocalization();
+            Preload();
             Reload();
             Closing += (object sender, System.ComponentModel.CancelEventArgs e) => {
                 if(RegistrySLS.LoadBool("SavePosSize", true)) SetPosSize();
@@ -188,8 +186,10 @@ namespace XGL {
 
         }
 
+        public static bool IsRunningApp = false;
+
         async void CreateTrayIcon() {
-            if (!RegistrySLS.LoadBool("HideInTray", true)) return;
+            if(!RegistrySLS.LoadBool("HideInTray", true)) return;
             App.TrayIcon = new Forms.NotifyIcon {
                 Icon = new System.Drawing.Icon("xgl.ico"),
                 Text = "XGLauncher",
@@ -197,7 +197,7 @@ namespace XGL {
                 ContextMenuStrip = new Forms.ContextMenuStrip()
             };
             LocalizationManager l = LocalizationManager.I;
-            while (!l.LocalLoaded()) await Task.Delay(25);
+            while(!l.LocalLoaded()) await Task.Delay(25);
             App.TrayIcon.ContextMenuStrip.Items.Add(l.dictionary["mw.store"], null,
                 (object sender, EventArgs e) => {
                     Instance.Show();
@@ -234,9 +234,9 @@ namespace XGL {
         }
 
         public void MainBtn_Click(object sender, RoutedEventArgs e) {
-            if (curP != 1)
+            if(curP != 1)
                 storeControl.Clear();
-            if (curP != 3)
+            if(curP != 3)
                 newsControl.Clear();
             CheckTabs(sender);
             GC.Collect();
@@ -250,30 +250,30 @@ namespace XGL {
             if(sender != games) gamesControl.tabClicks = 0;
             if(sender != store) storeControl.tabClicks = 0;
             if(sender != news) newsControl.tabClicks = 0;
-            if (sender != community) communityControl.tabClicks = 0;
-            if (sender == store & curP != 1) {
+            if(sender != community) communityControl.tabClicks = 0;
+            if(sender == store & curP != 1) {
                 SetAllButtons(store);
                 CollapseAllPages(StorePg);
                 storeControl.Reload();
                 storeControl.tabClicks++;
                 curP = 1;
-            } else if (sender == games & curP != 2) {
+            } else if(sender == games & curP != 2) {
                 SetAllButtons(games);
                 CollapseAllPages(GamesPg);
                 gamesControl.tabClicks++;
                 curP = 2;
-            } else if (sender == news & curP != 3) {
+            } else if(sender == news & curP != 3) {
                 SetAllButtons(news);
                 CollapseAllPages(NewsPg);
                 newsControl.Reload();
                 newsControl.tabClicks++;
                 curP = 3;
-            } else if (sender == community & curP != 4) {
+            } else if(sender == community & curP != 4) {
                 SetAllButtons(community);
                 CollapseAllPages(CommunityPg);
                 communityControl.tabClicks++;
                 curP = 4;
-            } else if (sender == myProfileBtn & curP != 5) {
+            } else if(sender == myProfileBtn & curP != 5) {
                 SetAllButtons(myProfileBtn);
                 CollapseAllPages(MyProfilePg);
                 myProfileControl.Reload();
@@ -303,7 +303,7 @@ namespace XGL {
         }
 
         void OpenSettings(object sender, RoutedEventArgs e) {
-            if (settingsW == null)
+            if(settingsW == null)
                 settingsW = new OptionsWindow();
             settingsW.Show();
             settingsW.Focus();
@@ -343,7 +343,7 @@ namespace XGL {
 
         public async void ApplyLocalization() {
             LocalizationManager l = LocalizationManager.I;
-            while (!l.LocalLoaded()) await Task.Delay(25);
+            while(!l.LocalLoaded()) await Task.Delay(25);
             //Notify controls.
             storeControl.ApplyLocalization();
             newsControl.ApplyLocalization();

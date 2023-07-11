@@ -52,7 +52,7 @@ namespace XGL.Networking {
                 //Open connection and read everything, what needed.
                 Database.OpenConnection();
                 MySqlDataReader dr = command.ExecuteReader();
-                while (dr.Read()) {
+                while(dr.Read()) {
                     databaseText = dr.GetString("latestDownloadLinks");
                     _id = dr.GetInt64("id");
                     _ver = version = databaseText.Split('{')[0];
@@ -71,7 +71,7 @@ namespace XGL.Networking {
         }
 
         public void Launch(XGLApp game, string path = "") {
-            if (game.Custom) {
+            if(game.Custom) {
                 Process.Start(path);
                 return;
             }
@@ -81,8 +81,14 @@ namespace XGL.Networking {
             appsDirectory = Path.Combine(Environment.CurrentDirectory, "apps");
             latestExecutablePath = Path.Combine(appsDirectory, _name, _name + ".exe");
             //Check for existance of save file.
-            if (GameExist(game.Name)) {
-                Process.Start(latestExecutablePath);
+            if(GameExist(game.Name)) {
+                Process p = Process.Start(latestExecutablePath);
+                game.ProcessID = p.Id;
+                p.EnableRaisingEvents = true;
+                p.Exited += (object sender, EventArgs e) => {
+                    MainWindow.IsRunningApp = true;
+                };
+                MainWindow.Instance.gamesControl.UpdatePageOf(game);
                 return;
             }
         }
@@ -100,7 +106,7 @@ namespace XGL.Networking {
                 GetLatestLink(_name);
                 MainWindow.Instance.gamesControl.progress_bar_adv.Visibility = Visibility.Visible;
                 MainWindow.Instance.gamesControl.UpdateControls(false);
-                if (!RegistrySLS.LoadBool("AdvancedDownloads", false))
+                if(!RegistrySLS.LoadBool("AdvancedDownloads", false))
                     MainWindow.Instance.gamesControl.downloaderPB_game.Text = _name;
                 GDFileDownloader downloader = new GDFileDownloader();
                 downloader.DownloadProgressChanged += (object sender, GDFileDownloader.DownloadProgress progress) => {
@@ -135,14 +141,17 @@ namespace XGL.Networking {
                 MainWindow.Instance.gamesControl.downloaderPB.Value = 0;
                 MainWindow.Instance.gamesControl.downloaderPB_perc.Visibility = Visibility.Collapsed;
                 //Send notification.
-                if (!_isUpdate)
+                if(!_isUpdate)
                     new ToastContentBuilder()
                         .AddArgument("action", "openLauncher")
                         .AddText(_name + LocalizationManager.I.dictionary["mw.g.down.main"])
                         .AddText(LocalizationManager.I.dictionary["mw.g.dru.splash"])
                         .Show(toast => {
-                            toast.ExpirationTime = DateTime.Now.AddMinutes(10);
-                            toast.Activated += (Windows.UI.Notifications.ToastNotification _sender, object args) => MainWindow.Instance.gamesControl.OpenPageOf(app);
+                            toast.ExpirationTime = DateTime.Now.AddMinutes(2.5);
+                            toast.Activated += (Windows.UI.Notifications.ToastNotification _sender, object args) => {
+                                MainWindow.Instance.Reload();
+                                MainWindow.Instance.gamesControl.OpenPageOf(app);
+                            };
                         });
                 else
                     new ToastContentBuilder()
@@ -150,11 +159,16 @@ namespace XGL.Networking {
                     .AddText(_name + LocalizationManager.I.dictionary["mw.g.upd.main"])
                     .AddText(LocalizationManager.I.dictionary["mw.g.dru.splash"])
                     .Show(toast => {
-                        toast.ExpirationTime = DateTime.Now.AddMinutes(10);
-                        toast.Activated += (Windows.UI.Notifications.ToastNotification _sender, object args) => MainWindow.Instance.gamesControl.OpenPageOf(app);
+                        toast.ExpirationTime = DateTime.Now.AddMinutes(2.5);
+                        toast.Activated += (Windows.UI.Notifications.ToastNotification _sender, object args) => {
+                            MainWindow.Instance.Reload();
+                            MainWindow.Instance.gamesControl.OpenPageOf(app);
+                        };
                     });
                 MainWindow.Instance.gamesControl.downloaderPB.Value = 0;
                 MainWindow.Instance.gamesControl.downloaderPB.Visibility = Visibility.Collapsed;
+                MainWindow.Instance.gamesControl.Clear();
+                MainWindow.Instance.gamesControl.Reload();
             }
             catch (Exception ex) {
                 //TODO: Implement custom dialog system.
@@ -162,21 +176,7 @@ namespace XGL.Networking {
             }
         }
 
-
-        /*private bool LaunchWithoutChecks(string name) {
-
-
-            return false;
-        }*/
-
     }
-
-
-}
-
-namespace XGL.Networking.Google.Drive
-{
-
 
 
 }

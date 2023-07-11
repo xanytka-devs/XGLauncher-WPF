@@ -43,8 +43,8 @@ namespace XGL.Pages.LW {
         }
 
         public void Reload() {
-            if (RegistrySLS.LoadBool("DClickToReloadTab", false)) {
-                if (tabClicks != 2) return;
+            if(RegistrySLS.LoadBool("DClickToReloadTab", false)) {
+                if(tabClicks != 2) return;
                 Clear();
                 tabClicks = 0;
             }
@@ -55,8 +55,8 @@ namespace XGL.Pages.LW {
         }
 
         public void Clear() {
-            if (RegistrySLS.LoadBool("DClickToReloadTab", false))
-                if (tabClicks != 2) return;
+            if(RegistrySLS.LoadBool("DClickToReloadTab", false))
+                if(tabClicks != 2) return;
             for (int i = 0; i < panels.Count; i++)
                 panels[i].Children.Clear();
             newsBtns.Clear();
@@ -127,7 +127,7 @@ namespace XGL.Pages.LW {
 
                 //Change column.
                 curNP++;
-                if (curNP == 5) curNP = 0;
+                if(curNP == 5) curNP = 0;
             }
             Scroll_Changed(ScrollBar, null);
         }
@@ -145,7 +145,7 @@ namespace XGL.Pages.LW {
 
         private void Scroll_Changed(object sender, ScrollChangedEventArgs e) {
             for (int i = 0; i < newsBtns.Count; i++) {
-                if (Utils.I.IsControlVisible(newsBtns[i], newsBtns[i].Parent as FrameworkElement)) {
+                if(Utils.I.IsControlVisible(newsBtns[i], newsBtns[i].Parent as FrameworkElement)) {
                     LoadImageBtn(i, newsBtnImages[i]);
                 }
             }
@@ -153,7 +153,7 @@ namespace XGL.Pages.LW {
 
         async void LoadImage(int i) {
             string nameOfImg = Path.Combine(App.CurrentFolder, "cache", news[i].Icon.Split('{')[0] + ".jpg");
-            if (!File.Exists(nameOfImg))
+            if(!File.Exists(nameOfImg))
                 await Utils.I.DownloadFileAsync(news[i].Icon.Split('{')[1], nameOfImg);
             BitmapImage logo = new BitmapImage();
             logo.BeginInit();
@@ -165,7 +165,7 @@ namespace XGL.Pages.LW {
 
         async void LoadImageBtn(int i, Image img) {
             string nameOfImg = Path.Combine(App.CurrentFolder, "cache", news[i].MainIcon.Split('{')[0] + ".jpg");
-            if (!File.Exists(nameOfImg))
+            if(!File.Exists(nameOfImg))
                 await Utils.I.DownloadFileAsync(news[i].MainIcon.Split('{')[1], nameOfImg);
             BitmapImage logo = new BitmapImage {
                 CacheOption = BitmapCacheOption.OnLoad

@@ -5,23 +5,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:XGL.Pages.LW"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#303031">
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Name="scroller"
+                  ScrollChanged="Scroll_Changed">
         <StackPanel Orientation="Vertical">
             <Grid Height="250">
                 <Button Content="&lt;" Click="BackToMainPage" FontSize="28"
-                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"/>
-                <TextBlock Name="pubName" Text="A" FontWeight="Bold" FontSize="48" VerticalAlignment="Center"
-                       HorizontalAlignment="Left" Margin="260, 0, 0, 0"/>
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 29"/>
                 <Image Name="pubImg" Stretch="UniformToFill" Height="200" Width="200" Source="\Images\def_icon.png" 
-                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="35, 0, 0, 0"/>
-                <Image Name="verified" Stretch="UniformToFill" Height="50" Width="50" Source="\Images\checkmark.png" 
-                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="300, 0, 0, 0" ToolTip="This organization is verified"/>
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="45, 0, 0, 0"/>
+                <StackPanel Orientation="Horizontal" Margin="270, 0, 0, 0">
+                    <TextBlock Name="pubName" Text="A" FontWeight="Bold" FontSize="48" VerticalAlignment="Center"
+                       HorizontalAlignment="Left"/>
+                    <Image Name="verified" Stretch="UniformToFill" Height="50" Width="50" Source="\Images\checkmark.png" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="This organization is verified"/>
+                </StackPanel>
             </Grid>
-            <ScrollViewer Margin="25, 5, 25, 5" Name="productsScroller" ScrollChanged="Scroll_Changed" HorizontalScrollBarVisibility="Disabled"
-                          VerticalScrollBarVisibility="Visible" VerticalContentAlignment="Top">
-                <StackPanel Orientation="Vertical" Name="products"/>
-            </ScrollViewer>
+            <TabControl Margin="10, 0, 10, 0" Name="tabs">
+                <TabItem Header="All" FontSize="20" Name="allTab">
+                    <StackPanel Orientation="Vertical" Name="allProducts" Margin="25, 5, 25, 5"/>
+                </TabItem>
+                <TabItem Name="featuredTab" Header="Featured" FontSize="20">
+                    <StackPanel Orientation="Vertical" Name="featuredProducts" Margin="25, 5, 25, 5"/>
+                </TabItem>
+            </TabControl>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

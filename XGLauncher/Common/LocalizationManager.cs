@@ -20,9 +20,9 @@ namespace XGL {
 
         public void LoadLocalization(string lang) {
             LocalizationLoaded = false;
-            if (!Directory.EnumerateFileSystemEntries(Path.Combine(App.CurrentFolder, "localizations")).Contains(lang + ".ini")) {
-                if (!Database.TryOpenConnection()) return;
-                if (string.IsNullOrEmpty(lang)) return;
+            if(!Directory.EnumerateFileSystemEntries(Path.Combine(App.CurrentFolder, "localizations")).Contains(lang + ".ini")) {
+                if(!Database.TryOpenConnection()) return;
+                if(string.IsNullOrEmpty(lang)) return;
                 dictionary.Clear();
                 MySqlCommand command = new MySqlCommand($"SELECT * FROM `localization_table` WHERE `appID` = 1 and `lang` = '{lang}'", Database.Connection);
                 string URL = string.Empty;
@@ -30,10 +30,10 @@ namespace XGL {
                     Database.OpenConnection();
                     MySqlDataReader dr;
                     dr = command.ExecuteReader();
-                    while (dr.Read()) URL = dr.GetString("url");
+                    while(dr.Read()) URL = dr.GetString("url");
                     dr.Close();
                     Database.CloseConnection();
-                    if (!string.IsNullOrEmpty(URL) && URL != "INS")
+                    if(!string.IsNullOrEmpty(URL) && URL != "INS")
                         Download(URL.Split('{')[1], lang);
                 }
                 catch (Exception ex) {
@@ -46,9 +46,9 @@ namespace XGL {
         }
 
         async void Download(string url, string lang) {
-            if (!App.RunMySQLCommands || App.CurrentAccount == null) return;
+            if(!App.RunMySQLCommands || App.CurrentAccount == null) return;
             string nameOfFile = Path.Combine(App.CurrentFolder, "localizations", lang + ".ini");
-            if (!File.Exists(nameOfFile))
+            if(!File.Exists(nameOfFile))
                 await Utils.I.DownloadFileAsync(url, nameOfFile);
             CreateDictionary(nameOfFile);
         }

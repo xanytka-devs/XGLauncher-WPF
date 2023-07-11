@@ -41,7 +41,7 @@ namespace XGL.Dev {
             //Check for updates.
             CheckForUpdates();
             Account acc = App.CurrentAccount;
-            if (AccountExisting(acc))
+            if(AccountExisting(acc))
                 NextWindow(acc);
 
         }
@@ -53,13 +53,13 @@ namespace XGL.Dev {
                 OpenConnection();
                 MySqlDataReader dr;
                 dr = command.ExecuteReader();
-                while (dr.Read()) output = dr.GetString("latest");
+                while(dr.Read()) output = dr.GetString("latest");
                 dr.Close();
                 CloseConnection();
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
             finally { CloseConnection(); }
-            if (output.Split('{')[0] != App.CurrentVersion) {
+            if(output.Split('{')[0] != App.CurrentVersion) {
                 Process.Start(Path.Combine(App.CurrentFolder, "XGLauncher Updater.exe"), "/devtools");
                 Close();
             }
@@ -71,28 +71,28 @@ namespace XGL.Dev {
             passwordWarn.Opacity = 0;
             loginWarn.Opacity = 0;
             bool isInvalid = false;
-            if (string.IsNullOrEmpty(loginTB.Text)) {
+            if(string.IsNullOrEmpty(loginTB.Text)) {
                 loginWarn.Opacity = 100;
                 loginWarn.Text = warnings[2];
                 isInvalid = true;
             }
-            if (string.IsNullOrEmpty(passwordTB.Text)) {
+            if(string.IsNullOrEmpty(passwordTB.Text)) {
                 passwordWarn.Opacity = 100;
                 passwordWarn.Text = warnings[3];
                 isInvalid = true;
             }
-            if (loginTB.Text.ToLower() == "null") {
+            if(loginTB.Text.ToLower() == "null") {
                 loginWarn.Opacity = 100;
                 loginWarn.Text = warnings[4];
                 isInvalid = true;
             }
-            if (passwordTB.Text.ToLower() == "null") {
+            if(passwordTB.Text.ToLower() == "null") {
                 passwordWarn.Opacity = 100;
                 passwordWarn.Text = warnings[5];
                 isInvalid = true;
             }
 
-            if (isInvalid) return;
+            if(isInvalid) return;
 
             UIStabilize();
 
@@ -100,8 +100,8 @@ namespace XGL.Dev {
 
             Account acc = new Account(loginTB.Text, _pass);
 
-            if (AccountExisting(acc)) {
-                if (AccountValid(acc)) {
+            if(AccountExisting(acc)) {
+                if(AccountValid(acc)) {
                     RegistrySLS.Save("PublisherLoginData", loginTB.Text + ";" + _pass);
                     RegistrySLS.Save("Description", Database.GetValue(acc, "description"));
                     RegistrySLS.Save("LastID", Database.GetID(acc));
@@ -168,7 +168,7 @@ namespace XGL.Dev {
             //Hides this window.
             Hide();
 
-            if (Utils.NotEmptyAndNotNotSet(App.CurrentAccount.Password)) {
+            if(Utils.NotEmptyAndNotNotSet(App.CurrentAccount.Password)) {
                 //Save username and password to settings.
                 App.AccountData = new string[] { acc.Login, acc.Password };
                 App.CurrentAccount = new Account(App.AccountData[0], App.AccountData[1]);

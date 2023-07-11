@@ -56,7 +56,7 @@
         <ScrollViewer Grid.Column="1" Name="generalPage"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Disabled"
-                      Visibility="Collapsed">
+                      Visibility="Visible">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">
                 <TextBlock Text="General" FontSize="20"
                            FontWeight="SemiBold" HorizontalAlignment="Center"
@@ -275,7 +275,7 @@
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" Name="betaPage"
-                      Visibility="Visible"
+                      Visibility="Collapsed"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Visible" Panel.ZIndex="0">
             <StackPanel Orientation="Vertical" Margin="5, 5, 5, 0">

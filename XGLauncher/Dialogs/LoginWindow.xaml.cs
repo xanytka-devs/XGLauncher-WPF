@@ -37,10 +37,10 @@ namespace XGL.Dialogs.Login {
         private async void LoginWindow_Loaded(object _sender, RoutedEventArgs _e) {
             Loaded -= LoginWindow_Loaded;
             CheckForLWButtons();
-            if (!App.LoginDataNotSaved) {
-                if (!Database.TryOpenConnection()) {
+            if(!App.LoginDataNotSaved) {
+                if(!Database.TryOpenConnection()) {
                     App.RunMySQLCommands = false;
-                    while (!LocalizationManager.I.LocalLoaded()) await Task.Delay(25);
+                    while(!LocalizationManager.I.LocalLoaded()) await Task.Delay(25);
                     ErrorBox box = new ErrorBox {
                         ErrorTitle = warnings[0],
                         ErrorDescription = warnings[1],
@@ -65,7 +65,7 @@ namespace XGL.Dialogs.Login {
                     return;
                 }
             } else {
-                if (!Database.AccountEmailVerified(App.CurrentAccount)) {
+                if(!Database.AccountEmailVerified(App.CurrentAccount)) {
                     LoginPage.Visibility = Visibility.Collapsed;
                     EmaiNotVerPage.Visibility = Visibility.Visible;
                 }
@@ -73,7 +73,7 @@ namespace XGL.Dialogs.Login {
         }
 
         void CheckForLWButtons() {
-            if (RegistrySLS.LoadBool("LoginAuth", false)) return;
+            if(RegistrySLS.LoadBool("LoginAuth", false)) return;
             lb_google.Visibility = Visibility.Collapsed;
             lb_vk.Visibility = Visibility.Collapsed;
             lb_tg.Visibility = Visibility.Collapsed;
@@ -87,28 +87,28 @@ namespace XGL.Dialogs.Login {
             passwordWarn.Opacity = 0;
             loginWarn.Opacity = 0;
             bool isInvalid = false;
-            if (string.IsNullOrEmpty(loginTB.Text)) {
+            if(string.IsNullOrEmpty(loginTB.Text)) {
                 loginWarn.Opacity = 100;
                 loginWarn.Text = warnings[2];
                 isInvalid = true;
             } 
-            if (string.IsNullOrEmpty(passwordTB.Text)) {
+            if(string.IsNullOrEmpty(passwordTB.Text)) {
                 passwordWarn.Opacity = 100;
                 passwordWarn.Text = warnings[3];
                 isInvalid = true;
             }
-            if (loginTB.Text.ToLower() == "null") {
+            if(loginTB.Text.ToLower() == "null") {
                 loginWarn.Opacity = 100;
                 loginWarn.Text = warnings[4];
                 isInvalid = true;
             }
-            if (passwordTB.Text.ToLower() == "null") {
+            if(passwordTB.Text.ToLower() == "null") {
                 passwordWarn.Opacity = 100;
                 passwordWarn.Text = warnings[5];
                 isInvalid = true;
             }
 
-            if (isInvalid) return;
+            if(isInvalid) return;
 
             UIStabilize(1);
 
@@ -116,15 +116,15 @@ namespace XGL.Dialogs.Login {
 
             Account acc = new Account(loginTB.Text, _pass);
 
-            if (Database.AccountExisting(acc)) {
-                if (Database.AccountValid(acc)) {
+            if(Database.AccountExisting(acc)) {
+                if(Database.AccountValid(acc)) {
                     RegistrySLS.Save("LoginData", loginTB.Text + ";" + _pass);
                     RegistrySLS.Save("LastID", Database.GetID(acc));
                     RegistrySLS.Save("Username", Database.GetValue(acc, "username"));
                     RegistrySLS.Save("Description", Database.GetValue(acc, "description"));
                     App.CurrentAccount = acc;
                     App.AccountData = new string[] { acc.Login, acc.Password };
-                    if (!Database.AccountEmailVerified(App.CurrentAccount)) {
+                    if(!Database.AccountEmailVerified(App.CurrentAccount)) {
                         LoginPage.Visibility = Visibility.Collapsed;
                         EmaiNotVerPage.Visibility = Visibility.Visible;
                         return;
@@ -176,7 +176,7 @@ namespace XGL.Dialogs.Login {
             passwordRWarn.Opacity = 0;
             emailWarn.Opacity = 0;
 
-            if (string.IsNullOrEmpty(nicknameTB.Text) & string.IsNullOrEmpty(passwordRTB.Text) 
+            if(string.IsNullOrEmpty(nicknameTB.Text) & string.IsNullOrEmpty(passwordRTB.Text) 
                 & string.IsNullOrEmpty(emailTB.Text) & string.IsNullOrEmpty(loginRTB.Text)) {
                 loginRWarn.Opacity = 100;
                 loginRWarn.Text = warnings[2];
@@ -188,51 +188,51 @@ namespace XGL.Dialogs.Login {
                 emailWarn.Text = warnings[6];
                 return;
             }
-            if (emailTB.Text.Length > 30) { emailWarn.Opacity = 100; emailWarn.Text = warnings[11]; invalid = true; }
-            if (loginRTB.Text.Length > 30) { loginRWarn.Opacity = 100; loginRWarn.Text = warnings[10]; invalid = true; }
-            if (passwordRTB.Text.Length > 30) { passwordRWarn.Opacity = 100; passwordRWarn.Text = warnings[13]; invalid = true; }
-            if (nicknameTB.Text.Length > 25) { nicknameWarn.Opacity = 100; nicknameWarn.Text = warnings[12]; invalid = true; }
-            if (emailTB.Text.Length < 8) { emailWarn.Opacity = 100; emailWarn.Text = warnings[15]; invalid = true; }
-            if (loginRTB.Text.Length < 5) { loginRWarn.Opacity = 100; loginRWarn.Text = warnings[16]; invalid = true; }
-            if (passwordRTB.Text.Length < 5) { passwordRWarn.Opacity = 100; passwordRWarn.Text = warnings[17]; invalid = true; }
-            if (nicknameTB.Text.Length < 0) { nicknameWarn.Opacity = 100; nicknameWarn.Text = warnings[18]; invalid = true; }
-            if (string.IsNullOrEmpty(nicknameTB.Text)) {
+            if(emailTB.Text.Length > 30) { emailWarn.Opacity = 100; emailWarn.Text = warnings[11]; invalid = true; }
+            if(loginRTB.Text.Length > 30) { loginRWarn.Opacity = 100; loginRWarn.Text = warnings[10]; invalid = true; }
+            if(passwordRTB.Text.Length > 30) { passwordRWarn.Opacity = 100; passwordRWarn.Text = warnings[13]; invalid = true; }
+            if(nicknameTB.Text.Length > 25) { nicknameWarn.Opacity = 100; nicknameWarn.Text = warnings[12]; invalid = true; }
+            if(emailTB.Text.Length < 8) { emailWarn.Opacity = 100; emailWarn.Text = warnings[15]; invalid = true; }
+            if(loginRTB.Text.Length < 5) { loginRWarn.Opacity = 100; loginRWarn.Text = warnings[16]; invalid = true; }
+            if(passwordRTB.Text.Length < 5) { passwordRWarn.Opacity = 100; passwordRWarn.Text = warnings[17]; invalid = true; }
+            if(nicknameTB.Text.Length < 0) { nicknameWarn.Opacity = 100; nicknameWarn.Text = warnings[18]; invalid = true; }
+            if(string.IsNullOrEmpty(nicknameTB.Text)) {
                 nicknameWarn.Opacity = 100;
                 nicknameWarn.Text = warnings[14];
                 invalid = true;
             }
-            if (string.IsNullOrEmpty(passwordRTB.Text)) {
+            if(string.IsNullOrEmpty(passwordRTB.Text)) {
                 passwordRWarn.Opacity = 100;
                 passwordRWarn.Text = warnings[3];
                 invalid = true;
             }
-            if (string.IsNullOrEmpty(emailTB.Text)) {
+            if(string.IsNullOrEmpty(emailTB.Text)) {
                 emailWarn.Opacity = 100;
                 emailWarn.Text = warnings[6];
                 invalid = true;
             }
-            if (nicknameTB.Text == "INS" || nicknameTB.Text.Contains(Path.GetInvalidPathChars().ToString())) {
+            if(nicknameTB.Text == "INS" || nicknameTB.Text.Contains(Path.GetInvalidPathChars().ToString())) {
                 nicknameWarn.Opacity = 100;
                 nicknameWarn.Text = warnings[19];
                 invalid = true;
             }
-            if (loginRTB.Text == "INS" || loginRTB.Text.Contains(Path.GetInvalidPathChars().ToString())) {
+            if(loginRTB.Text == "INS" || loginRTB.Text.Contains(Path.GetInvalidPathChars().ToString())) {
                 loginRWarn.Opacity = 100;
                 loginRWarn.Text = warnings[4];
                 invalid = true;
             }
-            if (passwordRTB.Text == "INS") {
+            if(passwordRTB.Text == "INS") {
                 passwordRWarn.Opacity = 100;
                 passwordRWarn.Text = warnings[5];
                 invalid = true;
             }
-            if (emailTB.Text == "INS") {
+            if(emailTB.Text == "INS") {
                 emailWarn.Opacity = 100;
                 emailWarn.Text = warnings[4];
                 invalid = true;
             }
-            if (!string.IsNullOrEmpty(emailTB.Text)) {
-                if (!emailTB.Text.Contains('@') ||
+            if(!string.IsNullOrEmpty(emailTB.Text)) {
+                if(!emailTB.Text.Contains('@') ||
                     !emailTB.Text.Contains('.')) {
                     emailWarn.Opacity = 100;
                     emailWarn.Text = warnings[9];
@@ -240,13 +240,13 @@ namespace XGL.Dialogs.Login {
                 }
             }
 
-            if (invalid) { return; }
+            if(invalid) { return; }
             UIStabilize();
             string _pass = Base64.ToBase64String(Encoding.ASCII.GetBytes(passwordRTB.Text));
             Account acc = new Account(loginRTB.Text, _pass);
 
-            if (!Database.AccountExisting(acc)) {
-                if (Database.CreateAccount(acc, nicknameTB.Text, emailTB.Text)) {
+            if(!Database.AccountExisting(acc)) {
+                if(Database.CreateAccount(acc, nicknameTB.Text, emailTB.Text)) {
                     RegistrySLS.Save("LoginData", loginRTB.Text + ";" + _pass);
                     RegistrySLS.Save("LastID", Database.GetID(acc));
                     RegistrySLS.Save("Username", nicknameTB.Text);
@@ -254,7 +254,7 @@ namespace XGL.Dialogs.Login {
                     App.CurrentAccount = acc;
                     App.AccountData = new string[] { acc.Login, acc.Password };
                     App.IsFirstRun = true;
-                    if (EmailAuthencator.SendVerificationMsg(emailTB.Text)) {
+                    if(EmailAuthencator.SendVerificationMsg(emailTB.Text)) {
                         RegisterPage.Visibility = Visibility.Collapsed;
                         EmailVerificationPage.Visibility = Visibility.Visible;
                     } else {
@@ -287,7 +287,7 @@ namespace XGL.Dialogs.Login {
         void NextWindow(Account acc) {
             //Hides this window.
             Hide();
-            if (Utils.I.NotEmptyAndNotINS(App.CurrentAccount.Password)) {
+            if(Utils.I.NotEmptyAndNotINS(App.CurrentAccount.Password)) {
                 //Save username and password to settings.
                 App.AccountData = new string[] { acc.Login, acc.Password};
                 App.CurrentAccount = new Account(App.AccountData[0], App.AccountData[1]);
@@ -302,7 +302,7 @@ namespace XGL.Dialogs.Login {
 
         void UIStabilize(int uiIndex = 0) {
 
-            if (uiIndex == 0) {
+            if(uiIndex == 0) {
                 nicknameWarn.Opacity = 0;
                 passwordRWarn.Opacity = 0;
                 emailWarn.Opacity = 0;
@@ -397,7 +397,7 @@ namespace XGL.Dialogs.Login {
 
             LocalizationManager l = LocalizationManager.I;
 
-            while (!l.LocalLoaded()) await Task.Delay(25);
+            while(!l.LocalLoaded()) await Task.Delay(25);
 
             loginT.Text = loginRT.Text = l.dictionary["gn.log"];
             swith_to_reset_pass.Content = l.dictionary["gn.restore"];
@@ -432,16 +432,16 @@ namespace XGL.Dialogs.Login {
                 verificationCodeTB.Text = "00000";
                 verificationCodeTB.Foreground = new SolidColorBrush(Colors.Gray);
             }
-            if (string.IsNullOrEmpty(resetPassVerCodeTB.Text)) {
+            if(string.IsNullOrEmpty(resetPassVerCodeTB.Text)) {
                 resetPassVerCodeTB.Text = "00000";
                 resetPassVerCodeTB.Foreground = new SolidColorBrush(Colors.Gray);
             }
         }
         void EmailVerificationTB_Gain(object sender, RoutedEventArgs e) {
-            if (verificationCodeTB.Text == "00000")
+            if(verificationCodeTB.Text == "00000")
                 verificationCodeTB.Text = string.Empty;
             verificationCodeTB.Foreground = new SolidColorBrush(Colors.White);
-            if (resetPassVerCodeTB.Text == "00000")
+            if(resetPassVerCodeTB.Text == "00000")
                 resetPassVerCodeTB.Text = string.Empty;
             resetPassVerCodeTB.Foreground = new SolidColorBrush(Colors.White);
         }
@@ -452,14 +452,14 @@ namespace XGL.Dialogs.Login {
         }
 
         void CheckVerCode(object sender, RoutedEventArgs e) {
-            if (verificationCodeTB.Text == EmailAuthencator.VerificationCode) {
+            if(verificationCodeTB.Text == EmailAuthencator.VerificationCode) {
                 EmailAuthencator.SendRegOverMsg(Database.GetValue(App.CurrentAccount, "email").ToString());
                 NextWindow(App.CurrentAccount);
             } else warnEmailVer.Visibility = Visibility.Visible;
         }
 
         void VerifyEmail(object sender, RoutedEventArgs e) {
-            if (EmailAuthencator.SendVerificationMsg(Database.GetValue(App.CurrentAccount, "email").ToString())) {
+            if(EmailAuthencator.SendVerificationMsg(Database.GetValue(App.CurrentAccount, "email").ToString())) {
                 EmailWrongPage.Visibility = Visibility.Collapsed;
                 EmaiNotVerPage.Visibility = Visibility.Collapsed;
                 EmailVerificationPage.Visibility = Visibility.Visible;
@@ -473,26 +473,26 @@ namespace XGL.Dialogs.Login {
         void ChangeEmail(object sender, RoutedEventArgs e) {
             warnEmailChange.Visibility = Visibility.Collapsed;
             bool invalid = false;
-            if (newEmailTB.Text.Length < 8) { warnEmailChange.Visibility = Visibility.Visible; warnEmailChange.Text = warnings[15]; invalid = true; }
-            if (string.IsNullOrEmpty(newEmailTB.Text)) {
+            if(newEmailTB.Text.Length < 8) { warnEmailChange.Visibility = Visibility.Visible; warnEmailChange.Text = warnings[15]; invalid = true; }
+            if(string.IsNullOrEmpty(newEmailTB.Text)) {
                 warnEmailChange.Visibility = Visibility.Visible;
                 warnEmailChange.Text = warnings[6];
                 invalid = true;
             }
-            if (newEmailTB.Text == "INS") {
+            if(newEmailTB.Text == "INS") {
                 warnEmailChange.Visibility = Visibility.Visible;
                 warnEmailChange.Text = warnings[4];
                 invalid = true;
             }
-            if (!string.IsNullOrEmpty(newEmailTB.Text)) {
-                if (!newEmailTB.Text.Contains('@') ||
+            if(!string.IsNullOrEmpty(newEmailTB.Text)) {
+                if(!newEmailTB.Text.Contains('@') ||
                     !newEmailTB.Text.Contains('.')) {
                     warnEmailChange.Visibility = Visibility.Visible;
                     warnEmailChange.Text = warnings[9];
                     invalid = true;
                 }
             }
-            if (invalid) return;
+            if(invalid) return;
             Database.SetValue(Database.DBDataType.DT_EMAIL, newEmailTB.Text);
             VerifyEmail(sender, e);
         }
@@ -516,26 +516,26 @@ namespace XGL.Dialogs.Login {
         void ResetPassword(object sender, RoutedEventArgs e) {
             rpEmailWarn.Visibility = Visibility.Collapsed;
             bool invalid = false;
-            if (rpEmailTB.Text.Length < 8) { rpEmailWarn.Visibility = Visibility.Visible; rpEmailWarn.Text = warnings[15]; invalid = true; }
-            if (string.IsNullOrEmpty(rpEmailTB.Text)) {
+            if(rpEmailTB.Text.Length < 8) { rpEmailWarn.Visibility = Visibility.Visible; rpEmailWarn.Text = warnings[15]; invalid = true; }
+            if(string.IsNullOrEmpty(rpEmailTB.Text)) {
                 rpEmailWarn.Visibility = Visibility.Visible;
                 rpEmailWarn.Text = warnings[6];
                 invalid = true;
             }
-            if (rpEmailTB.Text == "INS") {
+            if(rpEmailTB.Text == "INS") {
                 rpEmailWarn.Visibility = Visibility.Visible;
                 rpEmailWarn.Text = warnings[4];
                 invalid = true;
             }
-            if (!string.IsNullOrEmpty(rpEmailTB.Text)) {
-                if (!rpEmailTB.Text.Contains('@') ||
+            if(!string.IsNullOrEmpty(rpEmailTB.Text)) {
+                if(!rpEmailTB.Text.Contains('@') ||
                     !rpEmailTB.Text.Contains('.')) {
                     rpEmailWarn.Visibility = Visibility.Visible;
                     rpEmailWarn.Text = warnings[9];
                     invalid = true;
                 }
             }
-            if (invalid) return;
+            if(invalid) return;
             RegistrySLS.Save("LastID", Database.GetValue("email", rpEmailTB.Text, "id"));
             EmailAuthencator.SendResetPasswordMsg(rpEmailTB.Text);
             PasswordResetPage.Visibility = Visibility.Collapsed;
@@ -543,7 +543,7 @@ namespace XGL.Dialogs.Login {
         }
 
         void CheckRPVerCode(object sender, RoutedEventArgs e) {
-            if (resetPassVerCodeTB.Text == EmailAuthencator.VerificationCode) {
+            if(resetPassVerCodeTB.Text == EmailAuthencator.VerificationCode) {
                 Database.SetValue(Database.DBDataType.DT_PASSWORD, Base64.ToBase64String(
                     Encoding.UTF8.GetBytes(rpNewPassTB.Text)));
                 BackPassResetBtn_Click(sender, e);

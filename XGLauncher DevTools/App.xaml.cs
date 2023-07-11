@@ -32,11 +32,11 @@ namespace XGL.Dev {
             InstanceVars();
             RegistrySLS.Setup();
             //Read account data.
-            if (AccountData.Length > 1 && AccountData[0] != "INS" && AccountData[0] != "False") {
+            if(AccountData.Length > 1 && AccountData[0] != "INS" && AccountData[0] != "False") {
                 CurrentAccount = new Account(AccountData[0], AccountData[1]);
             }
             //Check for system language.
-            if (RegistrySLS.LoadXGLString("Language", "INS") == "INS") {
+            if(RegistrySLS.LoadXGLString("Language", "INS") == "INS") {
                 RegistrySLS.Save("Language", CultureInfo.CurrentCulture);
             }
             //Check folders and continue launching.
@@ -59,15 +59,15 @@ namespace XGL.Dev {
 
         void FolderCheck() {
             //Create cache folder, if it doesn't exist.
-            /*if (!Directory.Exists(Path.Combine(CurrentFolder, "cache"))) {
+            /*if(!Directory.Exists(Path.Combine(CurrentFolder, "cache"))) {
                 DirectoryInfo di = Directory.CreateDirectory(Path.Combine(CurrentFolder, "cache"));
                 di.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }*/
             //Create logs folder, if it doesn't exist.
-            if (!Directory.Exists(Path.Combine(CurrentFolder, "logs")))
+            if(!Directory.Exists(Path.Combine(CurrentFolder, "logs")))
                 Directory.CreateDirectory(Path.Combine(CurrentFolder, "logs"));
             //Create cache folder, if it doesn't exist.
-            /*if (!Directory.Exists(Path.Combine(CurrentFolder, "localizations")))
+            /*if(!Directory.Exists(Path.Combine(CurrentFolder, "localizations")))
                 Directory.CreateDirectory(Path.Combine(CurrentFolder, "localizations"));*/
         }
 

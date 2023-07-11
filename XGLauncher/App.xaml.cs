@@ -20,7 +20,7 @@ namespace XGL {
     public partial class App : Application {
 
         public static bool LoginDataNotSaved = false; //Is password and login saved
-        public static string CurrentVersion { get; private set; } = "0.1.6"; //Version
+        public static string CurrentVersion { get; private set; } = "0.1.6.1"; //Version
         public static string[] AccountData; // TMP / Raw account data. Soon will be replaced by token
         public static string CurrentFolder { get; private set; } //Application dir
         public static string AppDataFolder { get; private set; }//Application data dir
@@ -46,17 +46,17 @@ namespace XGL {
             RegistrySLS.Setup();
             //Check for XGLAPI status
             //FIX: Not working. Package indeficator not found
-            /*if (RegistrySLS.LoadBool("UseXGLAPI", true))
+            /*if(RegistrySLS.LoadBool("UseXGLAPI", true))
                 Core.Main(e.Args.ToArray());*/
             //Check folders and continue launching
             FolderCheck();
             //Check for system language
-            if (RegistrySLS.LoadString("Language", "INS") == "INS")
+            if(RegistrySLS.LoadString("Language", "INS") == "INS")
                 RegistrySLS.Save("Language", CultureInfo.CurrentCulture);
-            if (!OfflineMode) {
+            if(!OfflineMode) {
                 //Check online status and instantiate account
                 CheckStatus();
-                if (AccountData.Length > 1 && AccountData[0] != "INS" && AccountData[0] != "False")
+                if(AccountData.Length > 1 && AccountData[0] != "INS" && AccountData[0] != "False")
                     CurrentAccount = new Account(AccountData[0], AccountData[1]);
                 //Check account status
                 AccountCheck();
@@ -66,18 +66,18 @@ namespace XGL {
         }
 
         void AccountCheck() {
-            if (!LoginDataNotSaved) {
+            if(!LoginDataNotSaved) {
                 //Try check connection
-                if (!Database.TryOpenConnection()) {
+                if(!Database.TryOpenConnection()) {
                     LoginWindow l = new LoginWindow();
                     l.Show();
                     return;
                 }
                 //Check for updates
-                if (RegistrySLS.LoadBool("AutoUpdate", true)) Update();
+                if(RegistrySLS.LoadBool("AutoUpdate", true)) Update();
                 //Check for account existance
-                if (Database.AccountExisting(CurrentAccount)) {
-                    if (Database.AccountEmailVerified(CurrentAccount)) {
+                if(Database.AccountExisting(CurrentAccount)) {
+                    if(Database.AccountEmailVerified(CurrentAccount)) {
                         NextWindow();
                         return;
                     }
@@ -99,20 +99,20 @@ namespace XGL {
                 Database.OpenConnection();
                 MySqlDataReader dr;
                 dr = command.ExecuteReader();
-                while (dr.Read()) output = dr.GetString("latest");
+                while(dr.Read()) output = dr.GetString("latest");
                 dr.Close();
                 Database.CloseConnection();
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
             finally { Database.CloseConnection(); }
             //Update if needed
-            if (output.Split('{')[0] != CurrentVersion) {
+            if(output.Split('{')[0] != CurrentVersion) {
                 ProcessStartInfo pr = new ProcessStartInfo() {
                     FileName = $"{CurrentFolder}\\XGLauncher Updater.exe",
                     UseShellExecute = true,
                     Verb = "runas"
                 };
-                if (File.Exists(pr.FileName))
+                if(File.Exists(pr.FileName))
                     Process.Start(pr);
                 Shutdown();
                 return;
@@ -120,7 +120,7 @@ namespace XGL {
         }
 
         void NextWindow() {
-            if (Utils.I.NotEmptyAndNotINS(CurrentAccount.Password)) {
+            if(Utils.I.NotEmptyAndNotINS(CurrentAccount.Password)) {
                 //Save username and password to settings.
                 RegistrySLS.Save("LastID", Database.GetID(CurrentAccount));
                 Database.SetValue(Database.DBDataType.DT_ACTIVITY, 1);
@@ -162,18 +162,18 @@ namespace XGL {
 
         void FolderCheck() {
             //Instance folders
-            if (!Directory.Exists(Path.Combine(CurrentFolder, "cache"))) {
+            if(!Directory.Exists(Path.Combine(CurrentFolder, "cache"))) {
                 DirectoryInfo di = Directory.CreateDirectory(Path.Combine(CurrentFolder, "cache"));
                 di.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
-            if (!Directory.Exists(Path.Combine(CurrentFolder, "logs")))
+            if(!Directory.Exists(Path.Combine(CurrentFolder, "logs")))
                 Directory.CreateDirectory(Path.Combine(CurrentFolder, "logs"));
-            if (!Directory.Exists(Path.Combine(CurrentFolder, "apps")))
+            if(!Directory.Exists(Path.Combine(CurrentFolder, "apps")))
                 Directory.CreateDirectory(Path.Combine(CurrentFolder, "apps"));
-            if (!Directory.Exists(Path.Combine(CurrentFolder, "localizations")))
+            if(!Directory.Exists(Path.Combine(CurrentFolder, "localizations")))
                 Directory.CreateDirectory(Path.Combine(CurrentFolder, "localizations"));
             //Load localization
-            LocalizationManager.I.LoadLocalization(RegistrySLS.LoadString("Language", RegistrySLS.LoadString("Language", "en-US")));
+            LocalizationManager.I.LoadLocalization(RegistrySLS.LoadString("Language", RegistrySLS.LoadString("Language", CultureInfo.CurrentCulture.Name)));
         }
 
     }

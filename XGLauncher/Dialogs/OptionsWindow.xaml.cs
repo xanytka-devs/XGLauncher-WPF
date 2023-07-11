@@ -61,7 +61,7 @@ namespace XGL.Dialogs {
         private void OptionsWindow_Loaded(object sender, RoutedEventArgs e) {
             Loaded -= OptionsWindow_Loaded;
             //General page.
-            if (rkApp.GetValue("XGLauncher") == null) autorunTgB.IsChecked = false;
+            if(rkApp.GetValue("XGLauncher") == null) autorunTgB.IsChecked = false;
             else autorunTgB.IsChecked = true;
             g_autostoresearch_TB.IsChecked = RegistrySLS.LoadBool("AutoStoreSearch", false);
             gp_saab_CB.IsChecked = RegistrySLS.LoadBool("GBarAddGame", false);
@@ -70,11 +70,23 @@ namespace XGL.Dialogs {
             gp_ar_CB.IsChecked = RegistrySLS.LoadBool("SW_AutoReload", false);
             gp_cs_T.Text = Utils.I.GetDirectorySize(new DirectoryInfo(Path.Combine(App.CurrentFolder, "cache"))).ToString();
             gp_dctr_CB.IsChecked = RegistrySLS.LoadBool("DClickToReloadTab", false);
+            LoadOptions();
+            //Hotkeys
+            BetaToggle.InputGestures.Add(new KeyGesture(Key.Q, ModifierKeys.Control));
+            RegistrySLS.Save("Beta", !RegistrySLS.LoadBool("Beta", false));
+            BetaToggled(null, null);
+            SecretToggle.InputGestures.Add(new KeyGesture(Key.Up, ModifierKeys.Alt));
+            RegistrySLS.Save("SS", !RegistrySLS.LoadBool("SS", false));
+            SecretToggled(null, null);
+        }
+
+        async void LoadOptions() {
+            await Task.Delay(0);
             //Account page.
             pP.Text = Encoding.ASCII.GetString(Base64.Decode(Encoding.ASCII.GetBytes(App.AccountData[1])));
             pHP.Text = string.Empty;
             string pass = string.Empty;
-            for(int i = 0; i < pP.Text.Length; i++) {
+            for (int i = 0; i < pP.Text.Length; i++) {
                 pass += "*";
             }
             pHP.Text = pass;
@@ -86,7 +98,7 @@ namespace XGL.Dialogs {
             //Appearance page.
             ap_oldstyle_TB.IsChecked = RegistrySLS.LoadBool("OldStyle", false);
             LoadThemeButtons();
-            if(RegistrySLS.LoadBool("Themes", false)) ap_theme_panel.Visibility = Visibility.Visible;
+            if (RegistrySLS.LoadBool("Themes", false)) ap_theme_panel.Visibility = Visibility.Visible;
             //Privacy page.
             gp_hit_CB.IsChecked = RegistrySLS.LoadBool("HideInTray", true);
             //Early Access page
@@ -98,13 +110,6 @@ namespace XGL.Dialogs {
             //Dev page.
             //fd_sps_CB.IsChecked = RegistrySLS.LoadBool("PluginsButton", false);
             //fd_uplg_CB.IsChecked = RegistrySLS.LoadBool("Plugins", false);
-            //Hotkeys
-            BetaToggle.InputGestures.Add(new KeyGesture(Key.Q, ModifierKeys.Control));
-            RegistrySLS.Save("Beta", !RegistrySLS.LoadBool("Beta", false));
-            BetaToggled(null, null);
-            SecretToggle.InputGestures.Add(new KeyGesture(Key.Up, ModifierKeys.Alt));
-            RegistrySLS.Save("SS", !RegistrySLS.LoadBool("SS", false));
-            SecretToggled(null, null);
         }
 
         class LocalBtn {
@@ -130,7 +135,7 @@ namespace XGL.Dialogs {
                 //Open connection and read everything, what needed.
                 Database.OpenConnection();
                 MySqlDataReader dr = command.ExecuteReader();
-                while (dr.Read()) {
+                while(dr.Read()) {
                     bToGen.Add(new LocalBtn(dr.GetString("fullName"),
                                             dr.GetString("lang"),
                                             dr.GetString("langIcon")));
@@ -149,7 +154,7 @@ namespace XGL.Dialogs {
                 //Check for existance.
                 string nameOfFile = Path.Combine(App.CurrentFolder, "localizations",
                     bToGen[i].Abr + ".ini");
-                if (!File.Exists(nameOfFile)) bToGen[i].LoadStatus = false;
+                if(!File.Exists(nameOfFile)) bToGen[i].LoadStatus = false;
                 //Lang image.
                 Image img = new Image {
                     Height = 30,
@@ -159,7 +164,7 @@ namespace XGL.Dialogs {
                 LoadImage(i, img);
                 //Name.
                 SolidColorBrush color = new SolidColorBrush(Colors.White);
-                if (!bToGen[i].LoadStatus) color = new SolidColorBrush(Colors.Gray);
+                if(!bToGen[i].LoadStatus) color = new SolidColorBrush(Colors.Gray);
                 TextBlock tb = new TextBlock {
                     Text = bToGen[i].Name,
                     Margin = new Thickness(58, 0, 10, 0),
@@ -190,14 +195,14 @@ namespace XGL.Dialogs {
 
             string lang = RegistrySLS.LoadString("Language");
             for (int i = 0; i < bToGen.Count; i++)
-                if (lang == bToGen[i].Abr) langBtnTexts[i].FontWeight = FontWeights.Bold;
+                if(lang == bToGen[i].Abr) langBtnTexts[i].FontWeight = FontWeights.Bold;
 
         }
 
         async void LoadImage(int i, Image source) {
             string nameOfImg = Path.Combine(App.CurrentFolder, "cache", 
                 bToGen[i].Icon.Split('/')[bToGen[i].Icon.Split('/').Length - 1]);
-            if (!File.Exists(nameOfImg))
+            if(!File.Exists(nameOfImg))
                 await Utils.I.DownloadFileAsync(bToGen[i].Icon, nameOfImg);
             BitmapImage logo = new BitmapImage();
             logo.BeginInit();
@@ -228,7 +233,7 @@ namespace XGL.Dialogs {
             MessageBoxResult soWarnMB = MessageBox.Show(LocalizationManager.I.dictionary["sw.warn.so"], "XGLauncher", 
                 MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
 
-            if (soWarnMB != MessageBoxResult.Yes) return;
+            if(soWarnMB != MessageBoxResult.Yes) return;
             MainWindow.Instance.SignOut();
             Close();
 
@@ -291,7 +296,7 @@ namespace XGL.Dialogs {
 
         async void Localize(string culture) {
             LocalizationManager.I.LoadLocalization(culture);
-            while (!LocalizationManager.I.LocalLoaded()) await Task.Delay(25);
+            while(!LocalizationManager.I.LocalLoaded()) await Task.Delay(25);
             MainWindow.Instance.ApplyLocalization();
             ApplyLocalization();
         }
@@ -367,7 +372,7 @@ namespace XGL.Dialogs {
                     el = gp_dctr_CB;
                     break;
             }
-            if (!isChangeCritical) {
+            if(!isChangeCritical) {
                 RegistrySLS.Save(name, (bool)el.IsChecked);
                 if(RegistrySLS.LoadBool("SW_AutoReload", false)) MainWindow.Instance.Reload();
                 return;
@@ -390,7 +395,7 @@ namespace XGL.Dialogs {
             //TODO: Implement custom dialog system.
             MessageBoxResult result = MessageBox.Show(LocalizationManager.I.dictionary["sw.warn.del"],
                 "XGLauncher", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
-            if (result == MessageBoxResult.OK) {
+            if(result == MessageBoxResult.OK) {
                 MessageBox.Show(LocalizationManager.I.dictionary["sw.warn.del.comp"], "XGLauncher", MessageBoxButton.OK,
                     MessageBoxImage.Information);
                 Database.SetValue(Database.DBDataType.DT_ACTIVITY, 9);
@@ -489,15 +494,15 @@ namespace XGL.Dialogs {
                     isChangeCritical = true;
                     break;
             }
-            if (!isChangeCritical) {
+            if(!isChangeCritical) {
                 RegistrySLS.Save(name, (bool)el.IsChecked);
-                if (RegistrySLS.LoadBool("SW_AutoReload", false)) MainWindow.Instance.Reload();
+                if(RegistrySLS.LoadBool("SW_AutoReload", false)) MainWindow.Instance.Reload();
                 return;
             }
             //TODO: Implement custom dialog system.
             MessageBoxResult result = MessageBox.Show(LocalizationManager.I.dictionary["sw.warn.crit"],
                 "XGLauncher", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.OK);
-            if (result == MessageBoxResult.OK) {
+            if(result == MessageBoxResult.OK) {
                 RegistrySLS.Save(name, (bool)el.IsChecked);
                 MainWindow.Instance.CloseAllWindows();
                 Process.Start(Path.Combine(Environment.CurrentDirectory, "XGLauncher.exe"));
@@ -508,7 +513,7 @@ namespace XGL.Dialogs {
         void BetaToggled(object sender, ExecutedRoutedEventArgs e) {
 
             RegistrySLS.Save("Beta", !RegistrySLS.LoadBool("Beta", false));
-            if (RegistrySLS.LoadBool("Beta", false)) betaBtn.Visibility = Visibility.Visible;
+            if(RegistrySLS.LoadBool("Beta", false)) betaBtn.Visibility = Visibility.Visible;
             else betaBtn.Visibility = Visibility.Collapsed;
 
         }
@@ -516,7 +521,7 @@ namespace XGL.Dialogs {
         void SecretToggled(object sender, ExecutedRoutedEventArgs e) {
 
             RegistrySLS.Save("SS", !RegistrySLS.LoadBool("SS", false));
-            if (RegistrySLS.LoadBool("SS", false)) {
+            if(RegistrySLS.LoadBool("SS", false)) {
                 Random r = new Random(DateTime.Now.ToString().GetHashCode());
                 if(r.Next(0, 1000) == 777) beta_sso_l.Text = beta_sso_r.Text = "╰（‵□′）╯";
                 beta_sso.Visibility = Visibility.Visible;
