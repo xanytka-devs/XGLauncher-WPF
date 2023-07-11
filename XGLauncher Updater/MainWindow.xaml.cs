@@ -16,18 +16,18 @@ namespace XGL.Update {
             InitializeComponent();
             softwareKey = softwareKey.OpenSubKey("Xanytka Software");
             path = softwareKey.GetValue("Path").ToString();
-            if (App.UpdateIteration == 0) {
+            if(App.UpdateIteration == 0) {
                 pageWelcome.Visibility = Visibility.Visible;
                 link = Database.GetValue();
-                if (softwareKey.GetValue("Version").ToString() == link.Split('{')[0]) pageNoUpdates.Visibility = Visibility.Visible;
-            } else if (App.UpdateIteration == 1) ContinueUpdate();
-            else if (App.UpdateIteration == 2) EndUpdate();
+                if(softwareKey.GetValue("Version").ToString() == link.Split('{')[0]) pageNoUpdates.Visibility = Visibility.Visible;
+            } else if(App.UpdateIteration == 1) ContinueUpdate();
+            else if(App.UpdateIteration == 2) EndUpdate();
         }
         void Update(object sender, RoutedEventArgs e) {
             pageWelcome.Visibility = Visibility.Collapsed;
             DirectoryInfo di = new DirectoryInfo(path);
             foreach (FileInfo file in di.GetFiles()) {
-                if (file.Name != "XGLauncher Updater.exe" & 
+                if(file.Name != "XGLauncher Updater.exe" & 
                     file.Name != "XGLauncher Updater.exe.config" & 
                     file.Name != "XGLauncher Updater.pdb" &
                     file.Name != "MySql.Data.dll" &
@@ -73,7 +73,7 @@ namespace XGL.Update {
             foreach (FileInfo file in di.GetFiles()) file.Delete();
             Directory.Delete(Path.Combine(path, "temp"));
             string[] configs = File.ReadAllText(Path.Combine(path, "update.config")).Split('\n');
-            if (bool.Parse(configs[0]) || bool.Parse(configs[1])) {
+            if(bool.Parse(configs[0]) || bool.Parse(configs[1])) {
                 Shortcut sc = new Shortcut() {
                     Path = Path.Combine(path, "XGLauncher.exe"),
                     Description = "XGLauncher",
@@ -81,12 +81,12 @@ namespace XGL.Update {
                 };
                 string sh = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "XGLauncher.lnk");
                 sc.Save(sh);
-                try { if (!bool.Parse(configs[1])) File.SetAttributes(sh, FileAttributes.Hidden); else File.SetAttributes(sh, FileAttributes.Normal); }
+                try { if(!bool.Parse(configs[1])) File.SetAttributes(sh, FileAttributes.Hidden); else File.SetAttributes(sh, FileAttributes.Normal); }
                 catch (Exception ex) {
-                    if (bool.Parse(configs[0])) Process.Start(sh);
+                    if(bool.Parse(configs[0])) Process.Start(sh);
                     Thread.Sleep(100);
                     File.Delete(Path.Combine(path, "update.config"));
-                    if (!bool.Parse(configs[1])) File.Delete(sh);
+                    if(!bool.Parse(configs[1])) File.Delete(sh);
                     Debug.WriteLine(ex.Message);
                     Close();
                 }
@@ -96,9 +96,9 @@ namespace XGL.Update {
 
         void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
 
-            if (e.Error != null) {
+            if(e.Error != null) {
                 MessageBox.Show($"Error: {e.Error.Message}", "XGLauncher Setup");
-            } else if (!e.Cancelled) {
+            } else if(!e.Cancelled) {
                 try {
                     ZipFile.ExtractToDirectory(Path.Combine(path, "temp", "XGLauncher.zip"), Path.Combine(path, "temp"));
                     ProcessStartInfo updater = new ProcessStartInfo() {

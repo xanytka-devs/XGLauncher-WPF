@@ -28,7 +28,7 @@ namespace XGL.Pages.LW {
 
         public Profile() {
 
-            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+            if(DesignerProperties.GetIsInDesignMode(new DependencyObject()))
                 return;
             InitializeComponent();
 
@@ -50,7 +50,7 @@ namespace XGL.Pages.LW {
             profileIDT.Text = ID.ToString();
             profileDescT.Text = Database.GetValue(CurrentAccount, "description").ToString();
             //Define description.
-            if (profileDescT.Text == "INS") {
+            if(profileDescT.Text == "INS") {
                 //If there isn't any description saved - 
                 // hide description text box.
                 profileAddDesc.Visibility = Visibility.Collapsed;
@@ -68,11 +68,11 @@ namespace XGL.Pages.LW {
             bgFadeColor.Color = Color.FromArgb(0, outRGB[0], outRGB[1], outRGB[2]);
             //Define badge location.
             //Vertical
-            if (personalData[3] == "bottom")
+            if(personalData[3] == "bottom")
                 badgePanel.VerticalAlignment = VerticalAlignment.Bottom;
             else badgePanel.VerticalAlignment = VerticalAlignment.Top;
             //Horizontal
-            if (personalData[4] == "left")
+            if(personalData[4] == "left")
                 badgePanel.HorizontalAlignment = HorizontalAlignment.Left;
             else badgePanel.HorizontalAlignment = HorizontalAlignment.Right;
             LoadImage();
@@ -81,7 +81,7 @@ namespace XGL.Pages.LW {
         void LoadImage() {
             try {
                 string URL = string.Empty;
-                if (App.IsFirstRun) URL = "default{https://drive.google.com/uc?export=download&id=1hKSUYQgTaJIp8V-coY8Y8Bmod0eIupzy";
+                if(App.IsFirstRun) URL = "default{https://drive.google.com/uc?export=download&id=1hKSUYQgTaJIp8V-coY8Y8Bmod0eIupzy";
                 else URL = Database.GetValue(CurrentAccount, "icon").ToString();
                 string nameOfImg = Path.Combine(App.CurrentFolder, "cache", URL.Split('{')[0] + ".jpg");
                 BitmapImage logo = new BitmapImage();
@@ -102,16 +102,16 @@ namespace XGL.Pages.LW {
             //Define current and empty badge variables.
             string emptyBadgeCollection = "0000000000000000000000000";
             char[] badges = emptyBadgeCollection.ToCharArray();
-            if (RegistrySLS.LoadString("Description", "INS") != "INS")
+            if(RegistrySLS.LoadString("Description", "INS") != "INS")
                 badges = Database.GetValue(CurrentAccount, "badges").ToString().ToCharArray();
             //Check for badges.
             //NOTE #1: 0 and 1-s used like bool variable.
             //NOTE #2: If the user has at least one badge,
             // then the first value will always be one.
-            if (badges[1] == '0') verified.Visibility = Visibility.Collapsed;
-            if (badges[2] == '0') modBadge.Visibility = Visibility.Collapsed;
-            if (badges[3] == '0') premiumBadge.Visibility = Visibility.Collapsed;
-            if (badges[4] == '0') betaBadge.Visibility = Visibility.Collapsed;
+            if(badges[1] == '0') verified.Visibility = Visibility.Collapsed;
+            if(badges[2] == '0') modBadge.Visibility = Visibility.Collapsed;
+            if(badges[3] == '0') premiumBadge.Visibility = Visibility.Collapsed;
+            if(badges[4] == '0') betaBadge.Visibility = Visibility.Collapsed;
         }
 
         public void ApplyLocalization() {

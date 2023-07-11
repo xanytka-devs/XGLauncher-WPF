@@ -159,7 +159,7 @@
             <Grid Name="gBar" Grid.Column="0" Margin="-5, 0, 0, -5">
                 <Border Name="gBarV" Background="#232323" Opacity="0.25"/>
                 <StackPanel Margin="0, 0, 0, 60">
-                    <StackPanel Name="gBarSB" Height="110">
+                    <StackPanel Name="gBarSB">
                         <Grid Name="gSearchBar" Height="65" VerticalAlignment="Top" 
                           Margin="5">
                             <TextBlock Text="Search" FontSize="18" 

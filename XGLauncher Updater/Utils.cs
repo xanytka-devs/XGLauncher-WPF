@@ -7,9 +7,9 @@ namespace XGL {
             string[] parts = original.Split(charToSplit);
             string output = string.Empty;
             for (int i = 0; i < parts.Length; i++) {
-                if (i != indexToRemove) {
+                if(i != indexToRemove) {
                     output += parts[i];
-                    if (addCharToSplit) output += charToSplit.ToString();
+                    if(addCharToSplit) output += charToSplit.ToString();
                 }
             }
             return output;
@@ -19,7 +19,7 @@ namespace XGL {
         }
         public static bool IsRootDirectory(string path) {
             DirectoryInfo d = new DirectoryInfo(path);
-            if (d.Parent == null) return true;
+            if(d.Parent == null) return true;
             return false;
         }
     }

@@ -32,7 +32,7 @@ namespace XGL.Networking.Google.Drive {
 
                 get {
 
-                    if (TotalBytesToReceive > 0L)
+                    if(TotalBytesToReceive > 0L)
                         return (int)(((double)BytesReceived / TotalBytesToReceive) * 100);
 
                     return 0;
@@ -54,7 +54,7 @@ namespace XGL.Networking.Google.Drive {
 
                     get {
 
-                        if (cookies.TryGetValue(address.Host, out string cookie))
+                        if(cookies.TryGetValue(address.Host, out string cookie))
                             return cookie;
 
                         return null;
@@ -75,13 +75,13 @@ namespace XGL.Networking.Google.Drive {
 
                 WebRequest request = base.GetWebRequest(address);
 
-                if (request is HttpWebRequest r) {
+                if(request is HttpWebRequest r) {
 
                     string cookie = cookies[address];
-                    if (cookie != null)
+                    if(cookie != null)
                         r.Headers.Set("cookie", cookie);
 
-                    if (ContentRangeTarget != null)
+                    if(ContentRangeTarget != null)
                         r.AddRange(0);
 
                 }
@@ -101,7 +101,7 @@ namespace XGL.Networking.Google.Drive {
             private WebResponse ProcessResponse(WebResponse response) {
 
                 string[] cookies = response.Headers.GetValues("Set-Cookie");
-                if (cookies != null && cookies.Length > 0) {
+                if(cookies != null && cookies.Length > 0) {
 
                     int length = 0;
                     for (int i = 0; i < cookies.Length; i++)
@@ -115,13 +115,13 @@ namespace XGL.Networking.Google.Drive {
 
                 }
 
-                if (ContentRangeTarget != null) {
+                if(ContentRangeTarget != null) {
 
                     string[] rangeLengthHeader = response.Headers.GetValues("Content-Range");
-                    if (rangeLengthHeader != null && rangeLengthHeader.Length > 0) {
+                    if(rangeLengthHeader != null && rangeLengthHeader.Length > 0) {
                         int splitIndex = rangeLengthHeader[0].LastIndexOf('/');
-                        if (splitIndex >= 0 && splitIndex < rangeLengthHeader[0].Length - 1) {
-                            if (long.TryParse(rangeLengthHeader[0].Substring(splitIndex + 1), out long length))
+                        if(splitIndex >= 0 && splitIndex < rangeLengthHeader[0].Length - 1) {
+                            if(long.TryParse(rangeLengthHeader[0].Substring(splitIndex + 1), out long length))
                                 ContentRangeTarget.TotalBytesToReceive = length;
                         }
 
@@ -169,7 +169,7 @@ namespace XGL.Networking.Google.Drive {
 
             downloadingDriveFile = address.StartsWith(GOOGLE_DRIVE_DOMAIN) || address.StartsWith(GOOGLE_DRIVE_DOMAIN2);
             
-            if (downloadingDriveFile) {
+            if(downloadingDriveFile) {
 
                 address = GetGoogleDriveDownloadAddress(address);
                 driveDownloadAttempt = 1;
@@ -194,14 +194,14 @@ namespace XGL.Networking.Google.Drive {
 
         private void DownloadFileInternal()  {
 
-            if (!asyncDownload) {
+            if(!asyncDownload) {
 
                 webClient.DownloadFile(downloadAddress, downloadPath);
 
                 // This callback isn't triggered for synchronous downloads, manually trigger it
                 DownloadFileCompletedCallback(webClient, new AsyncCompletedEventArgs(null, false, null));
             
-            } else if (userToken == null)
+            } else if(userToken == null)
                 webClient.DownloadFileAsync(downloadAddress, downloadPath);
             else
                 webClient.DownloadFileAsync(downloadAddress, downloadPath, userToken);
@@ -210,10 +210,10 @@ namespace XGL.Networking.Google.Drive {
 
         private void DownloadProgressChangedCallback(object sender, DownloadProgressChangedEventArgs e) {
 
-            if (DownloadProgressChanged != null) {
+            if(DownloadProgressChanged != null) {
 
                 downloadProgress.BytesReceived = e.BytesReceived;
-                if (e.TotalBytesToReceive > 0L)
+                if(e.TotalBytesToReceive > 0L)
                     downloadProgress.TotalBytesToReceive = e.TotalBytesToReceive;
 
                 DownloadProgressChanged(this, downloadProgress);
@@ -224,13 +224,13 @@ namespace XGL.Networking.Google.Drive {
 
         private void DownloadFileCompletedCallback(object sender, AsyncCompletedEventArgs e) {
             
-            if (!downloadingDriveFile) {
+            if(!downloadingDriveFile) {
 
                 DownloadFileCompleted?.Invoke(this, e);
 
             } else {
 
-                if (driveDownloadAttempt < GOOGLE_DRIVE_MAX_DOWNLOAD_ATTEMPT && !ProcessDriveDownload()) {
+                if(driveDownloadAttempt < GOOGLE_DRIVE_MAX_DOWNLOAD_ATTEMPT && !ProcessDriveDownload()) {
                     
                     // Try downloading the Drive file again
                     driveDownloadAttempt++;
@@ -248,11 +248,11 @@ namespace XGL.Networking.Google.Drive {
         private bool ProcessDriveDownload() {
 
             FileInfo downloadedFile = new FileInfo(downloadPath);
-            if (downloadedFile == null)
+            if(downloadedFile == null)
                 return true;
 
             // Confirmation page is around 50KB, shouldn't be larger than 60KB
-            if (downloadedFile.Length > 60000L)
+            if(downloadedFile.Length > 60000L)
                 return true;
 
             // Downloaded file might be the confirmation page, check it
@@ -262,7 +262,7 @@ namespace XGL.Networking.Google.Drive {
                 // Confirmation page starts with <!DOCTYPE html>, which can be preceeded by a newline
                 char[] header = new char[20];
                 int readCount = reader.ReadBlock(header, 0, 20);
-                if (readCount < 20 || !(new string(header).Contains("<!DOCTYPE html>")))
+                if(readCount < 20 || !(new string(header).Contains("<!DOCTYPE html>")))
                     return true;
 
                 content = reader.ReadToEnd();
@@ -270,11 +270,11 @@ namespace XGL.Networking.Google.Drive {
             }
 
             int linkIndex = content.LastIndexOf("href=\"/uc?");
-            if (linkIndex >= 0) {
+            if(linkIndex >= 0) {
 
                 linkIndex += 6;
                 int linkEnd = content.IndexOf('"', linkIndex);
-                if (linkEnd >= 0) {
+                if(linkEnd >= 0) {
                     downloadAddress = new Uri("https://drive.google.com" + content.Substring(linkIndex, linkEnd - linkIndex).Replace("&amp;", "&"));
                     return false;
                 }
@@ -293,26 +293,26 @@ namespace XGL.Networking.Google.Drive {
             int index = address.IndexOf("id=");
             int closingIndex;
 
-            if (index > 0) {
+            if(index > 0) {
 
                 index += 3;
                 closingIndex = address.IndexOf('&', index);
-                if (closingIndex < 0)
+                if(closingIndex < 0)
                     closingIndex = address.Length;
 
             } else {
 
                 index = address.IndexOf("file/d/");
-                if (index < 0) // address is not in any of the supported forms
+                if(index < 0) // address is not in any of the supported forms
                     return string.Empty;
 
                 index += 7;
 
                 closingIndex = address.IndexOf('/', index);
-                if (closingIndex < 0) {
+                if(closingIndex < 0) {
 
                     closingIndex = address.IndexOf('?', index);
-                    if (closingIndex < 0)
+                    if(closingIndex < 0)
                         closingIndex = address.Length;
 
                 }
@@ -322,11 +322,11 @@ namespace XGL.Networking.Google.Drive {
             string fileID = address.Substring(index, closingIndex - index);
 
             index = address.IndexOf("resourcekey=");
-            if (index > 0) {
+            if(index > 0) {
 
                 index += 12;
                 closingIndex = address.IndexOf('&', index);
-                if (closingIndex < 0)
+                if(closingIndex < 0)
                     closingIndex = address.Length;
 
                 string resourceKey = address.Substring(index, closingIndex - index);

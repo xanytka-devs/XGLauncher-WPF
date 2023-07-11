@@ -32,9 +32,9 @@ namespace XGL.Dev.Pages {
         }
 
         void GSearchBarTB_TextChanged(object sender, TextChangedEventArgs e) {
-            if (!string.IsNullOrEmpty(appSearchBarTB.Text)) {
+            if(!string.IsNullOrEmpty(appSearchBarTB.Text)) {
                 for (int i = 0; i < toggles.Count; i++) {
-                    if (!toggles[i].Content.ToString().ToLower().Contains(appSearchBarTB.Text.ToLower()))
+                    if(!toggles[i].Content.ToString().ToLower().Contains(appSearchBarTB.Text.ToLower()))
                         toggles[i].Visibility = Visibility.Collapsed;
                 }
             } else {
@@ -55,7 +55,7 @@ namespace XGL.Dev.Pages {
                 OpenConnection();
                 MySqlDataReader dr;
                 dr = command.ExecuteReader();
-                while (dr.Read()) {
+                while(dr.Read()) {
                     apps.Add(dr.GetString("name"));
                 }
                 dr.Close();

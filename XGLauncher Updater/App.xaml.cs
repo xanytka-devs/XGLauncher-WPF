@@ -20,8 +20,8 @@ namespace XGL {
 
         protected override void OnStartup(StartupEventArgs e) {
             foreach (string arg in e.Args) {
-                if (arg == "/old") UpdateIteration = 1;
-                else if (arg == "/new") UpdateIteration = 2;
+                if(arg == "/old") UpdateIteration = 1;
+                else if(arg == "/new") UpdateIteration = 2;
             }
             string[] appSData = INTERNAL.ApplicationSData.IndefData;
             DBConnectorData = appSData[0];

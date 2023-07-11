@@ -50,7 +50,7 @@
                     <StackPanel Name="ShopBelt"/>
                 </Grid>
             </ScrollViewer>
-            <Border Background="#303031" Grid.ColumnSpan="3" Grid.RowSpan="2" Name="StorePagePresenter" Visibility="Collapsed">
+            <Border Background="#303031" Grid.ColumnSpan="3" Grid.RowSpan="2" Name="StorePagePresenter" Visibility="Visible">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
                           Margin="15, 15, 15, 0">
                     <StackPanel Orientation="Vertical">

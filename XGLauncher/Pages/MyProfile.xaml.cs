@@ -33,7 +33,7 @@ namespace XGL.Pages.LW {
         }
 
         public MyProfile() {
-            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+            if(DesignerProperties.GetIsInDesignMode(new DependencyObject()))
                 return;
             InitializeComponent();
             Loaded += Profile_Loaded;
@@ -51,17 +51,17 @@ namespace XGL.Pages.LW {
         private void Profile_Loaded(object sender, RoutedEventArgs e) {
             Loaded -= Profile_Loaded;
             //Load personalization data.
-            if (RegistrySLS.LoadString("Personalization") != "False")
+            if(RegistrySLS.LoadString("Personalization") != "False")
                 //Load from save file (if exists).
                 personalData = RegistrySLS.LoadString("Personalization").Replace(',', '.').Split('-');
-            else if (!App.IsFirstRun)
+            else if(!App.IsFirstRun)
                 //Load from database (if not in offline or null modes).
                 personalData = Database.GetValue(App.CurrentAccount, "personalizationChoices")
                         .ToString().Replace(',', '.').Split('-');
             //Else just create sample values string.
             else personalData = new string[] { "255", "128", "44", "top", "right" };
             //Define texts of UI elements.
-            if (string.IsNullOrEmpty(RegistrySLS.LoadString("Description")) ||
+            if(string.IsNullOrEmpty(RegistrySLS.LoadString("Description")) ||
                     RegistrySLS.LoadString("Description") == "INS") {
                 if(!App.IsFirstRun)
                     RegistrySLS.Save("Description", Database.GetValue(App.CurrentAccount, "description").ToString());
@@ -73,7 +73,7 @@ namespace XGL.Pages.LW {
             profileDescT.Text = RegistrySLS.LoadString("Description");
             profileDescTB.Text = RegistrySLS.LoadString("Description");
             //Define description.
-            if (string.IsNullOrEmpty(RegistrySLS.LoadString("Description")) ||
+            if(string.IsNullOrEmpty(RegistrySLS.LoadString("Description")) ||
                 RegistrySLS.LoadString("Description") == "INS") {
                 //If there isn't any description saved - 
                 // hide description text box.
@@ -95,14 +95,14 @@ namespace XGL.Pages.LW {
             bGColorPickerHEX.SelectedColor = Color.FromRgb(outRGB[0], outRGB[1], outRGB[2]);
             //Define badge location.
             //Vertical
-            if (personalData[3] == "bottom")
+            if(personalData[3] == "bottom")
                 badgePanel.VerticalAlignment = VerticalAlignment.Bottom;
             else {
                 badgePanel.VerticalAlignment = VerticalAlignment.Top;
                 vAlg = "top";
             }
             //Horizontal
-            if (personalData[4] == "left")
+            if(personalData[4] == "left")
                 badgePanel.HorizontalAlignment = HorizontalAlignment.Left;
             else {
                 badgePanel.HorizontalAlignment = HorizontalAlignment.Right;
@@ -114,7 +114,7 @@ namespace XGL.Pages.LW {
         void LoadImage() {
             try {
                 string URL = string.Empty;
-                if (App.IsFirstRun) URL = "default{https://drive.google.com/uc?export=download&id=1hKSUYQgTaJIp8V-coY8Y8Bmod0eIupzy";
+                if(App.IsFirstRun) URL = "default{https://drive.google.com/uc?export=download&id=1hKSUYQgTaJIp8V-coY8Y8Bmod0eIupzy";
                 else URL = Database.GetValue(App.CurrentAccount, "icon").ToString();
                 string nameOfImg = Path.Combine(App.CurrentFolder, "cache", URL.Split('{')[0] + ".jpg");
                 BitmapImage logo = new BitmapImage();
@@ -131,7 +131,7 @@ namespace XGL.Pages.LW {
         }
 
         private void EditProfile_Click(object sender, RoutedEventArgs e) {
-            if (!isEditingProfile) {
+            if(!isEditingProfile) {
                 //Change visibility.
                 changeBGColorBtn.Visibility = Visibility.Visible;
                 profileT.Visibility = Visibility.Collapsed;
@@ -143,9 +143,9 @@ namespace XGL.Pages.LW {
                 cUB_SI.Visibility = Visibility.Visible;
                 photoChangeBtnVis.Visibility = Visibility.Visible;
                 photoChangeBtn.Visibility = Visibility.Visible;
-                if (profileDescTB.Text == "INS") profileDescTB.Text = string.Empty;
+                if(profileDescTB.Text == "INS") profileDescTB.Text = string.Empty;
                 //If can edit badges -
-                if (canMoveBadges) { 
+                if(canMoveBadges) { 
                     // show edit icons.
                     hdirBP.Visibility = Visibility.Visible;
                     vdirBP.Visibility = Visibility.Visible;
@@ -155,18 +155,18 @@ namespace XGL.Pages.LW {
                 isEditingProfile = true;
             } else {
                 LocalizationManager l = LocalizationManager.I;
-                if (!string.IsNullOrEmpty(profileTB.Text)) {
-                    if (profileTB.Text.Length > 25) {
+                if(!string.IsNullOrEmpty(profileTB.Text)) {
+                    if(profileTB.Text.Length > 25) {
                         MessageBox.Show(l.dictionary["mw.p.tlu"], "XGLauncher", 
                             MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
-                    if (profileTB.Text.Length > 10) {
+                    if(profileTB.Text.Length > 10) {
                         MessageBox.Show(l.dictionary["mw.p.plu"], "XGLauncher",
                             MessageBoxButton.OK, MessageBoxImage.Information);
                     }
-                    if (string.IsNullOrEmpty(profileDescTB.Text)) profileDescTB.Text = "INS";
-                    else if (profileDescTB.Text.Length > 255) {
+                    if(string.IsNullOrEmpty(profileDescTB.Text)) profileDescTB.Text = "INS";
+                    else if(profileDescTB.Text.Length > 255) {
                         MessageBox.Show(l.dictionary["mw.p.tld"], "XGLauncher",
                             MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
@@ -189,12 +189,12 @@ namespace XGL.Pages.LW {
                     photoChangeBtnVis.Visibility = Visibility.Collapsed;
                     photoChangeBtn.Visibility = Visibility.Collapsed;
                     //If description is empty - hide it.
-                    if (string.IsNullOrEmpty(profileDescTB.Text) || profileDescTB.Text == "INS") {
+                    if(string.IsNullOrEmpty(profileDescTB.Text) || profileDescTB.Text == "INS") {
                         profileDescT.Visibility = Visibility.Collapsed;
                         profileAddDesc.Visibility = Visibility.Collapsed;
                     } else profileAddDesc.Visibility = Visibility.Visible;
                     //If can edit badges -
-                    if (canMoveBadges) {
+                    if(canMoveBadges) {
                         // hide edit icons.
                         hdirBP.Visibility = Visibility.Collapsed;
                         vdirBP.Visibility = Visibility.Collapsed;
@@ -209,7 +209,7 @@ namespace XGL.Pages.LW {
 
         private void ChangeBGColorBtn_Click(object sender, RoutedEventArgs e) {
 
-            if (!isEditingColors) {
+            if(!isEditingColors) {
                 bGColorPicker.Visibility = Visibility.Visible;
                 isEditingColors = true;
                 return;
@@ -220,8 +220,8 @@ namespace XGL.Pages.LW {
         }
 
         private void BGColorPickerBody_ColorChanged(object sender, RoutedEventArgs e) {
-            if (sender != null) {
-                if (sender.ToString() == bGColorPickerBody.ToString())
+            if(sender != null) {
+                if(sender.ToString() == bGColorPickerBody.ToString())
                     bGColorPickerHEX.SelectedColor = bGColorPickerBody.SelectedColor;
                 else
                     bGColorPickerBody.SelectedColor = bGColorPickerHEX.SelectedColor;
@@ -237,23 +237,23 @@ namespace XGL.Pages.LW {
             //Define current and empty badge variables.
             string emptyBadgeCollection = "0000000000000000000000000";
             char[] badges = emptyBadgeCollection.ToCharArray();
-            if (RegistrySLS.LoadString("Description", "INS") != "INS")
+            if(RegistrySLS.LoadString("Description", "INS") != "INS")
                 badges = Database.GetValue(App.CurrentAccount, "badges").ToString().ToCharArray();
             //Check for badges.
             //NOTE #1: 0 and 1-s used like bool variable.
             //NOTE #2: If the user has at least one badge,
             // then the first value will always be one.
-            if (badges[0] == '1' | App.IsPremium) canMoveBadges = true;
-            if (badges[1] == '0') { isVerified = false; verified.Visibility = Visibility.Collapsed; }
-            if (badges[2] == '0') modBadge.Visibility = Visibility.Collapsed;
-            if (badges[3] == '0') betaBadge.Visibility = Visibility.Collapsed;
+            if(badges[0] == '1' | App.IsPremium) canMoveBadges = true;
+            if(badges[1] == '0') { isVerified = false; verified.Visibility = Visibility.Collapsed; }
+            if(badges[2] == '0') modBadge.Visibility = Visibility.Collapsed;
+            if(badges[3] == '0') betaBadge.Visibility = Visibility.Collapsed;
             if(!App.IsPremium) premiumBadge.Visibility = Visibility.Collapsed;
         }
 
         private void VdirBP_Click(object sender, RoutedEventArgs e) {
             //If align was assigned to top - change it to bottom
             //else change it to top
-            if (badgePanel.VerticalAlignment == VerticalAlignment.Top) {
+            if(badgePanel.VerticalAlignment == VerticalAlignment.Top) {
                 badgePanel.VerticalAlignment = VerticalAlignment.Bottom;
                 vAlg = "bottom";
             } else {
@@ -265,7 +265,7 @@ namespace XGL.Pages.LW {
         private void HdirBP_Click(object sender, RoutedEventArgs e) {
             //If align was assigned to left - change it to right
             //else change it to left
-            if (badgePanel.HorizontalAlignment == HorizontalAlignment.Left) {
+            if(badgePanel.HorizontalAlignment == HorizontalAlignment.Left) {
                 badgePanel.HorizontalAlignment = HorizontalAlignment.Right;
                 hAlg = "right";
             } else {

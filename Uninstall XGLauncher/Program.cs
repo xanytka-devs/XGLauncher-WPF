@@ -14,7 +14,7 @@ internal class Program {
         string fullPath = Path.Combine(StringWithoutValueBySplit(filePath, '\\', filePath.Length - 1, true), fileName);
         //Delete all folders in root (application folder).
         for (int i = 0; i < termPaths.Length; i++) {
-            if (Directory.Exists(termPaths[i])) {
+            if(Directory.Exists(termPaths[i])) {
                 DirectoryInfo di = new DirectoryInfo(termPaths[i]);
                 foreach (FileInfo file in di.GetFiles()) file.Delete();
                 foreach (DirectoryInfo dir in di.GetDirectories()) dir.Delete(true);
@@ -22,7 +22,7 @@ internal class Program {
             }
         }
         string sh = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + "XGLauncher.lnk";
-        if (File.Exists(sh)) File.Delete(sh);
+        if(File.Exists(sh)) File.Delete(sh);
         if(Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true).GetValueNames().Contains("XGLauncher"))
             Registry.CurrentUser.OpenSubKey(@"SOFTWARE", true).DeleteSubKey("XGLauncher");
         //Write and run .bat to delete left over files (.exe, .dll, .lib, etc.)
@@ -32,9 +32,9 @@ internal class Program {
             string[] parts = original.Split(charToSplit);
             string output = string.Empty;
             for (int i = 0; i < parts.Length; i++) {
-                if (i != indexToRemove) {
+                if(i != indexToRemove) {
                     output += parts[i];
-                    if (addCharToSplit) output += charToSplit.ToString();
+                    if(addCharToSplit) output += charToSplit.ToString();
                 }
             }
             return output;

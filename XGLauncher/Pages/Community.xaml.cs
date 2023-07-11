@@ -29,8 +29,8 @@ namespace XGL.Pages.LW {
         }
 
         public void Clear() {
-            if (RegistrySLS.LoadBool("DClickToReloadTab", false))
-                if (tabClicks != 2) return;
+            if(RegistrySLS.LoadBool("DClickToReloadTab", false))
+                if(tabClicks != 2) return;
         }
 
         public void ApplyLocalization() {

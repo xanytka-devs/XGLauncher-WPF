@@ -33,7 +33,7 @@ namespace XGL {
 
             for (int i = 0; i < tmp.Length; i++){
                 if(i == index) tmp[i] = value.ToString();
-                if (!string.IsNullOrEmpty(tmp[i])) output += tmp[i] + ";";
+                if(!string.IsNullOrEmpty(tmp[i])) output += tmp[i] + ";";
             }
 
             return output;
@@ -43,9 +43,9 @@ namespace XGL {
             string[] parts = original.Split(charToSplit);
             string output = string.Empty;
             for (int i = 0; i < parts.Length; i++) {
-                if (i != indexToRemove) {
+                if(i != indexToRemove) {
                     output += parts[i];
-                    if (addCharToSplit) output += charToSplit.ToString();
+                    if(addCharToSplit) output += charToSplit.ToString();
                 }
             }
             return output;
@@ -53,8 +53,8 @@ namespace XGL {
 
         public int BoolToInt(bool input) { return input ? 1 : 0; }
         public object BoolToObj(bool input, object tV, object fV) { return input ? tV : fV; }
-        public bool BoolFromInt(int input) { if (input == 0) return false; else return true; }
-        public bool BoolFromObj(object tV, object fV) { if (tV == fV) return true; else return false; }
+        public bool BoolFromInt(int input) { if(input == 0) return false; else return true; }
+        public bool BoolFromObj(object tV, object fV) { if(tV == fV) return true; else return false; }
         public bool? BoolFromString(string v) {
             switch (v) {
                 case "0": return false;
@@ -65,7 +65,7 @@ namespace XGL {
 
         public long GetTotalFreeSpace(string driveName) {
             foreach (DriveInfo drive in DriveInfo.GetDrives()) {
-                if (drive.IsReady && drive.Name == driveName) {
+                if(drive.IsReady && drive.Name == driveName) {
                     return drive.TotalFreeSpace;
                 }
             }
@@ -73,7 +73,7 @@ namespace XGL {
         }
 
         public void AddToStartMenu(string name, string path) {
-            if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), name))) return;
+            if(File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), name))) return;
             else File.Copy(path, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), name));
         }
 
@@ -84,7 +84,7 @@ namespace XGL {
                 client.DownloadFileCompleted += (object sender, System.ComponentModel.AsyncCompletedEventArgs e) => isReady = true;
                 await Task.Run(() => client.DownloadFileAsync(new Uri(url), fileName));
                 for (int i = 0; i < int.MaxValue; i++) {
-                    if (isReady) break;
+                    if(isReady) break;
                 }
                 return;
             }
@@ -111,14 +111,14 @@ namespace XGL {
                    { "Bit", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
         public string SizeSuffix(long value, int decimalPlaces = 1) {
             SizeSuffixes[0] = LocalizationManager.I.dictionary["sw.g.bit"];
-            if (decimalPlaces < 0) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
-            if (value < 0) { return "-" + SizeSuffix(-value, decimalPlaces); }
-            if (value == 0) { return string.Format("{0:n" + decimalPlaces + "} bytes", 0); }
+            if(decimalPlaces < 0) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
+            if(value < 0) { return "-" + SizeSuffix(-value, decimalPlaces); }
+            if(value == 0) { return string.Format("{0:n" + decimalPlaces + "} bytes", 0); }
 
             int mag = (int)Math.Log(value, 1024);
 
             decimal adjustedSize = (decimal)value / (1L << (mag * 10));
-            if (Math.Round(adjustedSize, decimalPlaces) >= 1000) {
+            if(Math.Round(adjustedSize, decimalPlaces) >= 1000) {
                 mag += 1;
                 adjustedSize /= 1024;
             }
@@ -133,7 +133,7 @@ namespace XGL {
             WebRequest req = WebRequest.Create(url);
             req.Method = "HEAD";
             using (WebResponse resp = req.GetResponse()) {
-                if (long.TryParse(resp.Headers.Get("Content-Length"), out long ContentLength))
+                if(long.TryParse(resp.Headers.Get("Content-Length"), out long ContentLength))
                     result = ContentLength;
             }
             return result;
@@ -152,7 +152,7 @@ namespace XGL {
         }
 
         public bool IsControlVisible(FrameworkElement element, FrameworkElement container) {
-            if (!element.IsVisible) return false;
+            if(!element.IsVisible) return false;
             Rect bounds = element.TransformToAncestor(container).TransformBounds(new Rect(0.0, 0.0, element.ActualWidth, element.ActualHeight));
             Rect rect = new Rect(0.0, 0.0, container.ActualWidth, container.ActualHeight);
             return rect.Contains(bounds.TopLeft) || rect.Contains(bounds.BottomRight);
@@ -164,7 +164,7 @@ namespace XGL {
         public string GetSystemTheme() {
             StringBuilder themeNameBuffer = new StringBuilder(260);
             var error = GetCurrentThemeName(themeNameBuffer, themeNameBuffer.Capacity, null, 0, null, 0);
-            if (error != 0) Marshal.ThrowExceptionForHR(error);
+            if(error != 0) Marshal.ThrowExceptionForHR(error);
             return themeNameBuffer.ToString();
         }
 

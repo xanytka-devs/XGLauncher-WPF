@@ -42,7 +42,7 @@ namespace XGL {
         }
 
         async Task Start(int range) {
-            if (!_allowedToRun)
+            if(!_allowedToRun)
                 throw new InvalidOperationException();
 
             var request = (HttpWebRequest)WebRequest.Create(_source);
@@ -53,10 +53,10 @@ namespace XGL {
             using (var response = await request.GetResponseAsync()) {
                 using (var responseStream = response.GetResponseStream()) {
                     using (var fs = new FileStream(_destination, FileMode.Append, FileAccess.Write, FileShare.ReadWrite)) {
-                        while (_allowedToRun) {
+                        while(_allowedToRun) {
                             var buffer = new byte[_chunkSize];
                             var bytesRead = await responseStream.ReadAsync(buffer, 0, buffer.Length);
-                            if (bytesRead == 0) break;
+                            if(bytesRead == 0) break;
                             await fs.WriteAsync(buffer, 0, bytesRead);
                             BytesWritten += bytesRead;
                         }

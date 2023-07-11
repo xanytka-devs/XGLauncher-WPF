@@ -1,10 +1,10 @@
 ﻿<UserControl x:Class="XGL.Pages.LW.Changelog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:XGL.Pages.LW"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
@@ -33,19 +33,19 @@
                             <Image Source="\Images\remove.png"/>
                         </Button>
                     </Grid>
-                    <StackPanel Margin="5, 5, 5, 0">
-                        <TextBlock FontWeight="Bold" FontSize="30">Обновление 0.1.6</TextBlock>
-                        <TextBlock FontWeight="Bold" FontSize="24" Margin="0, 5, 0, 0">Что нового:</TextBlock>
-                        <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Список изменений</TextBlock>
-                        <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Новые плавные и красивые анимации</TextBlock>
-                        <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Система друзей</TextBlock>
-                        <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Новый вид магазина и промокоды</TextBlock>
-                        <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Коллекции товаров в магазине</TextBlock>
-                        <TextBlock FontWeight="Bold" FontSize="24" Margin="0, 5, 0, 0">Новое для раннего доступа:</TextBlock>
-                        <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Улучшенные загрузки, которые можно планировать, 
-                            останавливать и снова воспроизводить.</TextBlock>
-                        <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Интеграции в окне входа в аккаунт.</TextBlock>
-                    </StackPanel>
+                    <Border Padding="5">
+                        <StackPanel Margin="5, 5, 5, 0">
+                            <TextBlock FontWeight="Bold" FontSize="30">Обновление 0.1.6.1</TextBlock>
+                            <TextBlock FontWeight="Bold" FontSize="24" Margin="0, 5, 0, 0">Что нового:</TextBlock>
+                            <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Новые теги продуктов (Демо, Ранний доступ)</TextBlock>
+                            <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Слегка изменён дизайн постов новостей, 
+                                списка новинок и продуктов в магазине.</TextBlock>
+                            <TextBlock FontWeight="Bold" FontSize="24" Margin="0, 5, 0, 0">Фиксы багов:</TextBlock>
+                            <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Корректное создание и сохранение записей реестра</TextBlock>
+                            <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Корректная работа анимаций</TextBlock>
+                            <TextBlock FontSize="22" Margin="5, 0, 0, 0">• Быстрое открытие и закрытие окна настроек</TextBlock>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
             </ScrollViewer>
         </Border>

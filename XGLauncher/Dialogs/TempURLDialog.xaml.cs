@@ -33,7 +33,7 @@ namespace XGLauncher.Dialogs {
                 return;
             }
             int i = 1;
-            if (Database.GetValue(App.CurrentAccount, "icon").ToString().Split('{')[0] != "default")
+            if(Database.GetValue(App.CurrentAccount, "icon").ToString().Split('{')[0] != "default")
                 i = int.Parse(Database.GetValue(App.CurrentAccount, "icon").ToString().Split('{')[0].Split('_')[2]) + 1;
             Database.SetValue(Database.DBDataType.DT_ICON, $"{RegistrySLS.LoadString("LastID").Split(';')[1]}_profile_{i}" + "{" + imageURL.Text);
             Close();

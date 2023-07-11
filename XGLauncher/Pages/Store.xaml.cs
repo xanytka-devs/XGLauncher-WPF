@@ -19,6 +19,7 @@ using System.IO;
 using XGL.SLS;
 using XGL.Networking;
 using System.Windows.Media.Animation;
+using static Google.Protobuf.WellKnownTypes.Field.Types;
 
 namespace XGL.Pages.LW {
 
@@ -45,14 +46,14 @@ namespace XGL.Pages.LW {
         }
 
         public void Reload() {
-            if (RegistrySLS.LoadBool("DClickToReloadTab", false)) {
-                if (tabClicks != 2) return;
+            if(RegistrySLS.LoadBool("DClickToReloadTab", false)) {
+                if(tabClicks != 2) return;
                 Clear();
                 tabClicks = 0;
             }
             LoadContent();
             GenerateButtons();
-            if (RegistrySLS.LoadBool("AutoStoreSearch", false)) {
+            if(RegistrySLS.LoadBool("AutoStoreSearch", false)) {
                 searchBtn.Visibility = Visibility.Collapsed;
                 searchBar.Margin = new Thickness(0, 0, 0, 0);
                 searchBarPlaceholder.Margin = new Thickness(10, 0, 0, 0);
@@ -65,14 +66,15 @@ namespace XGL.Pages.LW {
         }
 
         public void Clear() {
-            if (RegistrySLS.LoadBool("DClickToReloadTab", false))
-                if (tabClicks != 2) return;
+            if(RegistrySLS.LoadBool("DClickToReloadTab", false))
+                if(tabClicks != 2) return;
+            if(storeBtns.Count > 0)
+                ScrollViwerMain.ScrollToTop();
             storePages.Clear();
             storeBtns.Clear();
             storeBtnImages.Clear();
             ShopBelt.Children.Clear();
             searchBar.Text = string.Empty;
-            ScrollViwerMain.ScrollToTop();
             BackToMainPage(null, null);
         }
 
@@ -88,17 +90,19 @@ namespace XGL.Pages.LW {
             CheckItems();
         }
 
-        int cii = 0;
         void CheckItems() {
-            if (cii == storePages.Count) return;
-            if (storePages[cii].Avaibility == 2) storePages.Remove(storePages[cii]);
-            else cii++;
-            CheckItems();
+            int cii = 0;
+            while (cii < storePages.Count) {
+                if (storePages[cii].Avaibility == 8) storePages.Remove(storePages[cii]);
+                else cii++;
+            }
         }
 
-        void GenerateButtons() {
+        async void GenerateButtons() {
             LocalizationManager l = LocalizationManager.I;
+            while (!LocalizationManager.I.LocalLoaded()) await Task.Delay(25);
             for (int i = 0; i < storePages.Count; i++) {
+                if (storePages[i].Avaibility == 0) { storeBtns.Add(new Button()); storeBtnImages.Add(new Image()); continue; }
                 //INNER//
                 //Preview image.
                 Image preview = new Image {
@@ -124,9 +128,9 @@ namespace XGL.Pages.LW {
                     Text = storePages[i].Price
                 };
                 string cost = storePages[i].Price.ToString().ToLower();
-                if (cost == "tbd")
+                if(cost == "tbd")
                     priceTB.Text = l.dictionary["mw.s.tbd"];
-                else if (cost == "free") priceTB.Text = l.dictionary["mw.s.free"];
+                else if(cost == "free") priceTB.Text = l.dictionary["mw.s.free"];
                 else priceTB.Text = storePages[i].Price.ToString();
 
                 //Holder.
@@ -137,9 +141,32 @@ namespace XGL.Pages.LW {
                         new ColumnDefinition()
                     }
                 };
+                //Early acess badge.
+                Border avaibilityB = new Border();
+                if (storePages[i].Avaibility == 2 || storePages[i].Avaibility == 3) {
+                    TextBlock avaibilityTB = new TextBlock {
+                        FontSize = 18,
+                    };
+                    avaibilityB = new Border {
+                        Margin = new Thickness(5),
+                        Padding = new Thickness(10, 2, 10, 2),
+                        VerticalAlignment = VerticalAlignment.Top,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        CornerRadius = new CornerRadius(15),
+                        Child = avaibilityTB
+                    };
+                    if (storePages[i].Avaibility == 2) {
+                        avaibilityTB.Text = l.dictionary["mw.s.demo"];
+                        avaibilityB.Background = new SolidColorBrush(Color.FromRgb(106, 168, 79));
+                    } else {
+                        avaibilityTB.Text = l.dictionary["mw.s.eacess"];
+                        avaibilityB.Background = new SolidColorBrush(Color.FromRgb(228, 166, 46));
+                    }
+                }
                 inner.Children.Add(preview);
                 inner.Children.Add(nameTB);
                 inner.Children.Add(priceTB);
+                inner.Children.Add(avaibilityB);
                 preview.SetValue(Grid.ColumnProperty, 0);
                 nameTB.SetValue(Grid.ColumnProperty, 1);
                 priceTB.SetValue(Grid.ColumnProperty, 2);
@@ -173,11 +200,11 @@ namespace XGL.Pages.LW {
             GameName.Text = storePages[ind].Name;
             DescriptionT.Text = storePages[ind].Description;
             CostT.Text = storePages[ind].Price.ToString();
-            if (CostT.Text.ToLower() != "free") {
+            if(CostT.Text.ToLower() != "free") {
                 BuyBtn.Content = l.dictionary["mw.s.buy"];
                 BuyBtn.IsEnabled = true;
             }
-            else if (CostT.Text.ToLower() == "tbd") {
+            else if(CostT.Text.ToLower() == "tbd") {
                 CostT.Text = l.dictionary["mw.s.tbd"];
                 BuyBtn.IsEnabled = false;
             }
@@ -186,20 +213,22 @@ namespace XGL.Pages.LW {
                 BuyBtn.Content = l.dictionary["mw.s.add"];
                 BuyBtn.IsEnabled = true;
             }
-            if (storePages[ind].Avaibility != 1) BuyBtn.IsEnabled = false;
+            if(storePages[ind].Avaibility == 0) BuyBtn.IsEnabled = false;
+            if (storePages[ind].Avaibility == 2) CostT.Text = l.dictionary["mw.s.demo"];
+            if (storePages[ind].Avaibility == 3) CostT.Text = l.dictionary["mw.s.eacess"];
             LoadImage(GamePreview, storePages[ind].StoreMedia);
             currentApp = storePages[ind];
             PublisherT.Text = storePages[ind].Publisher;
-            if (Database.AppsOnAccount.Contains(storePages[ind].ID.ToString())) BuyBtn.Content =
+            if(Database.AppsOnAccount.Contains(storePages[ind].ID.ToString())) BuyBtn.Content =
                 l.dictionary["mw.s.open"];
-            else if (Database.AppsOnAccount[0] == "*") BuyBtn.Content = l.dictionary["mw.s.open"];
+            else if(Database.AppsOnAccount[0] == "*") BuyBtn.Content = l.dictionary["mw.s.open"];
             StorePagePresenter.Visibility = Visibility.Visible;
         }
 
         void SearchButton_Click(object sender, RoutedEventArgs e) {
-            if (!string.IsNullOrEmpty(searchBar.Text)) {
+            if(!string.IsNullOrEmpty(searchBar.Text)) {
                 for (int i = 0; i < storeBtns.Count; i++) {
-                    if (!storeBtns[i].Name.ToLower().Contains(searchBar.Text.ToLower()))
+                    if(!storeBtns[i].Name.ToLower().Contains(searchBar.Text.ToLower()))
                         storeBtns[i].Visibility = Visibility.Collapsed;
                     else storeBtns[i].Visibility = Visibility.Visible;
                 }
@@ -211,7 +240,7 @@ namespace XGL.Pages.LW {
         void SearchBar_TextChanged(object sender, TextChangedEventArgs e) {
             if(string.IsNullOrEmpty(searchBar.Text)) searchBarPlaceholder.Visibility = Visibility.Visible;
             else searchBarPlaceholder.Visibility = Visibility.Collapsed;
-            if (RegistrySLS.LoadBool("AutoStoreSearch", false)) { searchBtn.Visibility = Visibility.Collapsed; 
+            if(RegistrySLS.LoadBool("AutoStoreSearch", false)) { searchBtn.Visibility = Visibility.Collapsed; 
                 searchBar.Margin = new Thickness(0, 0, 0, 0); SearchButton_Click(sender, e);
                 searchBarPlaceholder.Margin = new Thickness(10, 0, 0, 0); }
             else { searchBtn.Visibility = Visibility.Visible; searchBar.Margin = new Thickness(40, 0, 0, 0);
@@ -219,14 +248,17 @@ namespace XGL.Pages.LW {
         }
 
         void Scroll_Changed(object sender, ScrollChangedEventArgs e) {
-            for (int i = 0; i < storeBtns.Count; i++)
-                if (Utils.I.IsControlVisible(storeBtns[i], ShopBelt))
+            if(storeBtns.Count <= 0) return;
+            for(int i = 0; i < storePages.Count; i++) {
+                if(storePages[i].Avaibility == 0) continue;
+                if(Utils.I.IsControlVisible(storeBtns[i], ShopBelt))
                     LoadImage(storeBtnImages[i], storePages[i].StoreBanner);
+            }
         }
 
         async void LoadImage(Image img, string URL) {
-            string nameOfImg = Path.Combine(App.CurrentFolder, "cache", URL.Split('{')[0] + ".jpg");
-            if (!File.Exists(nameOfImg))
+            string nameOfImg = Path.Combine(App.CurrentFolder, "cache", URL.Split('{')[0] + ".png");
+            if(!File.Exists(nameOfImg))
                 await Utils.I.DownloadFileAsync(URL.Split('{')[1], nameOfImg);
             BitmapImage logo = new BitmapImage {
                 CacheOption = BitmapCacheOption.OnLoad
@@ -245,7 +277,7 @@ namespace XGL.Pages.LW {
 
         void Buy(object sender, RoutedEventArgs e) {
             LocalizationManager l = LocalizationManager.I;
-            if (BuyBtn.Content.ToString() == l.dictionary["mw.s.open"]) {
+            if(BuyBtn.Content.ToString() == l.dictionary["mw.s.open"]) {
                 MainWindow.Instance.gamesControl.Clear();
                 MainWindow.Instance.gamesControl.Reload();
                 MainWindow.Instance.gamesControl.OpenPageOf(new XGLApp(currentApp.Name, currentApp.Avaibility, 
@@ -254,8 +286,8 @@ namespace XGL.Pages.LW {
                 return;
             }
             string prds = Database.GetValue(App.CurrentAccount, "productsSaved").ToString();
-            if (prds == "*") return;
-            else if (prds == "-") prds = string.Empty;
+            if(prds == "*") return;
+            else if(prds == "-") prds = string.Empty;
             Database.SetValue(Database.DBDataType.DT_PRODUCTSSAVED, prds + currentIndex + ";");
             BuyBtn.Content = l.dictionary["mw.s.open"];
         }
@@ -264,7 +296,7 @@ namespace XGL.Pages.LW {
 
             try {
                 foreach (StoreBase page in storePages)
-                    if (page.ID == ID) currentApp = page;
+                    if(page.ID == ID) currentApp = page;
                 BackToMainPage(null, null);
                 SB_Click(storeBtns[storePages.IndexOf(currentApp)], null);
                 MainWindow.Instance.CollapseAllPages(MainWindow.Instance.StorePg);
@@ -302,7 +334,7 @@ namespace XGL.Pages.LW {
             storyboard.Children.Add(animation);
             Storyboard.SetTarget(animation, promocode_tbf);
             Storyboard.SetTargetProperty(animation, new PropertyPath("(Border.Width)"));
-            if (pbState) {
+            if(pbState) {
                 animation.From = 300;
                 animation.To = 0;
             } else {
@@ -313,7 +345,7 @@ namespace XGL.Pages.LW {
             storyboard.Begin();
             pbState = !pbState;
             animation.Completed += (object s, EventArgs _e) => {
-                if (!pbState) promocode_tbf.Visibility = Visibility.Collapsed;
+                if(!pbState) promocode_tbf.Visibility = Visibility.Collapsed;
             };
 
         }
